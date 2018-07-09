@@ -1,0 +1,14 @@
+SERVER LOCAL
+-------------
+Tienes que conectarte por control remoto (UltraVNC o similar) a 192.168.1.20:3
+
+contraseña del control remoto: w0rK18
+contraseña para entrar en el linux: 0ut18WoRk
+---------------
+http://www.seg-social.es/Internet_1/Masinformacion/SistemaRed/ACCSRED/index.htm
+----
+VPN:
+---------
+81.45.169.245
+workout\andrei
+Workout2018

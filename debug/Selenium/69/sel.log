@@ -1,0 +1,75 @@
+14:18:31.846 INFO - Selenium build info: version: '3.8.1', revision: '6e95a6684b'
+14:18:31.847 INFO - Launching a standalone Selenium Server
+2018-07-09 14:18:32.204:INFO::main: Logging initialized @1330ms to org.seleniumhq.jetty9.util.log.StdErrLog
+14:18:32.412 INFO - Using `new FirefoxOptions()` is preferred to `DesiredCapabilities.firefox()`
+14:18:32.502 INFO - Using `new ChromeOptions()` is preferred to `DesiredCapabilities.chrome()`
+14:18:32.506 INFO - Using `new EdgeOptions()` is preferred to `DesiredCapabilities.edge()`
+14:18:32.507 INFO - Driver class not found: com.opera.core.systems.OperaDriver
+14:18:32.507 INFO - Using `new OperaOptions()` is preferred to `DesiredCapabilities.operaBlink()`
+14:18:32.523 INFO - Using `new SafariOptions()` is preferred to `DesiredCapabilities.safari()`
+14:18:32.524 INFO - Driver class not found: org.openqa.selenium.phantomjs.PhantomJSDriver
+14:18:32.667 INFO - Driver provider class org.openqa.selenium.ie.InternetExplorerDriver registration is skipped:
+ registration capabilities Capabilities {browserName: internet explorer, ensureCleanSession: true, platform: WINDOWS, version: } does not match the current platform LINUX
+14:18:32.668 INFO - Driver provider class org.openqa.selenium.edge.EdgeDriver registration is skipped:
+ registration capabilities Capabilities {browserName: MicrosoftEdge, platform: WINDOWS, version: } does not match the current platform LINUX
+14:18:32.668 INFO - Driver provider class org.openqa.selenium.safari.SafariDriver registration is skipped:
+ registration capabilities Capabilities {browserName: safari, platform: MAC, version: } does not match the current platform LINUX
+14:18:32.824 INFO - Using `new ChromeOptions()` is preferred to `DesiredCapabilities.chrome()`
+14:18:32.825 INFO - Using `new EdgeOptions()` is preferred to `DesiredCapabilities.edge()`
+14:18:32.825 INFO - Using `new FirefoxOptions()` is preferred to `DesiredCapabilities.firefox()`
+14:18:32.826 INFO - Using `new OperaOptions()` is preferred to `DesiredCapabilities.operaBlink()`
+14:18:32.826 INFO - Using `new SafariOptions()` is preferred to `DesiredCapabilities.safari()`
+2018-07-09 14:18:32.991:INFO:osjs.Server:main: jetty-9.4.7.v20170914
+2018-07-09 14:18:33.415:WARN:osjs.SecurityHandler:main: ServletContext@o.s.j.s.ServletContextHandler@1d371b2d{/,null,STARTING} has uncovered http methods for path: /
+2018-07-09 14:18:33.421:INFO:osjsh.ContextHandler:main: Started o.s.j.s.ServletContextHandler@1d371b2d{/,null,AVAILABLE}
+Usage: <main class> [options]
+  Options:
+    --version, -version
+       Displays the version and exits.
+       Default: false
+    -browserTimeout
+       <Integer> in seconds : number of seconds a browser session is allowed to
+       hang while14:18:34.528 INFO - Executing: [new session: Capabilities {browserName: firefox, firefox_profile: UEsDBAoAAAAAAF1ksEytG51BHQA..., platform: LINUX}])
+14:18:34.597 INFO - Creating a new session for Capabilities {browserName: firefox, firefox_profile: UEsDBAoAAAAAAF1ksEytG51BHQA..., platform: LINUX}
+14:18:48.406 INFO - Detected dialect: OSS
+14:18:48.449 INFO - Done: [new session: Capabilities {browserName: firefox, firefox_profile: UEsDBAoAAAAAAF1ksEytG51BHQA..., platform: LINUX}]
+14:18:48.478 INFO - Executing: [get: ])
+14:18:48.596 INFO - Done: [get: ]
+ax number of threads for Jetty. An unspecified, zero, or
+       negative value means the Jetty default value (200) will be used.
+    -log
+       <String> filename : the filename to use for logging. If omitted, will log
+       to STDOUT
+    -port
+       <Integer> : the port number the server will use.
+       Default: 4444
+    -role
+       <String> options are [hub], [node], or [standalone].
+       Default: standalone
+    -timeout, -sessionTimeout
+       <Integer> in seconds : Specifies the timeout before the server
+       automatically kills a session that hasn't had any activity in the last X seconds. The
+       test slot will then be released for another test to use. This is typically
+       used to take care of client crashes. For grid hub/node roles, cleanUpCycle
+       must also be set.
+       Default: 99999999
+
+java.lang.RuntimeException: java.net.BindException: La dirección ya se está usando
+	at org.openqa.selenium.remote.server.SeleniumServer.boot(SeleniumServer.java:198)
+	at org.openqa.grid.selenium.GridLauncherV3$1.launch(GridLauncherV3.java:237)
+	at org.openqa.grid.selenium.GridLauncherV3.main(GridLauncherV3.java:82)
+Caused by: java.net.BindException: La dirección ya se está usando
+	at sun.nio.ch.Net.bind0(Native Method)
+	at sun.nio.ch.Net.bind(Net.java:433)
+	at sun.nio.ch.Net.bind(Net.java:425)
+	at sun.nio.ch.ServerSocketChannelImpl.bind(ServerSocketChannelImpl.java:223)
+	at sun.nio.ch.ServerSocketAdaptor.bind(ServerSocketAdaptor.java:74)
+	at org.seleniumhq.jetty9.server.ServerConnector.openAcceptChannel(ServerConnector.java:334)
+	at org.seleniumhq.jetty9.server.ServerConnector.open(ServerConnector.java:302)
+	at org.seleniumhq.jetty9.server.AbstractNetworkConnector.doStart(AbstractNetworkConnector.java:80)
+	at org.seleniumhq.jetty9.server.ServerConnector.doStart(ServerConnector.java:238)
+	at org.seleniumhq.jetty9.util.component.AbstractLifeCycle.start(AbstractLifeCycle.java:68)
+	at org.seleniumhq.jetty9.server.Server.doStart(Server.java:428)
+	at org.seleniumhq.jetty9.util.component.AbstractLifeCycle.start(AbstractLifeCycle.java:68)
+	at org.openqa.selenium.remote.server.SeleniumServer.boot(SeleniumServer.java:196)
+	... 2 more

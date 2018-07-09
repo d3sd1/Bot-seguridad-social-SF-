@@ -1,0 +1,81 @@
+11:45:38.214 INFO - Selenium build info: version: '3.8.1', revision: '6e95a6684b'
+11:45:38.215 INFO - Launching a standalone Selenium Server
+2018-06-15 11:45:38.426:INFO::main: Logging initialized @999ms to org.seleniumhq.jetty9.util.log.StdErrLog
+11:45:38.554 INFO - Using `new FirefoxOptions()` is preferred to `DesiredCapabilities.firefox()`
+11:45:38.613 INFO - Using `new ChromeOptions()` is preferred to `DesiredCapabilities.chrome()`
+11:45:38.616 INFO - Using `new EdgeOptions()` is preferred to `DesiredCapabilities.edge()`
+11:45:38.617 INFO - Driver class not found: com.opera.core.systems.OperaDriver
+11:45:38.617 INFO - Using `new OperaOptions()` is preferred to `DesiredCapabilities.operaBlink()`
+11:45:38.634 INFO - Using `new SafariOptions()` is preferred to `DesiredCapabilities.safari()`
+11:45:38.636 INFO - Driver class not found: org.openqa.selenium.phantomjs.PhantomJSDriver
+11:45:38.746 INFO - Driver provider class org.openqa.selenium.ie.InternetExplorerDriver registration is skipped:
+ registration capabilities Capabilities {browserName: internet explorer, ensureCleanSession: true, platform: WINDOWS, version: } does not match the current platform LINUX
+11:45:38.747 INFO - Driver provider class org.openqa.selenium.edge.EdgeDriver registration is skipped:
+ registration capabilities Capabilities {browserName: MicrosoftEdge, platform: WINDOWS, version: } does not match the current platform LINUX
+11:45:38.747 INFO - Driver provider class org.openqa.selenium.safari.SafariDriver registration is skipped:
+ registration capabilities Capabilities {browserName: safari, platform: MAC, version: } does not match the current platform LINUX
+11:45:38.895 INFO - Using `new ChromeOptions()` is preferred to `DesiredCapabilities.chrome()`
+11:45:38.897 INFO - Using `new EdgeOptions()` is preferred to `DesiredCapabilities.edge()`
+11:45:38.897 INFO - Using `new FirefoxOptions()` is preferred to `DesiredCapabilities.firefox()`
+11:45:38.897 INFO - Using `new OperaOptions()` is preferred to `DesiredCapabilities.operaBlink()`
+11:45:38.897 INFO - Using `new SafariOptions()` is preferred to `DesiredCapabilities.safari()`
+2018-06-15 11:45:39.008:INFO:osjs.Server:main: jetty-9.4.7.v20170914
+2018-06-15 11:45:39.265:WARN:osjs.SecurityHandler:main: ServletContext@o.s.j.s.ServletContextHandler@1d371b2d{/,null,STARTING} has uncovered http methods for path: /
+2018-06-15 11:45:39.271:INFO:osjsh.ContextHandler:main: Started o.s.j.s.ServletContextHandler@1d371b2d{/,null,AVAILABLE}
+Usage: <main class> [options]
+  Options:
+    --version, -version
+       Displays the version and exits.
+       Default: false
+    -browserTimeout
+       <Integer> in seconds : number of seconds a browser session is allowed to
+       hang while 11:45:40.017 INFO - Executing: [new session: Capabilities {browserName: firefox, firefox_profile: UEsDBBQAAAAIABYBuEykYb5h8QE..., platform: LINUX}])
+11:45:40.078 INFO - Creating a new session for Capabilities {browserName: firefox, firefox_profile: UEsDBBQAAAAIABYBuEykYb5h8QE..., platform: LINUX}
+11:45:50.683 INFO - Detected dialect: OSS
+11:45:50.739 INFO - Done: [new session: Capabilities {browserName: firefox, firefox_profile: UEsDBBQAAAAIABYBuEykYb5h8QE..., platform: LINUX}]
+11:45:50.996 INFO - Executing: [get: https://w2.seg-social.es/Xhtml?JacadaApplicationName=SGIRED&TRANSACCION=ATR41&E=I&AP=AFIR])
+11:45:52.900 INFO - Done: [get: https://w2.seg-social.es/Xhtml?JacadaApplicationName=SGIRED&TRANSACCION=ATR41&E=I&AP=AFIR]
+11:45:52.922 INFO - Executing: [find element: By.name: txt_SDFTESORNAF])
+11:45:53.067 INFO - Done: [find element: By.name: txt_SDFTESORNAF]
+11:45:53.091 INFO - Executing: [send keys: 0 [[FirefoxDriver: firefox on LINUX (a114fb37-17b9-4cc2-8f92-c129622a6dd5)] -> name: txt_SDFTESORNAF], [28]])
+11:45:53.352 INFO - Done: [send keys: 0 [[FirefoxDriver: firefox on LINUX (a114fb37-17b9-4cc2-8f92-c129622a6dd5)] -> name: txt_SDFTESORNAF], [28]]
+11:45:53.361 INFO - Executing: [find element: By.name: txt_SDFNUMNAF])
+11:45:53.404 INFO - Done: [find element: By.name: txt_SDFNUMNAF]
+11:45:53.413 INFO - Executing: [send keys: 1 [[FirefoxDriver: firefox on LINUX (a114fb37-17b9-4cc2-8f92-c129622a6dd5)] -> name: txt_SDFNUMNAF], [1252179000]])
+11:45:53.539 INFO - Done: [send keys: 1 [[FirefoxDriver: firefox on LINUX (a114fb37-17b9-4cc2-8f92-c129622a6dd5)] -> name: txt_SDFNUMNAF], [1252179000]]
+11:45:53.547 INFO - Executing: [find element: By.name: txt_SDFREGCC_ayuda])
+11:45:53.569 INFO - Done: [find element: By.name: txt_SDFREGCC_ayuda]
+11:45:53.588 INFO - Executing: [send keys: 2 [[FirefoxDriver: firefox on LINUX (a114fb37-17b9-4cc2-8f92-c129622a6dd5)] -> name: txt_SDFREGCC_ayuda], [111]])
+11:45:53.651 INFO - Done: [send keys: 2 [[FirefoxDriver: firefox on LINUX (a114fb37-17b9-4cc2-8f92-c129622a6dd5)] -> name: txt_SDFREGCC_ayuda], [111]]
+11:45:53.662 INFO - Executing: [find element: By.name: txt_SDFTESCC])
+11:45:53.690 INFO - Done: [find element: By.name: txt_SDFTESCC]
+11:45:53.694 INFO - Executing: [send keys: 3 [[FirefoxDriver: firefox on LINUX (a114fb37-17b9-4cc2-8f92-c129622a6dd5)] -> name: txt_SDFTESCC], [28]])
+11:45:53.769 INFO - Done: [send keys: 3 [[FirefoxDriver: firefox on LINUX (a114fb37-17b9-4cc2-8f92-c129622a6dd5)] -> name: txt_SDFTESCC], [28]]
+11:45:53.785 INFO - Executing: [find element: By.name: txt_SDFNUMCC])
+11:45:53.856 INFO - Done: [find element: By.name: txt_SDFNUMCC]
+11:45:53.866 INFO - Executing: [send keys: 4 [[FirefoxDriver: firefox on LINUX (a114fb37-17b9-4cc2-8f92-c129622a6dd5)] -> name: txt_SDFNUMCC], [149794464]])
+11:45:53.983 INFO - Done: [send keys: 4 [[FirefoxDriver: firefox on LINUX (a114fb37-17b9-4cc2-8f92-c129622a6dd5)] -> name: txt_SDFNUMCC], [149794464]]
+11:45:54.002 INFO - Executing: [take screenshot])
+11:45:54.123 INFO - Done: [take screenshot]
+11:45:54.161 INFO - Executing: [find element: By.name: btn_Sub2207501004])
+11:45:54.185 INFO - Done: [find element: By.name: btn_Sub2207501004]
+11:45:54.191 INFO - Executing: [click: 5 [[FirefoxDriver: firefox on LINUX (a114fb37-17b9-4cc2-8f92-c129622a6dd5)] -> name: btn_Sub2207501004]])
+11:45:54.952 INFO - Done: [click: 5 [[FirefoxDriver: firefox on LINUX (a114fb37-17b9-4cc2-8f92-c129622a6dd5)] -> name: btn_Sub2207501004]]
+11:45:54.964 INFO - Executing: [find elements: By.name: txt_SDFSITALT_ayuda])
+11:45:54.998 INFO - Done: [find elements: By.name: txt_SDFSITALT_ayuda]
+11:45:55.016 INFO - Executing: [find elements: By.id: DIL])
+11:45:55.038 INFO - Done: [find elements: By.id: DIL]
+11:45:55.049 INFO - Executing: [get text: 6 [[FirefoxDriver: firefox on LINUX (a114fb37-17b9-4cc2-8f92-c129622a6dd5)] -> id: DIL]])
+11:45:55.130 INFO - Done: [get text: 6 [[FirefoxDriver: firefox on LINUX (a114fb37-17b9-4cc2-8f92-c129622a6dd5)] -> id: DIL]]
+11:45:55.134 INFO - Executing: [is displayed: 6 [[FirefoxDriver: firefox on LINUX (a114fb37-17b9-4cc2-8f92-c129622a6dd5)] -> id: DIL]])
+11:45:55.191 INFO - Done: [is displayed: 6 [[FirefoxDriver: firefox on LINUX (a114fb37-17b9-4cc2-8f92-c129622a6dd5)] -> id: DIL]]
+11:45:55.209 INFO - Executing: [find elements: By.id: DIL])
+11:45:55.236 INFO - Done: [find elements: By.id: DIL]
+11:45:55.251 INFO - Executing: [get text: 6 [[FirefoxDriver: firefox on LINUX (a114fb37-17b9-4cc2-8f92-c129622a6dd5)] -> id: DIL]])
+11:45:55.310 INFO - Done: [get text: 6 [[FirefoxDriver: firefox on LINUX (a114fb37-17b9-4cc2-8f92-c129622a6dd5)] -> id: DIL]]
+11:45:55.316 INFO - Executing: [is displayed: 6 [[FirefoxDriver: firefox on LINUX (a114fb37-17b9-4cc2-8f92-c129622a6dd5)] -> id: DIL]])
+11:45:55.349 INFO - Done: [is displayed: 6 [[FirefoxDriver: firefox on LINUX (a114fb37-17b9-4cc2-8f92-c129622a6dd5)] -> id: DIL]]
+11:45:55.358 INFO - Executing: [get text: 6 [[FirefoxDriver: firefox on LINUX (a114fb37-17b9-4cc2-8f92-c129622a6dd5)] -> id: DIL]])
+11:45:55.386 INFO - Done: [get text: 6 [[FirefoxDriver: firefox on LINUX (a114fb37-17b9-4cc2-8f92-c129622a6dd5)] -> id: DIL]]
+11:45:55.398 INFO - Executing: [get text: 6 [[FirefoxDriver: firefox on LINUX (a114fb37-17b9-4cc2-8f92-c129622a6dd5)] -> id: DIL]])
+11:45:55.427 INFO - Done: [get text: 6 [[FirefoxDriver: firefox on LINUX (a114fb37-17b9-4cc2-8f92-c129622a6dd5)] -> id: DIL]]

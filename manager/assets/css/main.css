@@ -1,0 +1,91 @@
+html {
+    height: 100vh;
+    width: 100vw;
+    background: url(../img/bg.jpg) no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+.container {
+    margin-top: 10vh;
+    display: flex;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+}
+
+.container .row {
+    margin: 0 auto;
+}
+
+.status-online {
+    color: #0f9d58;
+}
+
+.status-offline {
+    color: #3d5afe;
+}
+
+.status-booting {
+    color: deepskyblue;
+    animation-name: spin;
+    animation-duration: 1000ms;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+
+.status-waiting {
+    color: #00acc1;
+}
+
+.status-running {
+    color: #00C853;
+}
+
+.status-error {
+    color: #b9151b;
+}
+
+.status-ssdown {
+    color: #b9151b;
+}
+
+.status-warning {
+    color: #ffab00;
+}
+
+.hidden {
+    display: none
+}
+
+@-moz-keyframes spin {
+    from {
+        -moz-transform: rotate(0deg);
+    }
+    to {
+        -moz-transform: rotate(360deg);
+    }
+}
+
+@-webkit-keyframes spin {
+    from {
+        -webkit-transform: rotate(0deg);
+    }
+    to {
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}

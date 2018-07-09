@@ -1,0 +1,29 @@
+11:56:29.642 INFO - Selenium build info: version: '3.8.1', revision: '6e95a6684b'
+11:56:29.668 INFO - Launching a standalone Selenium Server
+2018-06-15 11:56:30.056:INFO::main: Logging initialized @1649ms to org.seleniumhq.jetty9.util.log.StdErrLog
+11:56:30.266 INFO - Using `new FirefoxOptions()` is preferred to `DesiredCapabilities.firefox()`
+11:56:30.340 INFO - Using `new ChromeOptions()` is preferred to `DesiredCapabilities.chrome()`
+11:56:30.344 INFO - Using `new EdgeOptions()` is preferred to `DesiredCapabilities.edge()`
+11:56:30.345 INFO - Driver class not found: com.opera.core.systems.OperaDriver
+11:56:30.345 INFO - Using `new OperaOptions()` is preferred to `DesiredCapabilities.operaBlink()`
+11:56:30.346 INFO - Using `new SafariOptions()` is preferred to `DesiredCapabilities.safari()`
+11:56:30.365 INFO - Driver class not found: org.openqa.selenium.phantomjs.PhantomJSDriver
+11:56:30.501 INFO - Driver provider class org.openqa.selenium.ie.InternetExplorerDriver registration is skipped:
+ registration capabilities Capabilities {browserName: internet explorer, ensureCleanSession: true, platform: WINDOWS, version: } does not match the current platform LINUX
+11:56:30.501 INFO - Driver provider class org.openqa.selenium.edge.EdgeDriver registration is skipped:
+ registration capabilities Capabilities {browserName: MicrosoftEdge, platform: WINDOWS, version: } does not match the current platform LINUX
+11:56:30.502 INFO - Driver provider class org.openqa.selenium.safari.SafariDriver registration is skipped:
+ registration capabilities Capabilities {browserName: safari, platform: MAC, version: } does not match the current platform LINUX
+11:56:30.651 INFO - Using `new ChromeOptions()` is preferred to `DesiredCapabilities.chrome()`
+11:56:30.652 INFO - Using `new EdgeOptions()` is preferred to `DesiredCapabilities.edge()`
+11:56:30.652 INFO - Using `new FirefoxOptions()` is preferred to `DesiredCapabilities.firefox()`
+11:56:30.653 INFO - Using `new OperaOptions()` is preferred to `DesiredCapabilities.operaBlink()`
+11:56:30.653 INFO - Using `new SafariOptions()` is preferred to `DesiredCapabilities.safari()`
+2018-06-15 11:56:30.811:INFO:osjs.Server:main: jetty-9.4.7.v20170914
+2018-06-15 11:56:31.085:WARN:osjs.SecurityHandler:main: ServletContext@o.s.j.s.ServletContextHandler@1d371b2d{/,null,STARTING} has uncovered http methods for path: /
+2018-06-15 11:56:31.090:INFO:osjsh.ContextHandler:main: Started o.s.j.s.ServletContextHandler@1d371b2d{/,null,AVAILABLE}
+2018-06-15 11:56:31.157:INFO:osjs.AbstractConnector:main: Started ServerConnector@16f7c8c1{HTTP/1.1,[http/1.1]}{0.0.0.0:4444}
+2018-06-15 11:56:31.183:INFO:osjs.Server:main: Started @2752ms
+11:56:31.184 INFO - Selenium Server is up and running
+11:56:39.672 INFO - Executing: [new session: Capabilities {browserName: firefox, firefox_profile: UEsDBBQAAAAIABYBuEykYb5h8QE..., platform: LINUX}])
+11:56:39.717 INFO - Creating a new session for Capabilities {browserName: firefox, firefox_profile: UEsDBBQAAAAIABYBuEykYb5h8QE..., platform: LINUX}

@@ -1,0 +1,71 @@
+13:39:42.501 INFO - Selenium build info: version: '3.8.1', revision: '6e95a6684b'
+13:39:42.502 INFO - Launching a standalone Selenium Server
+2018-06-12 13:39:42.830:INFO::main: Logging initialized @1242ms to org.seleniumhq.jetty9.util.log.StdErrLog
+13:39:43.018 INFO - Using `new FirefoxOptions()` is preferred to `DesiredCapabilities.firefox()`
+13:39:43.083 INFO - Using `new ChromeOptions()` is preferred to `DesiredCapabilities.chrome()`
+13:39:43.113 INFO - Using `new EdgeOptions()` is preferred to `DesiredCapabilities.edge()`
+13:39:43.114 INFO - Driver class not found: com.opera.core.systems.OperaDriver
+13:39:43.114 INFO - Using `new OperaOptions()` is preferred to `DesiredCapabilities.operaBlink()`
+13:39:43.115 INFO - Using `new SafariOptions()` is preferred to `DesiredCapabilities.safari()`
+13:39:43.116 INFO - Driver class not found: org.openqa.selenium.phantomjs.PhantomJSDriver
+13:39:43.251 INFO - Driver provider class org.openqa.selenium.ie.InternetExplorerDriver registration is skipped:
+ registration capabilities Capabilities {browserName: internet explorer, ensureCleanSession: true, platform: WINDOWS, version: } does not match the current platform LINUX
+13:39:43.252 INFO - Driver provider class org.openqa.selenium.edge.EdgeDriver registration is skipped:
+ registration capabilities Capabilities {browserName: MicrosoftEdge, platform: WINDOWS, version: } does not match the current platform LINUX
+13:39:43.252 INFO - Driver provider class org.openqa.selenium.safari.SafariDriver registration is skipped:
+ registration capabilities Capabilities {browserName: safari, platform: MAC, version: } does not match the current platform LINUX
+13:39:43.394 INFO - Using `new ChromeOptions()` is preferred to `DesiredCapabilities.chrome()`
+13:39:43.395 INFO - Using `new EdgeOptions()` is preferred to `DesiredCapabilities.edge()`
+13:39:43.395 INFO - Using `new FirefoxOptions()` is preferred to `DesiredCapabilities.firefox()`
+13:39:43.396 INFO - Using `new OperaOptions()` is preferred to `DesiredCapabilities.operaBlink()`
+13:39:43.396 INFO - Using `new SafariOptions()` is preferred to `DesiredCapabilities.safari()`
+2018-06-12 13:39:43.519:INFO:osjs.Server:main: jetty-9.4.7.v20170914
+2018-06-12 13:39:43.717:WARN:osjs.SecurityHandler:main: ServletContext@o.s.j.s.ServletContextHandler@1d371b2d{/,null,STARTING} has uncovered http methods for path: /
+2018-06-12 13:39:43.741:INFO:osjsh.ContextHandler:main: Started o.s.j.s.ServletContextHandler@1d371b2d{/,null,AVAILABLE}
+Usage: <main class> [options]
+  Options:
+    --version, -version
+       Displays the version and exits.
+       Default: false
+    -browserTimeout
+       <Integer> in seconds : number of seconds a browser session is allowed to
+       hang while13:39:47.357 INFO - Executing: [new session: Capabilities {browserName: firefox, firefox_profile: UEsDBBQAAAAIABYBuEykYb5h8QE..., platform: LINUX}])
+13:39:47.413 INFO - Creating a new session for Capabilities {browserName: firefox, firefox_profile: UEsDBBQAAAAIABYBuEykYb5h8QE..., platform: LINUX}
+13:39:59.136 INFO - Detected dialect: OSS
+13:39:59.166 INFO - Done: [new session: Capabilities {browserName: firefox, firefox_profile: UEsDBBQAAAAIABYBuEykYb5h8QE..., platform: LINUX}]
+13:39:59.418 INFO - Executing: [get: https://w2.seg-social.es/Xhtml?JacadaApplicationName=SGIRED&TRANSACCION=ATR42&E=I&AP=AFIR])
+13:40:00.504 INFO - Done: [get: https://w2.seg-social.es/Xhtml?JacadaApplicationName=SGIRED&TRANSACCION=ATR42&E=I&AP=AFIR]
+13:40:00.566 INFO - Executing: [find element: By.name: txt_SDFTESORNAF])
+13:40:00.681 INFO - Done: [find element: By.name: txt_SDFTESORNAF]
+13:40:00.699 INFO - Executing: [send keys: 0 [[FirefoxDriver: firefox on LINUX (ba61d309-1df8-46a2-9a8b-37029ffd02e0)] -> name: txt_SDFTESORNAF], [46]])
+13:40:00.813 INFO - Done: [send keys: 0 [[FirefoxDriver: firefox on LINUX (ba61d309-1df8-46a2-9a8b-37029ffd02e0)] -> name: txt_SDFTESORNAF], [46]]
+13:40:00.822 INFO - Executing: [find element: By.name: txt_SDFNUMNAF])
+13:40:00.846 INFO - Done: [find element: By.name: txt_SDFNUMNAF]
+13:40:00.857 INFO - Executing: [send keys: 1 [[FirefoxDriver: firefox on LINUX (ba61d309-1df8-46a2-9a8b-37029ffd02e0)] -> name: txt_SDFNUMNAF], [1072254410]])
+13:40:00.941 INFO - Done: [send keys: 1 [[FirefoxDriver: firefox on LINUX (ba61d309-1df8-46a2-9a8b-37029ffd02e0)] -> name: txt_SDFNUMNAF], [1072254410]]
+13:40:00.947 INFO - Executing: [find element: By.name: txt_SDFREGCC_ayuda])
+13:40:00.964 INFO - Done: [find element: By.name: txt_SDFREGCC_ayuda]
+13:40:00.973 INFO - Executing: [send keys: 2 [[FirefoxDriver: firefox on LINUX (ba61d309-1df8-46a2-9a8b-37029ffd02e0)] -> name: txt_SDFREGCC_ayuda], [111]])
+13:40:01.040 INFO - Done: [send keys: 2 [[FirefoxDriver: firefox on LINUX (ba61d309-1df8-46a2-9a8b-37029ffd02e0)] -> name: txt_SDFREGCC_ayuda], [111]]
+13:40:01.046 INFO - Executing: [find element: By.name: txt_SDFTESCC])
+13:40:01.063 INFO - Done: [find element: By.name: txt_SDFTESCC]
+13:40:01.066 INFO - Executing: [send keys: 3 [[FirefoxDriver: firefox on LINUX (ba61d309-1df8-46a2-9a8b-37029ffd02e0)] -> name: txt_SDFTESCC], [28]])
+13:40:01.172 INFO - Done: [send keys: 3 [[FirefoxDriver: firefox on LINUX (ba61d309-1df8-46a2-9a8b-37029ffd02e0)] -> name: txt_SDFTESCC], [28]]
+13:40:01.178 INFO - Executing: [find element: By.name: txt_SDFNUMCC])
+13:40:01.252 INFO - Done: [find element: By.name: txt_SDFNUMCC]
+13:40:01.258 INFO - Executing: [send keys: 4 [[FirefoxDriver: firefox on LINUX (ba61d309-1df8-46a2-9a8b-37029ffd02e0)] -> name: txt_SDFNUMCC], [149794464]])
+13:40:01.403 INFO - Done: [send keys: 4 [[FirefoxDriver: firefox on LINUX (ba61d309-1df8-46a2-9a8b-37029ffd02e0)] -> name: txt_SDFNUMCC], [149794464]]
+13:40:01.433 INFO - Executing: [find element: By.name: cbo_ListaAltasBajas001])
+13:40:01.451 INFO - Done: [find element: By.name: cbo_ListaAltasBajas001]
+13:40:01.456 INFO - Executing: [tag name: 5 [[FirefoxDriver: firefox on LINUX (ba61d309-1df8-46a2-9a8b-37029ffd02e0)] -> name: cbo_ListaAltasBajas001]])
+13:40:01.475 INFO - Done: [tag name: 5 [[FirefoxDriver: firefox on LINUX (ba61d309-1df8-46a2-9a8b-37029ffd02e0)] -> name: cbo_ListaAltasBajas001]]
+13:40:01.480 INFO - Executing: [get element attribute: 5 [[FirefoxDriver: firefox on LINUX (ba61d309-1df8-46a2-9a8b-37029ffd02e0)] -> name: cbo_ListaAltasBajas001], multiple])
+13:40:01.504 INFO - Done: [get element attribute: 5 [[FirefoxDriver: firefox on LINUX (ba61d309-1df8-46a2-9a8b-37029ffd02e0)] -> name: cbo_ListaAltasBajas001], multiple]
+13:40:01.512 INFO - Executing: [find child elements: 5 [[FirefoxDriver: firefox on LINUX (ba61d309-1df8-46a2-9a8b-37029ffd02e0)] -> name: cbo_ListaAltasBajas001], By.xpath: .//option[normalize-space(.) = 'Alta']])
+13:40:01.633 INFO - Done: [find child elements: 5 [[FirefoxDriver: firefox on LINUX (ba61d309-1df8-46a2-9a8b-37029ffd02e0)] -> name: cbo_ListaAltasBajas001], By.xpath: .//option[normalize-space(.) = 'Alta']]
+13:40:01.643 INFO - Executing: [is selected: 6 [[[[FirefoxDriver: firefox on LINUX (ba61d309-1df8-46a2-9a8b-37029ffd02e0)] -> name: cbo_ListaAltasBajas001]] -> xpath: .//option[normalize-space(.) = 'Alta']]])
+13:40:01.669 INFO - Done: [is selected: 6 [[[[FirefoxDriver: firefox on LINUX (ba61d309-1df8-46a2-9a8b-37029ffd02e0)] -> name: cbo_ListaAltasBajas001]] -> xpath: .//option[normalize-space(.) = 'Alta']]]
+13:40:01.677 INFO - Executing: [click: 6 [[[[FirefoxDriver: firefox on LINUX (ba61d309-1df8-46a2-9a8b-37029ffd02e0)] -> name: cbo_ListaAltasBajas001]] -> xpath: .//option[normalize-space(.) = 'Alta']]])
+13:40:01.938 INFO - Done: [click: 6 [[[[FirefoxDriver: firefox on LINUX (ba61d309-1df8-46a2-9a8b-37029ffd02e0)] -> name: cbo_ListaAltasBajas001]] -> xpath: .//option[normalize-space(.) = 'Alta']]]
+13:40:01.941 INFO - Executing: [find element: By.name: txt_SDFDIAB])
+13:40:01.961 INFO - Done: [find element: By.name: txt_SDFDIAB]

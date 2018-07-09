@@ -1,0 +1,46 @@
+[
+   {
+      "id":1,
+      "type":"ALTA"
+   },
+   {
+      "id":4,
+      "type":"ANULACION_ALTA_CONSOLIDADA"
+   },
+   {
+      "id":3,
+      "type":"ANULACION_ALTA_PREVIA"
+   },
+   {
+      "id":6,
+      "type":"ANULACION_BAJA_CONSOLIDADA"
+   },
+   {
+      "id":5,
+      "type":"ANULACION_BAJA_PREVIA"
+   },
+   {
+      "id":2,
+      "type":"BAJA"
+   },
+   {
+      "id":7,
+      "type":"CAMBIO_CONTRATO"
+   },
+   {
+      "id":10,
+      "type":"CONSULTA_ALTAS_CCC"
+   },
+   {
+      "id":8,
+     "type": "CONSULTA_IPF"
+   },
+   {
+      "id":9,
+     "type": "CONSULTA_NAF"
+   },
+   {
+      "id":11,
+      "type":"CONSULTA_TA"
+   }
+]

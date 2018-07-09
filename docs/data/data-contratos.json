@@ -1,0 +1,242 @@
+[
+   {
+      "ckey":100,
+      "type":"1",
+      "time_type":"1",
+      "description":"ORDINARIO"
+   },
+   {
+      "ckey":109,
+      "type":"1",
+      "time_type":"1",
+      "description":"FOMENTO CONTRATACIÓN INDEFINIDA TRANSFORMACIÓN CONTRATO TEMPORAL"
+   },
+   {
+      "ckey":130,
+      "type":"1",
+      "time_type":"1",
+      "description":"PERSONAS CON DISCAPACIDAD"
+   },
+   {
+      "ckey":139,
+      "type":"1",
+      "time_type":"1",
+      "description":"PERSONAS CON DISCAPACIDAD TRANSFORMACIÓN CONTRATO TEMPORAL"
+   },
+   {
+      "ckey":150,
+      "type":"1",
+      "time_type":"1",
+      "description":"FOMENTO CONTRATACIÓN INDEFINIDA INICIAL"
+   },
+   {
+      "ckey":189,
+      "type":"1",
+      "time_type":"1",
+      "description":"TRANSFORMACIÓN CONTRATO TEMPORAL"
+   },
+   {
+      "ckey":200,
+      "type":"1",
+      "time_type":"2",
+      "description":"ORDINARIO"
+   },
+   {
+      "ckey":209,
+      "type":"1",
+      "time_type":"2",
+      "description":"FOMENTO CONTRATACIÓN INDEFINIDA TRANSFORMACIÓN CONTRATO TEMPORAL"
+   },
+   {
+      "ckey":230,
+      "type":"1",
+      "time_type":"2",
+      "description":"PERSONAS CON DISCAPACIDAD"
+   },
+   {
+      "ckey":239,
+      "type":"1",
+      "time_type":"2",
+      "description":"PERSONAS CON DISCAPACIDAD TRANSFORMACIÓN CONTRATO TEMPORAL"
+   },
+   {
+      "ckey":250,
+      "type":"1",
+      "time_type":"2",
+      "description":"FOMENTO CONTRATACIÓN INDEFINIDA INICIAL"
+   },
+   {
+      "ckey":289,
+      "type":"1",
+      "time_type":"2",
+      "description":"TRANSFORMACIÓN CONTRATO TEMPORAL"
+   },
+   {
+      "ckey":300,
+      "type":"1",
+      "time_type":"3",
+      "description":""
+   },
+   {
+      "ckey":309,
+      "type":"1",
+      "time_type":"3",
+      "description":"FOMENTO CONTRATACIÓN INDEFINIDA TRANSFORMACIÓN CONTRATO TEMPORAL"
+   },
+   {
+      "ckey":330,
+      "type":"1",
+      "time_type":"3",
+      "description":"PERSONAS CON DISCAPACIDAD"
+   },
+   {
+      "ckey":339,
+      "type":"1",
+      "time_type":"2",
+      "description":"PERSONAS CON DISCAPACIDAD TRANSFORMACIÓN CONTRATO TEMPORAL"
+   },
+   {
+      "ckey":350,
+      "type":"1",
+      "time_type":"3",
+      "description":"FOMENTO CONTRATACIÓN INDEFINIDA INICIAL"
+   },
+   {
+      "ckey":389,
+      "type":"1",
+      "time_type":"3",
+      "description":"TRANSFORMACIÓN CONTRATO TEMPORAL"
+   },
+   {
+      "ckey":401,
+      "type":"2",
+      "time_type":"1",
+      "description":"OBRA O SERVICIO DETERMINADO"
+   },
+   {
+      "ckey":402,
+      "type":"2",
+      "time_type":"1",
+      "description":"EVENTUAL CIRCUNSTANCIAS DE LA PRODUCCIÓN"
+   },
+   {
+      "ckey":408,
+      "type":"3",
+      "time_type":"1",
+      "description":"CARÁCTER ADMINISTRATIVO"
+   },
+   {
+      "ckey":410,
+      "type":"2",
+      "time_type":"1",
+      "description":"INTERINIDAD"
+   },
+   {
+      "ckey":418,
+      "type":"2",
+      "time_type":"1",
+      "description":"INTERINIDAD CARÁCTER ADMINISTRATIVO"
+   },
+   {
+      "ckey":420,
+      "type":"3",
+      "time_type":"1",
+      "description":"PRÁCTICAS"
+   },
+   {
+      "ckey":421,
+      "type":"3",
+      "time_type":"1",
+      "description":"FORMACIÓN Y APRENDIZAJE"
+   },
+   {
+      "ckey":430,
+      "type":"3",
+      "time_type":"1",
+      "description":"PERSONAS CON DISCAPACIDAD"
+   },
+   {
+      "ckey":441,
+      "type":"3",
+      "time_type":"1",
+      "description":"RELEVO"
+   },
+   {
+      "ckey":450,
+      "type":"3",
+      "time_type":"1",
+      "description":"FOMENTO CONTRATACIÓN INDEFINIDA"
+   },
+   {
+      "ckey":452,
+      "type":"3",
+      "time_type":"1",
+      "description":"EMPRESAS DE INSERCIÓN"
+   },
+   {
+      "ckey":501,
+      "type":"2",
+      "time_type":"2",
+      "description":"OBRA O SERVICIO DETERMINADO"
+   },
+   {
+      "ckey":502,
+      "type":"2",
+      "time_type":"2",
+      "description":"EVENTUAL CIRCUNSTANCIAS DE LA PRODUCCIÓN"
+   },
+   {
+      "ckey":508,
+      "type":"3",
+      "time_type":"2",
+      "description":"CARÁCTER ADMINISTRATIVO"
+   },
+   {
+      "ckey":510,
+      "type":"2",
+      "time_type":"2",
+      "description":"INTERINIDAD"
+   },
+   {
+      "ckey":518,
+      "type":"2",
+      "time_type":"2",
+      "description":"INTERINIDAD CARÁCTER ADMINISTRATIVO"
+   },
+   {
+      "ckey":520,
+      "type":"3",
+      "time_type":"2",
+      "description":"PRÁCTICAS"
+   },
+   {
+      "ckey":530,
+      "type":"3",
+      "time_type":"2",
+      "description":"PERSONAS CON DISCAPACIDAD"
+   },
+   {
+      "ckey":540,
+      "type":"3",
+      "time_type":"2",
+      "description":"JUBILADO PARCIAL"
+   },
+   {
+      "ckey":541,
+      "type":"3",
+      "time_type":"2",
+      "description":"RELEVO"
+   },
+   {
+      "ckey":550,
+      "type":"3",
+      "time_type":"2",
+      "description":"FOMENTO CONTRATACIÓN INDEFINIDA"
+   },
+   {
+      "ckey":552,
+      "type":"3",
+      "time_type":"2",
+      "description":"EMPRESAS DE INSERCIÓN"
+   }
+]
