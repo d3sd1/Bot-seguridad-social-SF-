@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="assets/css/materialize.min.css" media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="assets/css/main.css" media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="//cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css"
+          media="screen,projection"/>
+    <meta charset="utf-8"/>
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="shortcut icon" type="image/png" href="favicon.ico"/>
+    <title>Workout SS Bot Manager</title>
+</head>
+
+<body>
+<div class="container">
+    <div class="row valign-wrapper">
+        <div class="col s12 m10 offset-m1">
+            <div class="card">
+                <div class="card-tabs">
+                    <div class="card-content">
+                        <p>Manager para ver los estados del bot. No funciona en tiempo real, así que simplemente recarga
+                            cuando quieras ver cambios.
+                            Funciona con jQuery, usando el REST del bot. Además, tan sólo está disponible en la red
+                            LAN.</p>
+                    </div>
+                    <ul class="tabs tabs-fixed-width">
+                        <li class="tab" id="serverStatusTab"><a class="active" href="#status">Estado del servidor</a>
+                        </li>
+                        <li class="tab" id="logsBotTab"><a href="#logsBot">Logs (BOT)</a></li>
+                        <li class="tab" id="logsSelTab"><a href="#logsSel">Logs (SELENIUM)</a></li>
+                        <li class="tab" id="queueTab"><a href="#queue">Cola</a></li>
+                    </ul>
+                </div>
+                <div class="card-content grey lighten-4">
+                    <div id="status" class="center-align">
+                        <div class="row">
+                            <div class="col s12 m6 l3">
+                                <a class="waves-effect waves-light btn col s12 deep-orange darken-1" id="rebootTrigger"><i
+                                        class="material-icons left">cached</i>Reiniciar</a>
+                            </div>
+                            <div class="col s12 m6 l3">
+                                <a class="waves-effect waves-light btn col s12 green darken-1" id="bootTrigger"><i
+                                        class="material-icons left">lock_open</i>Iniciar</a>
+                            </div>
+                            <div class="col s12 m6 l3">
+                                <a class="waves-effect waves-light btn col s12 red darken-1" id="closeTrigger"><i
+                                        class="material-icons left">lock</i>Cerrar</a>
+                            </div>
+                            <div class="col s12 m6 l3">
+                                <a class="waves-effect waves-light btn col s12 blue lighten-1" id="statusChecker"><i
+                                        class="material-icons left">announcement</i>Estado</a>
+                            </div>
+                        </div>
+                        <br>
+                        <hr>
+                        <div id="status-icon"></div>
+                        <div id="status-msg"></div>
+                    </div>
+
+                    <div id="logsBot">
+                        <div class="row">
+                            <div class="col s12">
+                                <a class="waves-effect waves-light btn col s12 blue lighten-1" id="reloadLogsBot">Recargar
+                                    logs</a>
+                            </div>
+                        </div>
+                        <br>
+                        <table id="logsTableBot" class="display">
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Fecha</th>
+                                <th>Mensaje</th>
+                            </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                    <div id="queue">
+                        <div class="row">
+                            <div class="col s12">
+                                <a class="waves-effect waves-light btn col s12 blue lighten-1" id="reloadQueue">Recargar
+                                    cola</a>
+                            </div>
+                        </div>
+                        <br>
+                        <table id="queueTable" class="display">
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Proceso (Tipo)</th>
+                                <th>Clave de referencia</th>
+                            </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                    <div id="logsSel">
+                        <div class="row">
+                            <form class="col s12">
+                                <div class="row">
+                                    <div class="input-field col s6">
+                                        <i class="material-icons prefix">search</i>
+                                        <input id="searchSelLogId" type="number" class="validate">
+                                        <label for="searchSelLogId">Introduce el ID de sesión único</label>
+                                    </div>
+                                    <div class="input-field col s6">
+                                        <a class="waves-effect waves-light btn col s12" id="searchLogsSelBySessId"><i
+                                                class="material-icons right">arrow_forward</i>Buscar por ID de
+                                            sesión</a>
+                                    </div>
+                                </div>
+                            </form>
+
+                            <div class="col s12">
+                                <a class="waves-effect waves-light btn col s12 blue lighten-1" id="reloadLogsSelenium">Recargar
+                                    logs</a>
+                            </div>
+                        </div>
+                        <br>
+                        <table id="logsTableSel" class="display">
+                            <thead>
+                            <tr>
+                                <th>Mensaje</th>
+                            </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="preloader-wrapper big active hidden" id="loading">
+    <div class="spinner-layer spinner-blue">
+        <div class="circle-clipper left">
+            <div class="circle"></div>
+        </div>
+        <div class="gap-patch">
+            <div class="circle"></div>
+        </div>
+        <div class="circle-clipper right">
+            <div class="circle"></div>
+        </div>
+    </div>
+
+    <div class="spinner-layer spinner-red">
+        <div class="circle-clipper left">
+            <div class="circle"></div>
+        </div>
+        <div class="gap-patch">
+            <div class="circle"></div>
+        </div>
+        <div class="circle-clipper right">
+            <div class="circle"></div>
+        </div>
+    </div>
+
+    <div class="spinner-layer spinner-yellow">
+        <div class="circle-clipper left">
+            <div class="circle"></div>
+        </div>
+        <div class="gap-patch">
+            <div class="circle"></div>
+        </div>
+        <div class="circle-clipper right">
+            <div class="circle"></div>
+        </div>
+    </div>
+
+    <div class="spinner-layer spinner-green">
+        <div class="circle-clipper left">
+            <div class="circle"></div>
+        </div>
+        <div class="gap-patch">
+            <div class="circle"></div>
+        </div>
+        <div class="circle-clipper right">
+            <div class="circle"></div>
+        </div>
+    </div>
+</div>
+<!--JavaScript at end of body for optimized loading-->
+<script
+        src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+<script type="text/javascript" src="assets/js/materialize.min.js"></script>
+<script type="text/javascript" src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="assets/js/timeago.min.js"></script>
+<script type="text/javascript" src="assets/js/timeago.locales.min.js"></script>
+<script type="text/javascript" src="assets/js/main.min.js"></script>
+</body>
+</html>

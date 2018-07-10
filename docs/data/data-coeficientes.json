@@ -1,0 +1,18 @@
+[
+   {
+      "coefficient":402,
+      "description":"7+ Horas (Tiempo completo)"
+   },
+   {
+      "coefficient":500,
+      "description":"4 Horas"
+   },
+   {
+      "coefficient":625,
+      "description":"5 Horas"
+   },
+   {
+      "coefficient":750,
+      "description":"6 Horas"
+   }
+]

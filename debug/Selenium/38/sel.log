@@ -1,0 +1,117 @@
+13:26:00.694 INFO - Selenium build info: version: '3.8.1', revision: '6e95a6684b'
+13:26:00.695 INFO - Launching a standalone Selenium Server
+2018-07-06 13:26:01.751:INFO::main: Logging initialized @3729ms to org.seleniumhq.jetty9.util.log.StdErrLog
+13:26:02.076 INFO - Using `new FirefoxOptions()` is preferred to `DesiredCapabilities.firefox()`
+13:26:02.214 INFO - Using `new ChromeOptions()` is preferred to `DesiredCapabilities.chrome()`
+13:26:02.272 INFO - Using `new EdgeOptions()` is preferred to `DesiredCapabilities.edge()`
+13:26:02.273 INFO - Driver class not found: com.opera.core.systems.OperaDriver
+13:26:02.273 INFO - Using `new OperaOptions()` is preferred to `DesiredCapabilities.operaBlink()`
+13:26:02.274 INFO - Using `new SafariOptions()` is preferred to `DesiredCapabilities.safari()`
+13:26:02.275 INFO - Driver class not found: org.openqa.selenium.phantomjs.PhantomJSDriver
+13:26:02.560 INFO - Driver provider class org.openqa.selenium.ie.InternetExplorerDriver registration is skipped:
+ registration capabilities Capabilities {browserName: internet explorer, ensureCleanSession: true, platform: WINDOWS, version: } does not match the current platform LINUX
+13:26:02.599 INFO - Driver provider class org.openqa.selenium.edge.EdgeDriver registration is skipped:
+ registration capabilities Capabilities {browserName: MicrosoftEdge, platform: WINDOWS, version: } does not match the current platform LINUX
+13:26:02.599 INFO - Driver provider class org.openqa.selenium.safari.SafariDriver registration is skipped:
+ registration capabilities Capabilities {browserName: safari, platform: MAC, version: } does not match the current platform LINUX
+13:26:02.863 INFO - Using `new ChromeOptions()` is preferred to `DesiredCapabilities.chrome()`
+13:26:02.864 INFO - Using `new EdgeOptions()` is preferred to `DesiredCapabilities.edge()`
+13:26:02.864 INFO - Using `new FirefoxOptions()` is preferred to `DesiredCapabilities.firefox()`
+13:26:02.865 INFO - Using `new OperaOptions()` is preferred to `DesiredCapabilities.operaBlink()`
+13:26:02.865 INFO - Using `new SafariOptions()` is preferred to `DesiredCapabilities.safari()`
+2018-07-06 13:26:03.133:INFO:osjs.Server:main: jetty-9.4.7.v20170914
+2018-07-06 13:26:03.562:WARN:osjs.SecurityHandler:main: ServletContext@o.s.j.s.ServletContextHandler@1d371b2d{/,null,STARTING} has uncovered http methods for path: /
+2018-07-06 13:26:03.615:INFO:osjsh.ContextHandler:main: Started o.s.j.s.ServletContextHandler@1d371b2d{/,null,AVAILABLE}
+Usage: <main class> [options]
+  Options:
+    --version, -version
+       Displays the version and exits.
+       Default: false
+    -browserTimeout
+       <Integer> in seconds : number of seconds a browser session is allowed to
+       hang while 13:26:11.206 INFO - Executing: [new session: Capabilities {browserName: firefox, firefox_profile: UEsDBBQAAAAIABYBuEykYb5h8QE..., platform: LINUX}])
+13:26:11.309 INFO - Creating a new session for Capabilities {browserName: firefox, firefox_profile: UEsDBBQAAAAIABYBuEykYb5h8QE..., platform: LINUX}
+13:26:34.867 INFO - Detected dialect: OSS
+13:26:34.946 INFO - Done: [new session: Capabilities {browserName: firefox, firefox_profile: UEsDBBQAAAAIABYBuEykYb5h8QE..., platform: LINUX}]
+13:26:35.422 INFO - Executing: [get: https://w2.seg-social.es/Xhtml?JacadaApplicationName=SGIRED&TRANSACCION=ATR42&E=I&AP=AFIR])
+13:26:37.574 INFO - Done: [get: https://w2.seg-social.es/Xhtml?JacadaApplicationName=SGIRED&TRANSACCION=ATR42&E=I&AP=AFIR]
+13:26:37.632 INFO - Executing: [find element: By.name: txt_SDFTESORNAF])
+13:26:37.787 INFO - Done: [find element: By.name: txt_SDFTESORNAF]
+13:26:37.892 INFO - Executing: [send keys: 0 [[FirefoxDriver: firefox on LINUX (e2bdd3ee-ae34-45bd-8772-b66c1807a7b6)] -> name: txt_SDFTESORNAF], [46]])
+13:26:38.221 INFO - Done: [send keys: 0 [[FirefoxDriver: firefox on LINUX (e2bdd3ee-ae34-45bd-8772-b66c1807a7b6)] -> name: txt_SDFTESORNAF], [46]]
+13:26:38.241 INFO - Executing: [find element: By.name: txt_SDFNUMNAF])
+13:26:38.309 INFO - Done: [find element: By.name: txt_SDFNUMNAF]
+13:26:38.316 INFO - Executing: [send keys: 1 [[FirefoxDriver: firefox on LINUX (e2bdd3ee-ae34-45bd-8772-b66c1807a7b6)] -> name: txt_SDFNUMNAF], [1072254410]])
+13:26:38.528 INFO - Done: [send keys: 1 [[FirefoxDriver: firefox on LINUX (e2bdd3ee-ae34-45bd-8772-b66c1807a7b6)] -> name: txt_SDFNUMNAF], [1072254410]]
+13:26:38.534 INFO - Executing: [find element: By.name: txt_SDFREGCC_ayuda])
+13:26:38.554 INFO - Done: [find element: By.name: txt_SDFREGCC_ayuda]
+13:26:38.562 INFO - Executing: [send keys: 2 [[FirefoxDriver: firefox on LINUX (e2bdd3ee-ae34-45bd-8772-b66c1807a7b6)] -> name: txt_SDFREGCC_ayuda], [111]])
+13:26:38.613 INFO - Done: [send keys: 2 [[FirefoxDriver: firefox on LINUX (e2bdd3ee-ae34-45bd-8772-b66c1807a7b6)] -> name: txt_SDFREGCC_ayuda], [111]]
+13:26:38.619 INFO - Executing: [find element: By.name: txt_SDFTESCC])
+13:26:38.650 INFO - Done: [find element: By.name: txt_SDFTESCC]
+13:26:38.655 INFO - Executing: [send keys: 3 [[FirefoxDriver: firefox on LINUX (e2bdd3ee-ae34-45bd-8772-b66c1807a7b6)] -> name: txt_SDFTESCC], [28]])
+13:26:38.729 INFO - Done: [send keys: 3 [[FirefoxDriver: firefox on LINUX (e2bdd3ee-ae34-45bd-8772-b66c1807a7b6)] -> name: txt_SDFTESCC], [28]]
+13:26:38.735 INFO - Executing: [find element: By.name: txt_SDFNUMCC])
+13:26:38.761 INFO - Done: [find element: By.name: txt_SDFNUMCC]
+13:26:38.767 INFO - Executing: [send keys: 4 [[FirefoxDriver: firefox on LINUX (e2bdd3ee-ae34-45bd-8772-b66c1807a7b6)] -> name: txt_SDFNUMCC], [149794464]])
+13:26:38.847 INFO - Done: [send keys: 4 [[FirefoxDriver: firefox on LINUX (e2bdd3ee-ae34-45bd-8772-b66c1807a7b6)] -> name: txt_SDFNUMCC], [149794464]]
+13:26:38.877 INFO - Executing: [find element: By.name: cbo_ListaAltasBajas001])
+13:26:38.895 INFO - Done: [find element: By.name: cbo_ListaAltasBajas001]
+13:26:38.900 INFO - Executing: [tag name: 5 [[FirefoxDriver: firefox on LINUX (e2bdd3ee-ae34-45bd-8772-b66c1807a7b6)] -> name: cbo_ListaAltasBajas001]])
+13:26:38.920 INFO - Done: [tag name: 5 [[FirefoxDriver: firefox on LINUX (e2bdd3ee-ae34-45bd-8772-b66c1807a7b6)] -> name: cbo_ListaAltasBajas001]]
+13:26:38.926 INFO - Executing: [get element attribute: 5 [[FirefoxDriver: firefox on LINUX (e2bdd3ee-ae34-45bd-8772-b66c1807a7b6)] -> name: cbo_ListaAltasBajas001], multiple])
+13:26:38.954 INFO - Done: [get element attribute: 5 [[FirefoxDriver: firefox on LINUX (e2bdd3ee-ae34-45bd-8772-b66c1807a7b6)] -> name: cbo_ListaAltasBajas001], multiple]
+13:26:38.962 INFO - Executing: [find child elements: 5 [[FirefoxDriver: firefox on LINUX (e2bdd3ee-ae34-45bd-8772-b66c1807a7b6)] -> name: cbo_ListaAltasBajas001], By.xpath: .//option[normalize-space(.) = 'Alta']])
+13:26:38.987 INFO - Done: [find child elements: 5 [[FirefoxDriver: firefox on LINUX (e2bdd3ee-ae34-45bd-8772-b66c1807a7b6)] -> name: cbo_ListaAltasBajas001], By.xpath: .//option[normalize-space(.) = 'Alta']]
+13:26:38.995 INFO - Executing: [is selected: 6 [[[[FirefoxDriver: firefox on LINUX (e2bdd3ee-ae34-45bd-8772-b66c1807a7b6)] -> name: cbo_ListaAltasBajas001]] -> xpath: .//option[normalize-space(.) = 'Alta']]])
+13:26:39.014 INFO - Done: [is selected: 6 [[[[FirefoxDriver: firefox on LINUX (e2bdd3ee-ae34-45bd-8772-b66c1807a7b6)] -> name: cbo_ListaAltasBajas001]] -> xpath: .//option[normalize-space(.) = 'Alta']]]
+13:26:39.022 INFO - Executing: [click: 6 [[[[FirefoxDriver: firefox on LINUX (e2bdd3ee-ae34-45bd-8772-b66c1807a7b6)] -> name: cbo_ListaAltasBajas001]] -> xpath: .//option[normalize-space(.) = 'Alta']]])
+13:26:39.497 INFO - Done: [click: 6 [[[[FirefoxDriver: firefox on LINUX (e2bdd3ee-ae34-45bd-8772-b66c1807a7b6)] -> name: cbo_ListaAltasBajas001]] -> xpath: .//option[normalize-space(.) = 'Alta']]]
+13:26:39.508 INFO - Executing: [find element: By.name: txt_SDFDIAB])
+13:26:39.551 INFO - Done: [find element: By.name: txt_SDFDIAB]
+13:26:39.558 INFO - Executing: [send keys: 7 [[FirefoxDriver: firefox on LINUX (e2bdd3ee-ae34-45bd-8772-b66c1807a7b6)] -> name: txt_SDFDIAB], [14]])
+13:26:39.626 INFO - Done: [send keys: 7 [[FirefoxDriver: firefox on LINUX (e2bdd3ee-ae34-45bd-8772-b66c1807a7b6)] -> name: txt_SDFDIAB], [14]]
+13:26:39.649 INFO - Executing: [find element: By.name: txt_SDFMESB])
+13:26:39.684 INFO - Done: [find element: By.name: txt_SDFMESB]
+13:26:39.688 INFO - Executing: [send keys: 8 [[FirefoxDriver: firefox on LINUX (e2bdd3ee-ae34-45bd-8772-b66c1807a7b6)] -> name: txt_SDFMESB], [06]])
+13:26:39.757 INFO - Done: [send keys: 8 [[FirefoxDriver: firefox on LINUX (e2bdd3ee-ae34-45bd-8772-b66c1807a7b6)] -> name: txt_SDFMESB], [06]]
+13:26:39.760 INFO - Executing: [find element: By.name: txt_SDFAOB])
+13:26:39.788 INFO - Done: [find element: By.name: txt_SDFAOB]
+13:26:39.792 INFO - Executing: [send keys: 9 [[FirefoxDriver: firefox on LINUX (e2bdd3ee-ae34-45bd-8772-b66c1807a7b6)] -> name: txt_SDFAOB], [2018]])
+13:26:39.842 INFO - Done: [send keys: 9 [[FirefoxDriver: firefox on LINUX (e2bdd3ee-ae34-45bd-8772-b66c1807a7b6)] -> name: txt_SDFAOB], [2018]]
+13:26:39.856 INFO - Executing: [find element: By.name: cbo_ListaAltasBajas])
+13:26:39.875 INFO - Done: [find element: By.name: cbo_ListaAltasBajas]
+13:26:39.881 INFO - Executing: [tag name: 10 [[FirefoxDriver: firefox on LINUX (e2bdd3ee-ae34-45bd-8772-b66c1807a7b6)] -> name: cbo_ListaAltasBajas]])
+13:26:39.894 INFO - Done: [tag name: 10 [[FirefoxDriver: firefox on LINUX (e2bdd3ee-ae34-45bd-8772-b66c1807a7b6)] -> name: cbo_ListaAltasBajas]]
+13:26:39.901 INFO - Executing: [get element attribute: 10 [[FirefoxDriver: firefox on LINUX (e2bdd3ee-ae34-45bd-8772-b66c1807a7b6)] -> name: cbo_ListaAltasBajas], multiple])
+13:26:39.914 INFO - Done: [get element attribute: 10 [[FirefoxDriver: firefox on LINUX (e2bdd3ee-ae34-45bd-8772-b66c1807a7b6)] -> name: cbo_ListaAltasBajas], multiple]
+13:26:39.920 INFO - Executing: [find child elements: 10 [[FirefoxDriver: firefox on LINUX (e2bdd3ee-ae34-45bd-8772-b66c1807a7b6)] -> name: cbo_ListaAltasBajas], By.xpath: .//option[normalize-space(.) = 'Eliminación']])
+13:26:39.949 INFO - Done: [find child elements: 10 [[FirefoxDriver: firefox on LINUX (e2bdd3ee-ae34-45bd-8772-b66c1807a7b6)] -> name: cbo_ListaAltasBajas], By.xpath: .//option[normalize-space(.) = 'Eliminación']]
+13:26:39.953 INFO - Executing: [is selected: 11 [[[[FirefoxDriver: firefox on LINUX (e2bdd3ee-ae34-45bd-8772-b66c1807a7b6)] -> name: cbo_ListaAltasBajas]] -> xpath: .//option[normalize-space(.) = 'Eliminación']]])
+13:26:39.968 INFO - Done: [is selected: 11 [[[[FirefoxDriver: firefox on LINUX (e2bdd3ee-ae34-45bd-8772-b66c1807a7b6)] -> name: cbo_ListaAltasBajas]] -> xpath: .//option[normalize-space(.) = 'Eliminación']]]
+13:26:39.971 INFO - Executing: [click: 11 [[[[FirefoxDriver: firefox on LINUX (e2bdd3ee-ae34-45bd-8772-b66c1807a7b6)] -> name: cbo_ListaAltasBajas]] -> xpath: .//option[normalize-space(.) = 'Eliminación']]])
+13:26:40.359 INFO - Done: [click: 11 [[[[FirefoxDriver: firefox on LINUX (e2bdd3ee-ae34-45bd-8772-b66c1807a7b6)] -> name: cbo_ListaAltasBajas]] -> xpath: .//option[normalize-space(.) = 'Eliminación']]]
+13:26:40.372 INFO - Executing: [take screenshot])
+13:26:40.518 INFO - Done: [take screenshot]
+13:26:40.576 INFO - Executing: [find element: By.name: btn_Sub2207101004])
+13:26:40.597 INFO - Done: [find element: By.name: btn_Sub2207101004]
+13:26:40.602 INFO - Executing: [click: 12 [[FirefoxDriver: firefox on LINUX (e2bdd3ee-ae34-45bd-8772-b66c1807a7b6)] -> name: btn_Sub2207101004]])
+13:26:41.494 INFO - Done: [click: 12 [[FirefoxDriver: firefox on LINUX (e2bdd3ee-ae34-45bd-8772-b66c1807a7b6)] -> name: btn_Sub2207101004]]
+13:26:41.508 INFO - Executing: [find elements: By.name: txt_SDFSITALT_ayuda])
+13:26:41.562 INFO - Done: [find elements: By.name: txt_SDFSITALT_ayuda]
+13:26:41.603 INFO - Executing: [find elements: By.id: DIL])
+13:26:41.629 INFO - Done: [find elements: By.id: DIL]
+13:26:41.632 INFO - Executing: [get text: 13 [[FirefoxDriver: firefox on LINUX (e2bdd3ee-ae34-45bd-8772-b66c1807a7b6)] -> id: DIL]])
+13:26:41.665 INFO - Done: [get text: 13 [[FirefoxDriver: firefox on LINUX (e2bdd3ee-ae34-45bd-8772-b66c1807a7b6)] -> id: DIL]]
+13:26:41.672 INFO - Executing: [is displayed: 13 [[FirefoxDriver: firefox on LINUX (e2bdd3ee-ae34-45bd-8772-b66c1807a7b6)] -> id: DIL]])
+13:26:41.696 INFO - Done: [is displayed: 13 [[FirefoxDriver: firefox on LINUX (e2bdd3ee-ae34-45bd-8772-b66c1807a7b6)] -> id: DIL]]
+13:26:41.711 INFO - Executing: [find elements: By.id: DIL])
+13:26:41.767 INFO - Done: [find elements: By.id: DIL]
+13:26:41.772 INFO - Executing: [get text: 13 [[FirefoxDriver: firefox on LINUX (e2bdd3ee-ae34-45bd-8772-b66c1807a7b6)] -> id: DIL]])
+13:26:41.803 INFO - Done: [get text: 13 [[FirefoxDriver: firefox on LINUX (e2bdd3ee-ae34-45bd-8772-b66c1807a7b6)] -> id: DIL]]
+13:26:41.808 INFO - Executing: [is displayed: 13 [[FirefoxDriver: firefox on LINUX (e2bdd3ee-ae34-45bd-8772-b66c1807a7b6)] -> id: DIL]])
+13:26:41.838 INFO - Done: [is displayed: 13 [[FirefoxDriver: firefox on LINUX (e2bdd3ee-ae34-45bd-8772-b66c1807a7b6)] -> id: DIL]]
+13:26:41.848 INFO - Executing: [get text: 13 [[FirefoxDriver: firefox on LINUX (e2bdd3ee-ae34-45bd-8772-b66c1807a7b6)] -> id: DIL]])
+13:26:41.871 INFO - Done: [get text: 13 [[FirefoxDriver: firefox on LINUX (e2bdd3ee-ae34-45bd-8772-b66c1807a7b6)] -> id: DIL]]
+13:26:41.896 INFO - Executing: [get text: 13 [[FirefoxDriver: firefox on LINUX (e2bdd3ee-ae34-45bd-8772-b66c1807a7b6)] -> id: DIL]])
+13:26:41.942 INFO - Done: [get text: 13 [[FirefoxDriver: firefox on LINUX (e2bdd3ee-ae34-45bd-8772-b66c1807a7b6)] -> id: DIL]]

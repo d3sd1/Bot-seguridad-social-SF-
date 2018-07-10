@@ -1,0 +1,4 @@
+jms_serializer:
+    handlers:
+        datetime:
+            default_format: "Y-m-d"

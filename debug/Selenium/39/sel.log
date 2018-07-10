@@ -1,0 +1,90 @@
+11:05:21.426 INFO - Selenium build info: version: '3.8.1', revision: '6e95a6684b'
+11:05:21.427 INFO - Launching a standalone Selenium Server
+2018-06-12 11:05:21.717:INFO::main: Logging initialized @807ms to org.seleniumhq.jetty9.util.log.StdErrLog
+11:05:21.800 INFO - Using `new FirefoxOptions()` is preferred to `DesiredCapabilities.firefox()`
+11:05:21.835 INFO - Using `new ChromeOptions()` is preferred to `DesiredCapabilities.chrome()`
+11:05:21.839 INFO - Using `new EdgeOptions()` is preferred to `DesiredCapabilities.edge()`
+11:05:21.840 INFO - Driver class not found: com.opera.core.systems.OperaDriver
+11:05:21.840 INFO - Using `new OperaOptions()` is preferred to `DesiredCapabilities.operaBlink()`
+11:05:21.842 INFO - Using `new SafariOptions()` is preferred to `DesiredCapabilities.safari()`
+11:05:21.844 INFO - Driver class not found: org.openqa.selenium.phantomjs.PhantomJSDriver
+11:05:21.924 INFO - Driver provider class org.openqa.selenium.ie.InternetExplorerDriver registration is skipped:
+ registration capabilities Capabilities {browserName: internet explorer, ensureCleanSession: true, platform: WINDOWS, version: } does not match the current platform LINUX
+11:05:21.924 INFO - Driver provider class org.openqa.selenium.edge.EdgeDriver registration is skipped:
+ registration capabilities Capabilities {browserName: MicrosoftEdge, platform: WINDOWS, version: } does not match the current platform LINUX
+11:05:21.925 INFO - Driver provider class org.openqa.selenium.safari.SafariDriver registration is skipped:
+ registration capabilities Capabilities {browserName: safari, platform: MAC, version: } does not match the current platform LINUX
+11:05:22.018 INFO - Using `new ChromeOptions()` is preferred to `DesiredCapabilities.chrome()`
+11:05:22.019 INFO - Using `new EdgeOptions()` is preferred to `DesiredCapabilities.edge()`
+11:05:22.020 INFO - Using `new FirefoxOptions()` is preferred to `DesiredCapabilities.firefox()`
+11:05:22.020 INFO - Using `new OperaOptions()` is preferred to `DesiredCapabilities.operaBlink()`
+11:05:22.020 INFO - Using `new SafariOptions()` is preferred to `DesiredCapabilities.safari()`
+2018-06-12 11:05:22.094:INFO:osjs.Server:main: jetty-9.4.7.v20170914
+2018-06-12 11:05:22.228:WARN:osjs.SecurityHandler:main: ServletContext@o.s.j.s.ServletContextHandler@1d371b2d{/,null,STARTING} has uncovered http methods for path: /
+2018-06-12 11:05:22.234:INFO:osjsh.ContextHandler:main: Started o.s.j.s.ServletContextHandler@1d371b2d{/,null,AVAILABLE}
+Usage: <main class> [options]
+  Options:
+    --version, -version
+       Displays the version and exits.
+       Default: false
+    -browserTimeout
+       <Integer> in seconds : number of seconds a browser session is allowed to
+       hang while 11:05:25.513 INFO - Executing: [new session: Capabilities {browserName: firefox, firefox_profile: UEsDBBQAAAAIABYBuEykYb5h8QE..., platform: LINUX}])
+11:05:25.602 INFO - Creating a new session for Capabilities {browserName: firefox, firefox_profile: UEsDBBQAAAAIABYBuEykYb5h8QE..., platform: LINUX}
+11:05:38.645 INFO - Detected dialect: OSS
+11:05:38.703 INFO - Done: [new session: Capabilities {browserName: firefox, firefox_profile: UEsDBBQAAAAIABYBuEykYb5h8QE..., platform: LINUX}]
+11:05:39.048 INFO - Executing: [get: https://w2.seg-social.es/Xhtml?JacadaApplicationName=SGIRED&TRANSACCION=ATR01&E=I&AP=AFIR])
+11:05:41.656 INFO - Done: [get: https://w2.seg-social.es/Xhtml?JacadaApplicationName=SGIRED&TRANSACCION=ATR01&E=I&AP=AFIR]
+11:05:41.689 INFO - Executing: [find element: By.xpath: //select[@name='cbo_ListaAltasBajas']//option[text='Baja']])
+11:05:43.197 WARN - Exception thrown
+org.openqa.selenium.NoSuchElementException: Unable to locate element: {"method":"xpath","selector":"//select[@name='cbo_ListaAltasBajas']//option[text='Baja']"}
+Command duration or timeout: 0 milliseconds
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:214)
+	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:166)
+	at org.openqa.selenium.remote.http.JsonHttpResponseCodec.reconstructValue(JsonHttpResponseCodec.java:40)
+	at org.openqa.selenium.remote.http.AbstractHttpResponseCodec.decode(AbstractHttpResponseCodec.java:80)
+	at org.openqa.selenium.remote.http.AbstractHttpResponseCodec.decode(AbstractHttpResponseCodec.java:44)
+	at org.openqa.selenium.remote.HttpCommandExecutor.execute(HttpCommandExecutor.java:164)
+	at org.openqa.selenium.remote.service.DriverCommandExecutor.execute(DriverCommandExecutor.java:83)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:601)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:371)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElementByXPath(RemoteWebDriver.java:473)
+	at org.openqa.selenium.By$ByXPath.findElement(By.java:361)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:363)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.openqa.selenium.support.events.EventFiringWebDriver$2.invoke(EventFiringWebDriver.java:108)
+	at com.sun.proxy.$Proxy6.findElement(Unknown Source)
+	at org.openqa.selenium.support.events.EventFiringWebDriver.findElement(EventFiringWebDriver.java:192)
+	at org.openqa.selenium.remote.server.handler.FindElement.call(FindElement.java:48)
+	at org.openqa.selenium.remote.server.handler.FindElement.call(FindElement.java:33)
+	at org.openqa.selenium.remote.server.handler.WebDriverHandler.handle(WebDriverHandler.java:41)
+	at org.openqa.selenium.remote.server.rest.ResultConfig.handle(ResultConfig.java:112)
+	at org.openqa.selenium.remote.server.JsonHttpCommandHandler.handleRequest(JsonHttpCommandHandler.java:191)
+	at org.openqa.selenium.remote.server.DriverServlet.lambda$handleRequest$0(DriverServlet.java:261)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: org.openqa.selenium.NoSuchElementException: Unable to locate element: {"method":"xpath","selector":"//select[@name='cbo_ListaAltasBajas']//option[text='Baja']"}
+For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html
+Build info: version: '3.8.1', revision: '6e95a6684b', time: '2017-12-01T19:05:32.194Z'
+System info: host: 'localhost.localdomain', ip: '127.0.0.1', os.name: 'Linux', os.arch: 'amd64', os.version: '3.10.0-862.2.3.el7.x86_64', java.version: '1.8.0_171'
+Driver info: driver.version: unknown
+	at <anonymous class>.FirefoxDriver.prototype.findElementInternal_(file:///tmp/anonymous9078134880170865939webdriver-profile/extensions/fxdriver@googlecode.com/components/driver-component.js:11870)
+	at <anonymous class>.FirefoxDriver.prototype.findElement(file:///tmp/anonymous9078134880170865939webdriver-profile/extensions/fxdriver@googlecode.com/components/driver-component.js:11879)
+	at <anonymous class>.DelayedCommand.prototype.executeInternal_/k(file:///tmp/anonymous9078134880170865939webdriver-profile/extensions/fxdriver@googlecode.com/components/command-processor.js:13364)
+	at <anonymous class>.DelayedCommand.prototype.executeInternal_(file:///tmp/anonymous9078134880170865939webdriver-profile/extensions/fxdriver@googlecode.com/components/command-processor.js:13369)
+	at <anonymous class>.DelayedCommand.prototype.execute/<(file:///tmp/anonymous9078134880170865939webdriver-profile/extensions/fxdriver@googlecode.com/components/command-processor.js:13311)
+11:05:43.213 WARN - Exception: Unable to locate element: {"method":"xpath","selector":"//select[@name='cbo_ListaAltasBajas']//option[text='Baja']"}
+For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html
+Build info: version: '3.8.1', revision: '6e95a6684b', time: '2017-12-01T19:05:32.194Z'
+System info: host: 'localhost.localdomain', ip: '127.0.0.1', os.name: 'Linux', os.arch: 'amd64', os.version: '3.10.0-862.2.3.el7.x86_64', java.version: '1.8.0_171'
+Driver info: driver.version: unknown

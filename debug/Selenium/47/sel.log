@@ -1,0 +1,143 @@
+11:10:39.350 INFO - Selenium build info: version: '3.8.1', revision: '6e95a6684b'
+11:10:39.351 INFO - Launching a standalone Selenium Server
+2018-06-12 11:10:39.762:INFO::main: Logging initialized @1421ms to org.seleniumhq.jetty9.util.log.StdErrLog
+11:10:39.917 INFO - Using `new FirefoxOptions()` is preferred to `DesiredCapabilities.firefox()`
+11:10:40.014 INFO - Using `new ChromeOptions()` is preferred to `DesiredCapabilities.chrome()`
+11:10:40.019 INFO - Using `new EdgeOptions()` is preferred to `DesiredCapabilities.edge()`
+11:10:40.021 INFO - Driver class not found: com.opera.core.systems.OperaDriver
+11:10:40.021 INFO - Using `new OperaOptions()` is preferred to `DesiredCapabilities.operaBlink()`
+11:10:40.022 INFO - Using `new SafariOptions()` is preferred to `DesiredCapabilities.safari()`
+11:10:40.052 INFO - Driver class not found: org.openqa.selenium.phantomjs.PhantomJSDriver
+11:10:40.232 INFO - Driver provider class org.openqa.selenium.ie.InternetExplorerDriver registration is skipped:
+ registration capabilities Capabilities {browserName: internet explorer, ensureCleanSession: true, platform: WINDOWS, version: } does not match the current platform LINUX
+11:10:40.233 INFO - Driver provider class org.openqa.selenium.edge.EdgeDriver registration is skipped:
+ registration capabilities Capabilities {browserName: MicrosoftEdge, platform: WINDOWS, version: } does not match the current platform LINUX
+11:10:40.233 INFO - Driver provider class org.openqa.selenium.safari.SafariDriver registration is skipped:
+ registration capabilities Capabilities {browserName: safari, platform: MAC, version: } does not match the current platform LINUX
+11:10:40.414 INFO - Using `new ChromeOptions()` is preferred to `DesiredCapabilities.chrome()`
+11:10:40.415 INFO - Using `new EdgeOptions()` is preferred to `DesiredCapabilities.edge()`
+11:10:40.415 INFO - Using `new FirefoxOptions()` is preferred to `DesiredCapabilities.firefox()`
+11:10:40.416 INFO - Using `new OperaOptions()` is preferred to `DesiredCapabilities.operaBlink()`
+11:10:40.416 INFO - Using `new SafariOptions()` is preferred to `DesiredCapabilities.safari()`
+2018-06-12 11:10:40.645:INFO:osjs.Server:main: jetty-9.4.7.v20170914
+2018-06-12 11:10:40.937:WARN:osjs.SecurityHandler:main: ServletContext@o.s.j.s.ServletContextHandler@1d371b2d{/,null,STARTING} has uncovered http methods for path: /
+2018-06-12 11:10:40.972:INFO:osjsh.ContextHandler:main: Started o.s.j.s.ServletContextHandler@1d371b2d{/,null,AVAILABLE}
+Usage: <main class> [options]
+  Options:
+    --version, -version
+       Displays the version and exits.
+       Default: false
+    -browserTimeout
+       <Integer> in seconds : number of seconds a browser session is allowed to
+       hang while11:10:42.712 INFO - Executing: [new session: Capabilities {browserName: firefox, firefox_profile: UEsDBBQAAAAIABYBuEykYb5h8QE..., platform: LINUX}])
+11:10:42.810 INFO - Creating a new session for Capabilities {browserName: firefox, firefox_profile: UEsDBBQAAAAIABYBuEykYb5h8QE..., platform: LINUX}
+11:10:56.277 INFO - Detected dialect: OSS
+11:10:56.321 INFO - Done: [new session: Capabilities {browserName: firefox, firefox_profile: UEsDBBQAAAAIABYBuEykYb5h8QE..., platform: LINUX}]
+11:10:56.627 INFO - Executing: [get: https://w2.seg-social.es/Xhtml?JacadaApplicationName=SGIRED&TRANSACCION=ATR01&E=I&AP=AFIR])
+11:10:57.732 INFO - Done: [get: https://w2.seg-social.es/Xhtml?JacadaApplicationName=SGIRED&TRANSACCION=ATR01&E=I&AP=AFIR]
+11:10:57.768 INFO - Executing: [find element: By.name: txt_SDFPROAFI])
+11:10:58.040 INFO - Done: [find element: By.name: txt_SDFPROAFI]
+11:10:58.083 INFO - Executing: [send keys: 0 [[FirefoxDriver: firefox on LINUX (e0772045-3ab2-439b-b2a6-b596ed030454)] -> name: txt_SDFPROAFI], [08]])
+11:10:58.389 INFO - Done: [send keys: 0 [[FirefoxDriver: firefox on LINUX (e0772045-3ab2-439b-b2a6-b596ed030454)] -> name: txt_SDFPROAFI], [08]]
+11:10:58.401 INFO - Executing: [find element: By.name: txt_SDFCODAFI])
+11:10:58.451 INFO - Done: [find element: By.name: txt_SDFCODAFI]
+11:10:58.457 INFO - Executing: [send keys: 1 [[FirefoxDriver: firefox on LINUX (e0772045-3ab2-439b-b2a6-b596ed030454)] -> name: txt_SDFCODAFI], [1120603377]])
+11:10:58.674 INFO - Done: [send keys: 1 [[FirefoxDriver: firefox on LINUX (e0772045-3ab2-439b-b2a6-b596ed030454)] -> name: txt_SDFCODAFI], [1120603377]]
+11:10:58.679 INFO - Executing: [find element: By.name: txt_SDFTIPPFI_ayuda])
+11:10:58.696 INFO - Done: [find element: By.name: txt_SDFTIPPFI_ayuda]
+11:10:58.701 INFO - Executing: [send keys: 2 [[FirefoxDriver: firefox on LINUX (e0772045-3ab2-439b-b2a6-b596ed030454)] -> name: txt_SDFTIPPFI_ayuda], [1]])
+11:10:58.744 INFO - Done: [send keys: 2 [[FirefoxDriver: firefox on LINUX (e0772045-3ab2-439b-b2a6-b596ed030454)] -> name: txt_SDFTIPPFI_ayuda], [1]]
+11:10:58.750 INFO - Executing: [find element: By.name: txt_SDFNUMPFI])
+11:10:58.772 INFO - Done: [find element: By.name: txt_SDFNUMPFI]
+11:10:58.776 INFO - Executing: [send keys: 3 [[FirefoxDriver: firefox on LINUX (e0772045-3ab2-439b-b2a6-b596ed030454)] -> name: txt_SDFNUMPFI], [37389672K]])
+11:10:58.842 INFO - Done: [send keys: 3 [[FirefoxDriver: firefox on LINUX (e0772045-3ab2-439b-b2a6-b596ed030454)] -> name: txt_SDFNUMPFI], [37389672K]]
+11:10:58.849 INFO - Executing: [find element: By.name: txt_SDFREGAFI_ayuda])
+11:10:58.874 INFO - Done: [find element: By.name: txt_SDFREGAFI_ayuda]
+11:10:58.882 INFO - Executing: [send keys: 4 [[FirefoxDriver: firefox on LINUX (e0772045-3ab2-439b-b2a6-b596ed030454)] -> name: txt_SDFREGAFI_ayuda], [111]])
+11:10:58.973 INFO - Done: [send keys: 4 [[FirefoxDriver: firefox on LINUX (e0772045-3ab2-439b-b2a6-b596ed030454)] -> name: txt_SDFREGAFI_ayuda], [111]]
+11:10:58.978 INFO - Executing: [find element: By.name: txt_SDFTESCTACOT])
+11:10:58.994 INFO - Done: [find element: By.name: txt_SDFTESCTACOT]
+11:10:58.999 INFO - Executing: [send keys: 5 [[FirefoxDriver: firefox on LINUX (e0772045-3ab2-439b-b2a6-b596ed030454)] -> name: txt_SDFTESCTACOT], [28]])
+11:10:59.048 INFO - Done: [send keys: 5 [[FirefoxDriver: firefox on LINUX (e0772045-3ab2-439b-b2a6-b596ed030454)] -> name: txt_SDFTESCTACOT], [28]]
+11:10:59.056 INFO - Executing: [find element: By.name: txt_SDFCTACOT])
+11:10:59.079 INFO - Done: [find element: By.name: txt_SDFCTACOT]
+11:10:59.085 INFO - Executing: [send keys: 6 [[FirefoxDriver: firefox on LINUX (e0772045-3ab2-439b-b2a6-b596ed030454)] -> name: txt_SDFCTACOT], [149794464]])
+11:10:59.145 INFO - Done: [send keys: 6 [[FirefoxDriver: firefox on LINUX (e0772045-3ab2-439b-b2a6-b596ed030454)] -> name: txt_SDFCTACOT], [149794464]]
+11:10:59.153 INFO - Executing: [take screenshot])
+11:10:59.214 INFO - Done: [take screenshot]
+11:10:59.267 INFO - Executing: [find element: By.name: btn_Sub2207401004])
+11:10:59.285 INFO - Done: [find element: By.name: btn_Sub2207401004]
+11:10:59.290 INFO - Executing: [click: 7 [[FirefoxDriver: firefox on LINUX (e0772045-3ab2-439b-b2a6-b596ed030454)] -> name: btn_Sub2207401004]])
+11:10:59.990 INFO - Done: [click: 7 [[FirefoxDriver: firefox on LINUX (e0772045-3ab2-439b-b2a6-b596ed030454)] -> name: btn_Sub2207401004]]
+11:11:00.050 INFO - Executing: [find elements: By.id: SDFSITAFI_ayuda])
+11:11:00.079 INFO - Done: [find elements: By.id: SDFSITAFI_ayuda]
+11:11:00.109 INFO - Executing: [find elements: By.id: DIL])
+11:11:00.123 INFO - Done: [find elements: By.id: DIL]
+11:11:00.126 INFO - Executing: [get text: 8 [[FirefoxDriver: firefox on LINUX (e0772045-3ab2-439b-b2a6-b596ed030454)] -> id: DIL]])
+11:11:00.257 INFO - Done: [get text: 8 [[FirefoxDriver: firefox on LINUX (e0772045-3ab2-439b-b2a6-b596ed030454)] -> id: DIL]]
+11:11:00.261 INFO - Executing: [is displayed: 8 [[FirefoxDriver: firefox on LINUX (e0772045-3ab2-439b-b2a6-b596ed030454)] -> id: DIL]])
+11:11:00.326 INFO - Done: [is displayed: 8 [[FirefoxDriver: firefox on LINUX (e0772045-3ab2-439b-b2a6-b596ed030454)] -> id: DIL]]
+11:11:00.432 INFO - Executing: [find elements: By.id: DIL])
+11:11:00.471 INFO - Done: [find elements: By.id: DIL]
+11:11:00.486 INFO - Executing: [get text: 8 [[FirefoxDriver: firefox on LINUX (e0772045-3ab2-439b-b2a6-b596ed030454)] -> id: DIL]])
+11:11:00.590 INFO - Done: [get text: 8 [[FirefoxDriver: firefox on LINUX (e0772045-3ab2-439b-b2a6-b596ed030454)] -> id: DIL]]
+11:11:00.596 INFO - Executing: [is displayed: 8 [[FirefoxDriver: firefox on LINUX (e0772045-3ab2-439b-b2a6-b596ed030454)] -> id: DIL]])
+11:11:00.646 INFO - Done: [is displayed: 8 [[FirefoxDriver: firefox on LINUX (e0772045-3ab2-439b-b2a6-b596ed030454)] -> id: DIL]]
+11:11:00.666 INFO - Executing: [get text: 8 [[FirefoxDriver: firefox on LINUX (e0772045-3ab2-439b-b2a6-b596ed030454)] -> id: DIL]])
+11:11:00.731 INFO - Done: [get text: 8 [[FirefoxDriver: firefox on LINUX (e0772045-3ab2-439b-b2a6-b596ed030454)] -> id: DIL]]
+11:11:01.052 INFO - Executing: [get text: 8 [[FirefoxDriver: firefox on LINUX (e0772045-3ab2-439b-b2a6-b596ed030454)] -> id: DIL]])
+11:11:01.086 INFO - Done: [get text: 8 [[FirefoxDriver: firefox on LINUX (e0772045-3ab2-439b-b2a6-b596ed030454)] -> id: DIL]]
+11:15:38.327 INFO - Executing: [get: https://w2.seg-social.es/Xhtml?JacadaApplicationName=SGIRED&TRANSACCION=ATR01&E=I&AP=AFIR])
+11:15:38.899 INFO - Done: [get: https://w2.seg-social.es/Xhtml?JacadaApplicationName=SGIRED&TRANSACCION=ATR01&E=I&AP=AFIR]
+11:15:38.911 INFO - Executing: [find element: By.name: txt_SDFPROAFI])
+11:15:38.932 INFO - Done: [find element: By.name: txt_SDFPROAFI]
+11:15:38.937 INFO - Executing: [send keys: 9 [[FirefoxDriver: firefox on LINUX (e0772045-3ab2-439b-b2a6-b596ed030454)] -> name: txt_SDFPROAFI], [08]])
+11:15:39.002 INFO - Done: [send keys: 9 [[FirefoxDriver: firefox on LINUX (e0772045-3ab2-439b-b2a6-b596ed030454)] -> name: txt_SDFPROAFI], [08]]
+11:15:39.006 INFO - Executing: [find element: By.name: txt_SDFCODAFI])
+11:15:39.032 INFO - Done: [find element: By.name: txt_SDFCODAFI]
+11:15:39.042 INFO - Executing: [send keys: 10 [[FirefoxDriver: firefox on LINUX (e0772045-3ab2-439b-b2a6-b596ed030454)] -> name: txt_SDFCODAFI], [1120603377]])
+11:15:39.118 INFO - Done: [send keys: 10 [[FirefoxDriver: firefox on LINUX (e0772045-3ab2-439b-b2a6-b596ed030454)] -> name: txt_SDFCODAFI], [1120603377]]
+11:15:39.134 INFO - Executing: [find element: By.name: txt_SDFTIPPFI_ayuda])
+11:15:39.165 INFO - Done: [find element: By.name: txt_SDFTIPPFI_ayuda]
+11:15:39.167 INFO - Executing: [send keys: 11 [[FirefoxDriver: firefox on LINUX (e0772045-3ab2-439b-b2a6-b596ed030454)] -> name: txt_SDFTIPPFI_ayuda], [1]])
+11:15:39.224 INFO - Done: [send keys: 11 [[FirefoxDriver: firefox on LINUX (e0772045-3ab2-439b-b2a6-b596ed030454)] -> name: txt_SDFTIPPFI_ayuda], [1]]
+11:15:39.229 INFO - Executing: [find element: By.name: txt_SDFNUMPFI])
+11:15:39.249 INFO - Done: [find element: By.name: txt_SDFNUMPFI]
+11:15:39.265 INFO - Executing: [send keys: 12 [[FirefoxDriver: firefox on LINUX (e0772045-3ab2-439b-b2a6-b596ed030454)] -> name: txt_SDFNUMPFI], [37389672K]])
+11:15:39.336 INFO - Done: [send keys: 12 [[FirefoxDriver: firefox on LINUX (e0772045-3ab2-439b-b2a6-b596ed030454)] -> name: txt_SDFNUMPFI], [37389672K]]
+11:15:39.344 INFO - Executing: [find element: By.name: txt_SDFREGAFI_ayuda])
+11:15:39.384 INFO - Done: [find element: By.name: txt_SDFREGAFI_ayuda]
+11:15:39.388 INFO - Executing: [send keys: 13 [[FirefoxDriver: firefox on LINUX (e0772045-3ab2-439b-b2a6-b596ed030454)] -> name: txt_SDFREGAFI_ayuda], [111]])
+11:15:40.318 INFO - Done: [send keys: 13 [[FirefoxDriver: firefox on LINUX (e0772045-3ab2-439b-b2a6-b596ed030454)] -> name: txt_SDFREGAFI_ayuda], [111]]
+11:15:40.324 INFO - Executing: [find element: By.name: txt_SDFTESCTACOT])
+11:15:40.364 INFO - Done: [find element: By.name: txt_SDFTESCTACOT]
+11:15:40.369 INFO - Executing: [send keys: 14 [[FirefoxDriver: firefox on LINUX (e0772045-3ab2-439b-b2a6-b596ed030454)] -> name: txt_SDFTESCTACOT], [28]])
+11:15:40.519 INFO - Done: [send keys: 14 [[FirefoxDriver: firefox on LINUX (e0772045-3ab2-439b-b2a6-b596ed030454)] -> name: txt_SDFTESCTACOT], [28]]
+11:15:40.524 INFO - Executing: [find element: By.name: txt_SDFCTACOT])
+11:15:40.552 INFO - Done: [find element: By.name: txt_SDFCTACOT]
+11:15:40.560 INFO - Executing: [send keys: 15 [[FirefoxDriver: firefox on LINUX (e0772045-3ab2-439b-b2a6-b596ed030454)] -> name: txt_SDFCTACOT], [149794464]])
+11:15:40.693 INFO - Done: [send keys: 15 [[FirefoxDriver: firefox on LINUX (e0772045-3ab2-439b-b2a6-b596ed030454)] -> name: txt_SDFCTACOT], [149794464]]
+11:15:40.998 INFO - Executing: [take screenshot])
+11:15:41.073 INFO - Done: [take screenshot]
+11:15:41.087 INFO - Executing: [find element: By.name: btn_Sub2207401004])
+11:15:41.105 INFO - Done: [find element: By.name: btn_Sub2207401004]
+11:15:41.107 INFO - Executing: [click: 16 [[FirefoxDriver: firefox on LINUX (e0772045-3ab2-439b-b2a6-b596ed030454)] -> name: btn_Sub2207401004]])
+11:15:41.771 INFO - Done: [click: 16 [[FirefoxDriver: firefox on LINUX (e0772045-3ab2-439b-b2a6-b596ed030454)] -> name: btn_Sub2207401004]]
+11:15:41.800 INFO - Executing: [find elements: By.id: SDFSITAFI_ayuda])
+11:15:41.819 INFO - Done: [find elements: By.id: SDFSITAFI_ayuda]
+11:15:41.838 INFO - Executing: [find elements: By.id: DIL])
+11:15:41.852 INFO - Done: [find elements: By.id: DIL]
+11:15:41.858 INFO - Executing: [get text: 17 [[FirefoxDriver: firefox on LINUX (e0772045-3ab2-439b-b2a6-b596ed030454)] -> id: DIL]])
+11:15:41.882 INFO - Done: [get text: 17 [[FirefoxDriver: firefox on LINUX (e0772045-3ab2-439b-b2a6-b596ed030454)] -> id: DIL]]
+11:15:41.887 INFO - Executing: [is displayed: 17 [[FirefoxDriver: firefox on LINUX (e0772045-3ab2-439b-b2a6-b596ed030454)] -> id: DIL]])
+11:15:41.910 INFO - Done: [is displayed: 17 [[FirefoxDriver: firefox on LINUX (e0772045-3ab2-439b-b2a6-b596ed030454)] -> id: DIL]]
+11:15:41.929 INFO - Executing: [find elements: By.id: DIL])
+11:15:41.944 INFO - Done: [find elements: By.id: DIL]
+11:15:41.948 INFO - Executing: [get text: 17 [[FirefoxDriver: firefox on LINUX (e0772045-3ab2-439b-b2a6-b596ed030454)] -> id: DIL]])
+11:15:41.970 INFO - Done: [get text: 17 [[FirefoxDriver: firefox on LINUX (e0772045-3ab2-439b-b2a6-b596ed030454)] -> id: DIL]]
+11:15:41.979 INFO - Executing: [is displayed: 17 [[FirefoxDriver: firefox on LINUX (e0772045-3ab2-439b-b2a6-b596ed030454)] -> id: DIL]])
+11:15:42.001 INFO - Done: [is displayed: 17 [[FirefoxDriver: firefox on LINUX (e0772045-3ab2-439b-b2a6-b596ed030454)] -> id: DIL]]
+11:15:42.033 INFO - Executing: [get text: 17 [[FirefoxDriver: firefox on LINUX (e0772045-3ab2-439b-b2a6-b596ed030454)] -> id: DIL]])
+11:15:42.056 INFO - Done: [get text: 17 [[FirefoxDriver: firefox on LINUX (e0772045-3ab2-439b-b2a6-b596ed030454)] -> id: DIL]]
+11:15:42.073 INFO - Executing: [get text: 17 [[FirefoxDriver: firefox on LINUX (e0772045-3ab2-439b-b2a6-b596ed030454)] -> id: DIL]])
+11:15:42.094 INFO - Done: [get text: 17 [[FirefoxDriver: firefox on LINUX (e0772045-3ab2-439b-b2a6-b596ed030454)] -> id: DIL]]
