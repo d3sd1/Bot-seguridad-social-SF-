@@ -164,7 +164,9 @@ class BotController extends Controller
         } else {
             $serverStatusName = $dbServerStatus;
         }
-        $this->get("app.dblogger")->success("Estado del servidor consultado: " . $serverStatusName);
+        if($serverStatusName != "WAITING_TASKS") {
+            $this->get("app.dblogger")->success("Estado del servidor consultado: " . $serverStatusName);
+        }
         return $this->container->get("response")->success($serverStatusName);
     }
 

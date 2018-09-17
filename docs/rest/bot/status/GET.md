@@ -18,6 +18,5 @@ Códigos message de respuesta:
         OFFLINE - El servidor está desconectado.
         RUNNING - El servidor está procesando una petición.
         RUNNING_WITH_WARNINGS - El servidor está procesando una petición con posibles errores.
-        WAITING_TASKS - El servidor está esperando peticiones para cumplirlas en tiempo real.
         UNKNOWN - El servidor tiene un estado desconocido.
 	
