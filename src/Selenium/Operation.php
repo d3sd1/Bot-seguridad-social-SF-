@@ -26,12 +26,127 @@ abstract class Operation
             $this->em = $em;
             $this->server = $server;
             $this->driver = $this->container->get("app.selenium")->getDriver();
+
             $this->operationName = array_values(array_slice(explode("\\", get_class($operation)), -1))[0];
-            $this->container->get("app.dblogger")->success("Iniciando operación " . strtolower($this->operationName) . " con ID: " . $this->operation->getId());
+            $this->container->get("app.dblogger")->success("Iniciando operación " . strtolower($this->operationName) . " con objeto: " . print_r($this->operation));
             $this->updateStatus("IN_PROCESS");
             $this->manageOperation();
         } catch (\Exception $e) {
             $this->container->get("app.dblogger")->error("El bot a crasheado. Motivo: " . $e->getMessage());
+            /* FIX: Ahora reinicia el bot */
+
+            //CERRAR
+            $ssh = $this->get("app.ssh");
+            if (!$ssh->connect()) {
+                return $this->container->get("response")->error(500, "SERVER_NOT_CONFIGURED");
+            }
+            /*
+             * Matar todos procesos el bot que estén corriendo.
+             */
+            $ssh->killBotProcess();
+            $ssh->disconnect();
+
+            /*
+             * Marcar servidor como inactivo
+             */
+            $em = $this->get("doctrine.orm.entity_manager");
+            $qb = $em->createQueryBuilder();
+            $server = $qb->select(array('s'))
+                ->from('App:ServerStatus', 's')
+                ->orderBy('s.id', 'ASC')
+                ->getQuery()
+                ->setMaxResults(1)
+                ->getOneOrNullResult();
+            if ($server !== null) {
+                $server->setCurrentStatus($em->getRepository("App:ServerStatusOptions")->findOneBy(['status' => "OFFLINE"]));
+                $em->flush();
+            }
+            $this->get("app.dblogger")->success("Servidor detenido.");
+
+            //INICIAR
+
+
+            $em = $this->get("doctrine.orm.entity_manager");
+            /*
+             * Iniciar estado del servidor.
+             * Dejar sólo un estado del bot (prevenir duplicados).
+             * Marcar el estado como running, y resetear
+             * los demás valores.
+             */
+
+            $em->createQueryBuilder()
+                ->delete('App:ServerStatus', 's')
+                ->where('s.id != :serverId')
+                ->setParameter('serverId', 1)
+                ->getQuery()->execute();
+
+            $bootServer = $em->getRepository("App:ServerStatus")->findOneBy(['id' => 1]);
+            if ($bootServer === null) {
+                $bootServer = new ServerStatus();
+            }
+
+            /* Abortar todas las peticiones previas */
+
+            $getQueue = $qb->select(array('q'))
+                ->from('App:Queue', 'q')
+                ->orderBy('q.id', 'ASC')
+                ->setMaxResults(1)
+                ->getQuery()->getArrayResult();
+            $abortedStatus = $em->getRepository("App:ProcessStatus")->findOneBy(['status' => "ABORTED"]);
+            foreach($getQueue as $queueProccess) {
+                /* Marcar como abortada */
+                $queueProccess->setStatus($abortedStatus->getId());
+                /* Eliminar de la cola */
+                $em->remove($queueProccess);
+            }
+            $em->flush();
+
+            $bootServer->setId(1);
+            $bootServer->setCurrentStatus($em->getRepository("App:ServerStatusOptions")->findOneBy(['status' => 'BOOTING']));
+            $bootServer->setSessionAlerts(0);
+            $bootServer->setSessionErrors(0);
+            $bootServer->setSessionProcessedRequests(0);
+            $bootServer->setSessionWarnings(0);
+            $em->persist($bootServer);
+            $em->flush();
+
+            $ssh = $this->get("app.ssh");
+            if (!$ssh->connect()) {
+                return $this->container->get("response")->error(500, "SERVER_NOT_CONFIGURED");
+            }
+
+            /*
+             * Iniciar sesión del bot.
+             */
+            $botSession = new BotSession();
+            $botSession->setDatetime();
+            $em->persist($botSession);
+            $em->flush();
+            /*
+             * Matar todos procesos el bot que estuvieran corriendo antes.
+             */
+            $ssh->killBotProcess();
+
+            /*
+             * Establecer modo headless.
+             */
+            $ssh->setBotHeadless(true);
+
+            /*
+             * Abrir interfaz gráfica.
+             */
+            $ssh->startX();
+
+            /*
+             * Iniciar el bot y selenium.
+             */
+            $ssh->startSelenium();
+            $ssh->startBot();
+
+            $this->get("app.dblogger")->success("Servidor iniciado.");
+            $ssh->disconnect();
+
+            /* ENDFIX */
             $this->setServerStatus("CRASHED");
             exit();
         }
@@ -88,7 +203,7 @@ abstract class Operation
             $this->container->get("app.dblogger")->info("La página de la seguridad social no está activa.");
         }
 
-        $this->container->get("app.dblogger")->info("Fin de operación: " . $this->operationName);
+        $this->container->get("app.dblogger")->info("Fin de operación: " . print_r($this->operation));
     }
 
     abstract function doOperation();
