@@ -77,9 +77,11 @@ class BotServer
                 ->setMaxResults(1)
                 ->getOneOrNullResult();
 
+
             /*
              * Instanciar la automatización
              */
+
             new $taskClass($taskData, $this->container, $this->em, $this->server);
 
         } catch (\Exception $e) {

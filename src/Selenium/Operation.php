@@ -29,8 +29,27 @@ abstract class Operation
 
             $this->operationName = array_values(array_slice(explode("\\", get_class($operation)), -1))[0];
             $this->container->get("app.dblogger")->success("Iniciando operación " . strtolower($this->operationName) . " ID: " . $this->operation->getId());
-            $this->updateStatus("IN_PROCESS");
-            $this->manageOperation();
+
+
+
+            /*
+             * Comprobar que la tarea no está caducada y que
+             * hay algo por hacer.
+             */
+
+            if ($this->operation->getDateInit() != null && $this->operation->getDateInit()->diff(new \DateTime())->s > getenv('OPERATION_TIMEOUT_SECONDS')) {
+                /* Eliminar de la cola */
+                $this->removeFromQueue();
+
+                /* Marcar operación como TIMED_OUT */
+                $this->updateStatus("TIMED_OUT");
+            }
+            else {
+                /* Si no, procesar operación */
+                $this->updateStatus("IN_PROCESS");
+                $this->manageOperation();
+            }
+
         } catch (\Exception $e) {
             $this->container->get("app.dblogger")->error("El bot a crasheado. Motivo: " . $e->getMessage());
             /* FIX: Ahora reinicia el bot */
