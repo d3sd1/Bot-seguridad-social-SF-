@@ -122,6 +122,7 @@ class BajaController extends Controller
              */
             $baja->setCca($em->getRepository("App:ContractAccounts")->findOneBy(['name' => $baja->getCca()]));
 
+            $baja->setDateInit();
             /*
              * Paseo del tipo de identificación en caso de que sea necesario.
              */

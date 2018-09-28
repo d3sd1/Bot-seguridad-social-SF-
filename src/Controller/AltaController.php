@@ -116,6 +116,7 @@ class AltaController extends Controller
              * Deserializar a la entidad Alta.
              */
             $alta = $this->get("jms_serializer")->deserialize($request->getContent(), 'App\Entity\Alta', 'json');
+            $this->container->get("app.dblogger")->success("Recibida operación " . strtolower($this->operationName) . " OBJETO: " . $request->getContent());
             $validationErrors = $this->get('validator')->validate($alta);
             if (count($validationErrors) > 0) {
                 throw new \JMS\Serializer\Exception\RuntimeException("Could not deserialize entity: " . $validationErrors);
@@ -128,6 +129,7 @@ class AltaController extends Controller
             $alta->setCoe($em->getRepository("App:ContractCoefficient")->findOneBy(['coefficient' => $alta->getCoe()]));
             $alta->setCca($em->getRepository("App:ContractAccounts")->findOneBy(['name' => $alta->getCca()]));
 
+            $alta->setDateInit();
             /*
              * Paseo del tipo de identificación en caso de que sea necesario.
              */

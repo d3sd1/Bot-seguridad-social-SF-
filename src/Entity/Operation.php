@@ -22,10 +22,16 @@ class Operation
     private $id;
 
     /**
-     * Fecha de nacimiento
+     * Fecha de procesamiento
      * @ORM\Column(type="datetime")
      */
     private $dateProcessed;
+
+    /**
+     * Fecha de recepción de la operación
+     * @ORM\Column(type="datetime")
+     */
+    private $dateInit;
 
     /**
      * @JMS\Exclude(if="context.getDirection() === 0")
@@ -59,6 +65,23 @@ class Operation
     {
         $this->id = $id;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getDateInit()
+    {
+        return $this->dateInit;
+    }
+
+    /**
+     * @param mixed $dateInit
+     */
+    public function setDateInit()
+    {
+        $this->dateInit = new \DateTime("now");
+    }
+
 
     /**
      * @return mixed

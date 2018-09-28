@@ -71,13 +71,32 @@ class StartBotCommand extends ContainerAwareCommand
                 $task = $taskQuery->getOneOrNullResult();
 
                 /*
+                 * Comprobar que la tarea no está caducada y que
+                 * hay algo por hacer.
+                 */
+                $taskTimeOut = false;
+
+                if($task != null && $task->getDateInit() != null) {
+                    $taskTimeOut = $task->getDateInit()->diff(new \DateTime())->s > GET_ENV('OPERATION_TIMEOUT_SECONDS');
+                }
+
+                if ($task != null && $taskTimeOut) {
+                        //TODO: eliminar de la cola
+
+                    $task->setStatus($this->em->getRepository("App:ProcessStatus")->findOneBy(['status' => 'TIMED_OUT'])->getId());
+                    $bot->setServerStatus("WAITING_TASKS");
+                    $commandManager->killProcessByName("firefox");
+                    $this->processQueue = $sockets->waitForTask();
+                }
+                /*
                  * Si hay cosas por hacer, se hacen.
                  * Si no, esperar a que haya algo por sockets.
                  */
-                if ($task != null) {
+                else if($task != null) {
                     $bot->setServerStatus("RUNNING");
                     $bot->processTask($task);
-                } else {
+                }
+                else {
                     $bot->setServerStatus("WAITING_TASKS");
                     $commandManager->killProcessByName("firefox");
                     $this->processQueue = $sockets->waitForTask();

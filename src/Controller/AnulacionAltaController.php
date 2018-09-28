@@ -124,6 +124,7 @@ class AnulacionAltaController extends Controller
              */
             $anulacionAlta->setCca($em->getRepository("App:ContractAccounts")->findOneBy(['name' => $anulacionAlta->getCca()]));
 
+            $anulacionAlta->setDateInit();
             /*
              * La primera comprobación es básica: La petición de alta previa no puede sobrepasar 60 días posteriores
              * al actual.
@@ -299,6 +300,7 @@ class AnulacionAltaController extends Controller
              */
             $anulacionAlta->setCca($em->getRepository("App:ContractAccounts")->findOneBy(['name' => $anulacionAlta->getCca()]));
 
+            $anulacionAlta->setDateInit();
             /*
              * Validar el tipo de empresa.
              */

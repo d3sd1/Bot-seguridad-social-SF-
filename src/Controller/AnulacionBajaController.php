@@ -123,6 +123,7 @@ class AnulacionBajaController extends Controller
              */
             $anulacionBaja->setCca($em->getRepository("App:ContractAccounts")->findOneBy(['name' => $anulacionBaja->getCca()]));
 
+            $anulacionBaja->setDateInit();
             /*
              * La primera comprobación es básica: La petición de baja previa no puede sobrepasar 60 días posteriores
              * al actual.
@@ -299,6 +300,7 @@ class AnulacionBajaController extends Controller
              */
             $anulacionBaja->setCca($em->getRepository("App:ContractAccounts")->findOneBy(['name' => $anulacionBaja->getCca()]));
 
+            $anulacionBaja->setDateInit();
             /*
              * La primera comprobación es básica: La petición de baja consolidada no puede ser anterior a la actual.
              */

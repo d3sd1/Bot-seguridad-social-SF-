@@ -132,6 +132,7 @@ class CambioContratoController extends Controller
             $cambioTcoCons->setCoe($em->getRepository("App:ContractCoefficient")->findOneBy(['coefficient' => $cambioTcoCons->getCoe()]));
             $cambioTcoCons->setCca($em->getRepository("App:ContractAccounts")->findOneBy(['name' => $cambioTcoCons->getCca()]));
 
+            $cambioTcoCons->setDateInit();
             /*
              * Parseo del tipo de identificación en caso de que sea necesario.
              */

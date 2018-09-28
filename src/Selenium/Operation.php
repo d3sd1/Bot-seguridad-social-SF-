@@ -28,7 +28,7 @@ abstract class Operation
             $this->driver = $this->container->get("app.selenium")->getDriver();
 
             $this->operationName = array_values(array_slice(explode("\\", get_class($operation)), -1))[0];
-            $this->container->get("app.dblogger")->success("Iniciando operación " . strtolower($this->operationName) . " con objeto: " . print_r($this->operation));
+            $this->container->get("app.dblogger")->success("Iniciando operación " . strtolower($this->operationName) . " ID: " . $this->operation->getId());
             $this->updateStatus("IN_PROCESS");
             $this->manageOperation();
         } catch (\Exception $e) {
@@ -203,7 +203,7 @@ abstract class Operation
             $this->container->get("app.dblogger")->info("La página de la seguridad social no está activa.");
         }
 
-        $this->container->get("app.dblogger")->info("Fin de operación: " . print_r($this->operation));
+        $this->container->get("app.dblogger")->success("Fin de operación " . strtolower($this->operationName) . " ID: " . $this->operation->getId());
     }
 
     abstract function doOperation();
