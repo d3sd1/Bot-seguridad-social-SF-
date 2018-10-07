@@ -51,7 +51,7 @@ abstract class Operation
             }
 
         } catch (\Exception $e) {
-            $this->container->get("app.dblogger")->error("El bot a crasheado. Motivo: " . $e->getMessage());
+            $this->container->get("app.dblogger")->error("El bot ha crasheado. Motivo: " . $e->getMessage());
             /* FIX: Ahora reinicia el bot */
 
             //CERRAR
