@@ -55,7 +55,7 @@ abstract class Operation
             /* FIX: Ahora reinicia el bot */
 
             //CERRAR
-            $ssh = $this->get("app.ssh");
+            $ssh = $this->container->get("app.ssh");
             if (!$ssh->connect()) {
                 return $this->container->get("response")->error(500, "SERVER_NOT_CONFIGURED");
             }

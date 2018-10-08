@@ -23,3 +23,14 @@ Versiones
 ===
 La versión de Firefox debe ser: firefox-52.8.0-1.el7.centos.x86_64
 La versión de Selenium (WebDriver) debe ser: 3.8.1.
+
+Iniciar en modo debug:
+===
+Abrir 3 terminales, en cada una poner:
+
+java -Dwebdriver.firefox.marionette=false -Dwebdriver.server.session.timeout=99999 -Dwebdriver.gecko.driver="/usr/bin/geckodriver" -jar /var/www/drivers/selenium-server-standalone-3.14.0.jar -timeout 99999 -port 50902 --debug
+
+
+geckodriver -v --jsdebugger
+
+php bin/console start-bot

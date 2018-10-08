@@ -42,7 +42,8 @@ class SeleniumDriver
         }
         catch(\Facebook\WebDriver\Exception\WebDriverCurlException $e)
         {
-            $this->container->get("app.dblogger")->error("Selenium driver not loaded. Exiting bot. Details: ". $e->getMessage());
+            var_dump($e->getMessage());
+            $this->container->get("app.dblogger")->error("Selenium driver not loaded (Did u loaded GeckoDriver?). Details: ". $e->getMessage());
             exit();
         }
     }

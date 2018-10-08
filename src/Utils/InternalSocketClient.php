@@ -24,7 +24,7 @@ class InternalSocketClient
                 $this->con = socket_create(AF_INET, SOCK_STREAM, 0) or die("Could not create socket\n");
                 $status = socket_connect($this->con, getenv("INTERNAL_SOCKETS_HOST"), getenv("INTERNAL_SOCKETS_PORT"));
             } catch (\Exception $e) {
-                $this->container->get("app.exception")->capture(new \App\Exceptions\SocketCommunicationException("Could not connect trought internal sockets. Server offline."));
+                $this->container->get("app.exception")->capture(new \App\Exceptions\SocketCommunicationException("Could not connect trought internal sockets. Server offline: " . $e->getMessage()));
             }
         }
     }
@@ -39,7 +39,7 @@ class InternalSocketClient
             socket_write($this->con, $data, strlen($data));
             $this->close();
         } catch (\Exception $e) {
-            $this->container->get("app.exception")->capture(new \App\Exceptions\SocketCommunicationException("Could not sent data trought internal sockets. Server busy."));
+            $this->container->get("app.exception")->capture(new \App\Exceptions\SocketCommunicationException("Could not sent data trought internal sockets. Server busy." . $e->getMessage()));
         }
     }
 
