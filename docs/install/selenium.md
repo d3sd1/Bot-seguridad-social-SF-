@@ -8,7 +8,7 @@ java -Dwebdriver.firefox.marionette=false -jar /var/www/drivers/selenium-server-
 
 Es importante, manualmente (en firefox), Menú > Preferencias > Avanzado > Certificados > Seleccionar uno automáticamente.
 
-Automatización para la instalación de selenium y chromedriver, y la instalación del navegador chrome:
+Automatización para la instalación de selenium y geckodriver, y la instalación del navegador firefox:
 
 ````
 sudo yum install https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm
