@@ -74,6 +74,7 @@ class ConsultaController extends Controller
              * Si existe una previa, se devuelve la ID de la previa, excepto:
              * Si existe y esta en estado de error o completada, que se genera una nueva.
              */
+
             die();
 
             $qb = $em->createQueryBuilder();
