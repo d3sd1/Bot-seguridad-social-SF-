@@ -42,7 +42,7 @@ class SeleniumDriver
         }
         catch(\Facebook\WebDriver\Exception\WebDriverCurlException $e)
         {
-            $this->container->get("app.dblogger")->error("Selenium driver not loaded. Exiting bot. Stacktrace: ". $e->getMessage());
+            $this->container->get("app.dblogger")->error("Selenium driver not loaded. Exiting bot. Details: ". $e->getMessage());
             exit();
         }
     }
