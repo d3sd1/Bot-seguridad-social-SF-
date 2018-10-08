@@ -62,6 +62,7 @@ class ConsultaController extends Controller
             /*
              * Deserializar a la entidad Consulta NAF.
              */
+            die();
             $consulta = $this->get("jms_serializer")->deserialize($request->getContent(), 'App\Entity\ConsultaNaf', 'json');
             $validationErrors = $this->get('validator')->validate($consulta);
             if (count($validationErrors) > 0) {
@@ -73,8 +74,10 @@ class ConsultaController extends Controller
              * Si existe una previa, se devuelve la ID de la previa, excepto:
              * Si existe y esta en estado de error o completada, que se genera una nueva.
              */
+            die();
 
             $qb = $em->createQueryBuilder();
+            die();
             $task = $qb->select(array('c'))
                 ->from('App:ConsultaNaf', 'c')
                 ->join("App:Queue", "q", "WITH", "q.referenceId = c.id")
@@ -88,7 +91,6 @@ class ConsultaController extends Controller
                 ->getQuery()
                 ->setMaxResults(1)
                 ->getOneOrNullResult();
-
             if ($task != null) {
                 /* Enviar notificación al bot para procesar cola */
                 $this->get("app.sockets")->notify();

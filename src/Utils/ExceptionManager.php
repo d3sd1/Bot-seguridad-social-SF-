@@ -22,6 +22,7 @@ class ExceptionManager
         $this->em = $em;
     }
 
+
     /*
      * Esto es el manager de las excepciones capturadas.
      * Aquí es donde se introduce el log a la base de datos.
@@ -32,7 +33,6 @@ class ExceptionManager
     {
         $server = $this->em->getRepository("App:ServerStatus")->findOneBy(['id' => 1]);
         $this->container->get("app.dblogger")->error("Llamada al rest TRACE: [" . $exception->getTraceAsString() . "] EXCEPTION: [" . $exception->getMessage() . "]");
-
         switch (ltrim(get_class($exception), "\\")) {
             case "JMS\Serializer\Exception\RuntimeException":
                 return "INVALID_OBJECT";

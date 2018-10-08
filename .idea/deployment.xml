@@ -7,6 +7,19 @@
           <mappings>
             <mapping deploy="/var/www" local="$PROJECT_DIR$" web="/" />
           </mappings>
+          <excludedPaths>
+            <excludedPath path="/var/www/debug" />
+            <excludedPath local="true" path="$PROJECT_DIR$/docs" />
+            <excludedPath path="/var/www/docs" />
+            <excludedPath path="/var/www/.git" />
+            <excludedPath path="/var/www/cgi-bin" />
+            <excludedPath path="/var/www/data" />
+            <excludedPath path="/var/www/tmp" />
+            <excludedPath path="/var/www/translations" />
+            <excludedPath path="/var/www/var" />
+            <excludedPath path="/var/www/vendor" />
+            <excludedPath path="/var/www/nohup.out" />
+          </excludedPaths>
         </serverdata>
       </paths>
     </serverData>

@@ -15,12 +15,27 @@ class DBLogger
         $this->em = $em;
     }
 
+    public function sendErrorMail($type,$msg) {
+        $message = (new \Swift_Message('('.$type.') MError en bot de la seguridad social'))
+            ->setFrom('ss-bot@workout-events.com')
+            ->setBody(
+                'El bot de la seguridad social (192.168.1.32) ha tenido una excepción: ' + $msg,
+                'text/html'
+            );
+        $recipers = explode(',',getenv('LOG_EMAILS'));
+        foreach($recipers as $reciper) {
+            $message->setTo($reciper);
+        }
+        $this->get('mailer')->send($message);
+    }
+
     public function error($msg)
     {
         $log = new InternalLog();
         $log->setMessage($msg);
         $log->setType($this->em->getRepository("App:LogType")->findOneBy(['type' => 'ERROR']));
         $this->em->persist($log);
+        $this->get('mailer')->send('ERROR',$msg);
         $this->em->flush();
     }
 
@@ -30,6 +45,7 @@ class DBLogger
         $log->setMessage($msg);
         $log->setType($this->em->getRepository("App:LogType")->findOneBy(['type' => 'WARNING']));
         $this->em->persist($log);
+        $this->get('mailer')->send('Warning',$msg);
         $this->em->flush();
     }
 
