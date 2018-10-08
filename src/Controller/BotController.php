@@ -5,7 +5,7 @@ namespace App\Controller;
 use App\Entity\BotSession;
 use App\Utils\BotSsh;
 use FOS\RestBundle\Controller\Annotations as FOSRest;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\ServerStatus;

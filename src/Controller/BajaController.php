@@ -11,7 +11,7 @@ use Facebook\WebDriver\WebDriverExpectedCondition;
 use FOS\RestBundle\Controller\Annotations as FOSRest;
 use JMS\Serializer\Expression\ExpressionEvaluator;
 use JMS\Serializer\SerializerBuilder;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;

@@ -4,15 +4,18 @@ namespace App\Utils;
 
 use App\Entity\InternalLog;
 use Doctrine\ORM\EntityManagerInterface;
+use Psr\Container\ContainerInterface;
 
 class DBLogger
 {
 
     private $em;
+    private $container;
 
-    public function __construct(EntityManagerInterface $em)
+    public function __construct(EntityManagerInterface $em, ContainerInterface $container)
     {
         $this->em = $em;
+        $this->container = $container;
     }
 
     public function sendErrorMail($type,$msg) {
@@ -26,7 +29,7 @@ class DBLogger
         foreach($recipers as $reciper) {
             $message->setTo($reciper);
         }
-        $this->get('mailer')->send($message);
+        $this->container->get('mailer')->send($message);
     }
 
     public function error($msg)
@@ -35,7 +38,7 @@ class DBLogger
         $log->setMessage($msg);
         $log->setType($this->em->getRepository("App:LogType")->findOneBy(['type' => 'ERROR']));
         $this->em->persist($log);
-        $this->get('mailer')->send('ERROR',$msg);
+        $this->container->get('mailer')->send('ERROR',$msg);
         $this->em->flush();
     }
 
@@ -45,7 +48,7 @@ class DBLogger
         $log->setMessage($msg);
         $log->setType($this->em->getRepository("App:LogType")->findOneBy(['type' => 'WARNING']));
         $this->em->persist($log);
-        $this->get('mailer')->send('Warning',$msg);
+        $this->container->get('mailer')->send('Warning',$msg);
         $this->em->flush();
     }
 
