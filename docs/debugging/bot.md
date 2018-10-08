@@ -18,3 +18,8 @@ Manager
 ====
 Permite reiniciar el servidor y consultar el estado del mismo en todo momento,
 así como hacer debugging del mismo.
+
+Versiones
+===
+La versión de Firefox debe ser: firefox-52.8.0-1.el7.centos.x86_64
+La versión de Selenium (WebDriver) debe ser: 3.8.1.
