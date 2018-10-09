@@ -52,6 +52,9 @@ abstract class Operation
 
         } catch (\Exception $e) {
 
+            /* ENDFIX */
+            $this->setServerStatus("CRASHED");
+
             if($e->getMessage() == 'Notice: Undefined index: ELEMENT'){
                 $this->container->get("app.dblogger")->error("El bot ha crasheado. Motivo: El certificado no está instalado en Firefox o Firefox ha sufrido problemas.");
             }
@@ -60,16 +63,19 @@ abstract class Operation
             }
             /* FIX: Ahora reinicia el bot */
 
+            $this->container->get("app.dblogger")->success("Reiniciando servidor...");
             //CERRAR
             $ssh = $this->container->get("app.ssh");
             if (!$ssh->connect()) {
                 return $this->container->get("response")->error(500, "SERVER_NOT_CONFIGURED");
             }
+            $this->container->get("app.dblogger")->success("Recargado SSH...");
             /*
              * Matar todos procesos el bot que estén corriendo.
              */
             $ssh->killBotProcess();
             $ssh->disconnect();
+            $this->container->get("app.dblogger")->success("Desconectado servidor.");
 
             /*
              * Marcar servidor como inactivo
@@ -86,6 +92,7 @@ abstract class Operation
                 $server->setCurrentStatus($em->getRepository("App:ServerStatusOptions")->findOneBy(['status' => "OFFLINE"]));
                 $em->flush();
             }
+            $this->container->get("app.dblogger")->success("Servidor marcado como inactivo...");
             $this->get("app.dblogger")->success("Servidor detenido.");
 
             //INICIAR
@@ -170,10 +177,6 @@ abstract class Operation
 
             $this->get("app.dblogger")->success("Servidor iniciado.");
             $ssh->disconnect();
-
-            /* ENDFIX */
-            $this->setServerStatus("CRASHED");
-            exit();
         }
     }
 
