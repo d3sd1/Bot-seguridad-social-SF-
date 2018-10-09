@@ -51,7 +51,13 @@ abstract class Operation
             }
 
         } catch (\Exception $e) {
-            $this->container->get("app.dblogger")->error("El bot ha crasheado. Motivo: " . $e->getMessage());
+
+            if($e->getMessage() == 'Notice: Undefined index: ELEMENT'){
+                $this->container->get("app.dblogger")->error("El bot ha crasheado. Motivo: El certificado no está instalado en Firefox o Firefox ha sufrido problemas.");
+            }
+            else {
+                $this->container->get("app.dblogger")->error("El bot ha crasheado. Motivo: " . $e->getMessage());
+            }
             /* FIX: Ahora reinicia el bot */
 
             //CERRAR
