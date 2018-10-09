@@ -74,6 +74,7 @@ class BotSsh
          * Capturar la sesión actual.
          */
         $sessionId = $this->getSession()->getId();
+        $this->ssh->exec("cd /var/www && sudo geckodriver &");
         $this->ssh->exec("mkdir -p /var/www/debug/Selenium/$sessionId && DISPLAY=:99 nohup java -Dwebdriver.firefox.marionette=false -Dwebdriver.server.session.timeout=0 -jar /var/www/drivers/selenium-server-standalone-3.8.1.jar -enablePassThrough false -timeout 0 -port 50901 &> /var/www/debug/Selenium/$sessionId/sel.log");
     }
 

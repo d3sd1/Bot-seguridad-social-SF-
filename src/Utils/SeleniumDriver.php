@@ -37,7 +37,7 @@ class SeleniumDriver
         }
         catch(\Facebook\WebDriver\Exception\SessionNotCreatedException $e)
         {
-            $this->container->get("app.dblogger")->error("Firefox drivers not loaded. Exiting bot.");
+            $this->container->get("app.dblogger")->error("Firefox drivers not loaded (GeckoDriver). Exiting bot.");
             exit();
         }
         catch(\Facebook\WebDriver\Exception\WebDriverCurlException $e)
