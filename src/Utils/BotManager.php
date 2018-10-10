@@ -144,7 +144,7 @@ class BotManager
     }
 
     public function setBotStatus($status) {
-        $serverStatusRows = $this->em->getRepository("App:ServerStatusOptions")->findOneBy(['status' => "OFFLINE"]);
+        $serverStatusRows = $this->em->getRepository("App:ServerStatus")->findAll();
         if($serverStatusRows >= 2) {
             $this->em->createQueryBuilder()
                 ->delete('App:ServerStatus', 's')
@@ -156,7 +156,7 @@ class BotManager
         if($serverStatusRows <= 0){
             $bootServer = new ServerStatus();
             $bootServer->setId(1);
-            $bootServer->setCurrentStatus($this->em->getRepository("App:ServerStatusOptions")->findOneBy(['status' => 'OFFLINE']));
+            $bootServer->setCurrentStatus($this->getStatus('OFFLINE'));
             $bootServer->setSessionAlerts(0);
             $bootServer->setSessionErrors(0);
             $bootServer->setSessionProcessedRequests(0);
@@ -164,8 +164,15 @@ class BotManager
             $this->em->persist($bootServer);
             $this->em->flush();
         }
-        $serverRealStatus = $this->em->getRepository("App:ServerStatus")-> findAll()[0];
-        $serverRealStatus->setCurrentStatus($this->em->getRepository("App:ServerStatusOptions")->findOneBy(['status' => $status]));
+        $serverRealStatus = $this->getBotStatus();
+        $serverRealStatus->setCurrentStatus($this->getStatus($status));
         $this->em->flush();
+    }
+
+    public function getBotStatus() {
+        return $this->em->getRepository("App:ServerStatus")->findAll()[0];
+    }
+    public function getStatus($status) {
+        return $this->em->getRepository("App:ServerStatusOptions")->findOneBy(['status' => $status]);
     }
 }

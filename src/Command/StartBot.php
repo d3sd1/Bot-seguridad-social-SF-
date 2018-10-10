@@ -13,7 +13,10 @@ class StartBot extends ContainerAwareCommand
 {
 
     private $processQueue = true;
+    private $socket = false;
     private $em;
+    private $bm;
+    private $log;
 
     protected function configure()
     {
@@ -22,8 +25,6 @@ class StartBot extends ContainerAwareCommand
             ->setDescription('Starts the bot.')
             ->setHelp('This command allows you to start the bot server, and the required automatizing scripts. You have to get Firefox installed and the bot running under nginx.');
     }
-
-    private $socket = false;
 
     /*
      * Iniciar escuchadores y prevenir que se deniegue la ejecución.
@@ -39,7 +40,7 @@ class StartBot extends ContainerAwareCommand
                 socket_bind($this->socket, getenv("INTERNAL_SOCKETS_HOST"), getenv("INTERNAL_SOCKETS_PORT"));
                 socket_listen($this->socket, 3);
             } catch (\Exception $e) {
-                $this->getContainer()->get("app.dblogger")->error("El servidor ya estaba iniciado.");
+                $this->log->error("El servidor ya estaba iniciado.");
                 exit();
             }
         }
@@ -70,22 +71,65 @@ class StartBot extends ContainerAwareCommand
         return true;
     }
 
+    /*
+     * Procesa una tarea.
+     */
+    public function processTask(Queue $task)
+    {
+
+        try {
+            /*
+             * Cargar nombre de la clase del controlador
+             * de Selenium.
+             */
+            $task = explode("_", $task->getProcessType()->getType());
+            $taskPlainClass = "";
+            foreach ($task as $part) {
+                $taskPlainClass .= ucfirst(strtolower($part));
+            }
+            $taskClass = "\App\Selenium\\" . $taskPlainClass;
+
+            /*
+             * Cargar la operación requerida.
+             */
+
+            $qb = $this->em->createQueryBuilder();
+            $taskData = $qb->select(array('t'))
+                ->from('App:Queue', 'q')
+                ->join("App:" . $taskPlainClass, "t", "WITH", "q.referenceId = t.id")
+                ->getQuery()
+                ->setMaxResults(1)
+                ->getOneOrNullResult();
+
+
+            /*
+             * Instanciar la automatización
+             */
+
+            new $taskClass($taskData, $this->getContainer(), $this->em, $this->server);
+
+        } catch (\Exception $e) {
+            $this->log->error("Ha ocurrido un error interno en el bot [BOT TASK MANAGER]: " . $e->getMessage());
+        }
+    }
+
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         try {
+
             /*
              * Iniciar objetos.
              */
             $this->em = $this->getContainer()->get('doctrine')->getManager();
-            $bot = new BotServer($this->em, $this->getContainer());
+            $this->bm = $this->getContainer()->get('bot.manager');
 
             /*
-             * Iniciar bot.
+             * Marcar estado del bot como iniciando.
              */
-            $bot->startBot();
+            $this->bm->setBotStatus("BOOTING");
 
             /*
-             * Iniciar escuchadores.
+             * Iniciar escuchadores BOT - REST.
              */
             $this->socketCreate();
 
@@ -100,16 +144,17 @@ class StartBot extends ContainerAwareCommand
                 ->getQuery();
 
             /*
-             * Comunicar que se finalizó la carga.
+             * Marcar estado del bot como iniciando.
              */
+            $this->bm->setBotStatus("WAITING_TASKS");
 
             /*
              * Procesar cola.
              */
             $commandManager = new Commands();
             while ($this->processQueue) {
-                if ($bot->getServerStatus()->getStatus() === "SS_PAGE_DOWN") {
-                    $this->getContainer()->get("app.dblogger")->success("Página de la seguridad social inactiva. Esperando " . getenv("SS_PAGE_DOWN_SLEEP") . " segundos.");
+                if ($this->bm->getBotStatus() === "SS_PAGE_DOWN") {
+                    $this->log->error("Página de la seguridad social inactiva. Esperando " . getenv("SS_PAGE_DOWN_SLEEP") . " segundos.");
                     sleep(getenv("SS_PAGE_DOWN_SLEEP"));
                 }
                 /*
@@ -122,10 +167,10 @@ class StartBot extends ContainerAwareCommand
                  * Si no, esperar a que haya algo por sockets.
                  */
                 if ($task != null) {
-                    $bot->setServerStatus("RUNNING");
-                    $bot->processTask($task);
+                    $this->bm->setBotStatus("RUNNING");
+                    $this->processTask($task);
                 } else {
-                    $bot->setServerStatus("WAITING_TASKS");
+                    $this->bm->setBotStatus("WAITING_TASKS");
                     $commandManager->killProcessByName("firefox");
                     $this->processQueue = $this->waitForTask();
                 }
@@ -133,7 +178,7 @@ class StartBot extends ContainerAwareCommand
             $this->socketKill();
 
         } catch (\Exception $e) {
-            $this->getContainer()->get("app.dblogger")->error("Ha ocurrido un error interno en el bot [COMANDO]: " . $e->getMessage());
+            $this->log->error("Ha ocurrido un error interno en el bot [COMANDO]: " . $e->getMessage());
         }
     }
 }
