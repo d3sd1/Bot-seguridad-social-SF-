@@ -32,10 +32,12 @@ abstract class Operation
             $this->operationName = array_values(array_slice(explode("\\", get_class($operation)), -1))[0];
             $this->container->get("app.dblogger")->success("Iniciando operación " . strtolower($this->operationName) . " ID: " . $this->operation->getId());
 
-            $this->driver->get("chrome://version");
+            /*$this->driver->get("chrome://version");
+            $this->takeScreenShoot();
+            $this->driver->get("chrome://policy");
             $this->takeScreenShoot();
 
-            die();
+            die();*/
 
 
             /*

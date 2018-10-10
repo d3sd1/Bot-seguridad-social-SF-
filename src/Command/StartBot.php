@@ -147,9 +147,7 @@ class StartBot extends ContainerAwareCommand
                     $caps = DesiredCapabilities::chrome();
                     $options = new ChromeOptions();
                     $options->addArguments(array(
-                        '--user-data-dir=/home/andrei/.config/google-chrome',
-                        '--headless',
-                        '--disable-gpu'
+                        '--user-data-dir=/home/andrei/.config/google-chrome'
                     ));
                     $caps->setCapability(ChromeOptions::CAPABILITY, $options);
 
