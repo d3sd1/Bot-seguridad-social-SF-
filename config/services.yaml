@@ -52,7 +52,7 @@ services:
         class: App\Utils\ExceptionManager
         arguments: ["@service_container", '@doctrine.orm.entity_manager']
         public: true
-    app.mail:
-        class: App\Utils\Mailer
+    bot.manager:
+        class: App\Utils\ExceptionManager
         arguments: ["@service_container", '@doctrine.orm.entity_manager']
         public: true
