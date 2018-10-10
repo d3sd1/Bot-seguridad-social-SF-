@@ -116,13 +116,14 @@ class BotController extends Controller
         return $this->container->get("response")->success("LAST_SESSION_ID", $sessionId);
     }
 
+    //TODO: hacer todos los status setter and getter ya que ahora no funcionan.
     /**
      * Ver estado del bot.
      * @FOSRest\Get("/status")
      */
     public function statusAction(Request $request)
     {
-        return $this->container->get("response")->success($serverStatusName);
+        return $this->container->get("response")->success($this->get("bot.manager")->getBotStatus());
     }
 
     /**
@@ -131,9 +132,14 @@ class BotController extends Controller
      */
     public function startBot(Request $request)
     {
-
-        $this->get("bot.manager");
-        return $this->container->get("response")->success("SERVER_STARTED");
+        if($this->get("bot.manager")->start()) {
+            $this->get("app.dblogger")->success("Servidor iniciado correctamente.");
+            return $this->container->get("response")->success("SERVER_STARTED");
+        }
+        else {
+            $this->get("app.dblogger")->success("El servidor no se pudo iniciar. Para más información lanza el bot en modo debug GUI-BASH.");
+            return $this->container->get("response")->success("SERVER_NOT_STARTED");
+        }
     }
 
     /**
@@ -142,7 +148,13 @@ class BotController extends Controller
      */
     public function closeBot(Request $request)
     {
-
-        return $this->container->get("response")->success("SERVER_CLOSED");
+        if($this->get("bot.manager")->close()) {
+            $this->get("app.dblogger")->success("Servidor iniciado correctamente.");
+            return $this->container->get("response")->success("SERVER_CLOSED");
+        }
+        else {
+            $this->get("app.dblogger")->success("El servidor no se pudo iniciar. Para más información lanza el bot en modo debug GUI-BASH.");
+            return $this->container->get("response")->success("SERVER_NOT_CLOSED");
+        }
     }
 }

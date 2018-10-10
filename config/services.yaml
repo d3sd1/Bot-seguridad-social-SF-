@@ -40,19 +40,16 @@ services:
         class: App\Utils\InternalSocketClient
         arguments: [ "@service_container" ]
         public: true
-    app.selenium:
-        class: App\Utils\SeleniumDriver
-        arguments: ["@service_container"]
-        public: true
-    app.ssh:
-        class: App\Utils\BotSsh
-        arguments: ["@service_container"]
-        public: true
     app.exception:
         class: App\Utils\ExceptionManager
         arguments: ["@service_container", '@doctrine.orm.entity_manager']
         public: true
     bot.manager:
         class: App\Utils\ExceptionManager
+        arguments: ["@service_container", '@doctrine.orm.entity_manager']
+        public: true
+
+    so.commands:
+        class: App\Utils\Commands
         arguments: ["@service_container", '@doctrine.orm.entity_manager']
         public: true

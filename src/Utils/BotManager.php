@@ -25,15 +25,15 @@ class BotManager
         $this->ssh = $this->get("app.ssh");
     }
 
-    private function startBotCommands() {
+    public function start() {
+        /*
+         * Iniciar sesión del bot.
+         */
+
         $ssh = $this->get("app.ssh");
         if (!$ssh->connect()) {
             return $this->container->get("response")->error(500, "SERVER_NOT_CONFIGURED");
         }
-        /*
-         * Establecer modo headless.
-         */
-        $ssh->setBotHeadless(true);
 
         /*
          * Abrir interfaz gráfica.
@@ -51,13 +51,6 @@ class BotManager
         $ssh->killBotProcess();
         $this->get("app.dblogger")->success("Servidor iniciado.");
         $ssh->disconnect();
-    }
-
-    public function start() {
-        /*
-         * Iniciar sesión del bot.
-         */
-        $this->startBotCommands();
         $botSession = new BotSession();
         $botSession->setDatetime();
         $this->em->persist($botSession);

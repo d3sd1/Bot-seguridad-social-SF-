@@ -13,6 +13,7 @@ Códigos message de respuesta:
 
     message: 
         SERVER_STARTED - Servidor iniciado correctamente.
+        SERVER_NOT_STARTED - Servidor no iniciado correctamente.
 500
 
     message:

@@ -13,6 +13,7 @@ Códigos message de respuesta:
 
     message: 
         SERVER_CLOSED - Servidor detenido correctamente.
+        SERVER_NOT_CLOSED - Servidor no detenido correctamente.
 500
 
     message:

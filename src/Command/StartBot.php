@@ -5,7 +5,14 @@ set_time_limit(0);
 
 use App\Utils\Commands;
 use App\Utils\CommandUtils;
+use Facebook\WebDriver\Chrome\ChromeDriver;
+use Facebook\WebDriver\Exception\SessionNotCreatedException;
+use Facebook\WebDriver\Exception\WebDriverCurlException;
+use Facebook\WebDriver\Firefox\FirefoxDriver;
+use Facebook\WebDriver\Remote\DesiredCapabilities;
+use Facebook\WebDriver\Remote\RemoteWebDriver;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -14,6 +21,7 @@ class StartBot extends ContainerAwareCommand
 
     private $processQueue = true;
     private $socket = false;
+    private $selenium = false;
     private $em;
     private $bm;
     private $log;
@@ -23,6 +31,7 @@ class StartBot extends ContainerAwareCommand
         $this
             ->setName("start-bot")
             ->setDescription('Starts the bot.')
+            ->addArgument('debug', InputArgument::OPTIONAL, 'Start on debug mode (must be instanciated on server GUI bash, either X won\'t be created and it will impolode).')
             ->setHelp('This command allows you to start the bot server, and the required automatizing scripts. You have to get Firefox installed and the bot running under nginx.');
     }
 
@@ -76,7 +85,7 @@ class StartBot extends ContainerAwareCommand
      */
     public function processTask(Queue $task)
     {
-
+        /* Set bot in debug mode */
         try {
             /*
              * Cargar nombre de la clase del controlador
@@ -113,8 +122,58 @@ class StartBot extends ContainerAwareCommand
         }
     }
 
+    private function initSeleniumDriver()
+    {
+
+        /*
+         * CARGAR CONTROLADOR
+         */
+        try {
+            $navigator = getenv("SELENIUM_NAVIGATOR");
+            /*
+             * Si se requiere de cambiar el certificado, simplemente cambiar el perfil de firefox.
+             * Para ello, crear un perfil y exportarlo a zip y base 64.
+             */
+            switch ($navigator) {
+                case "chrome":
+                    $caps = DesiredCapabilities::chrome();
+                    $options = new ChromeOptions();
+                    if ($GLOBALS["debug"]) {
+                        $options->addArguments(array(
+                            '--headless',
+                            '--disable-gpu',
+                        ));
+                    }
+                    $caps->setCapability(ChromeDriver::PROFILE, file_get_contents('/var/www/drivers/profiles/chrome/profile.zip.b64'));
+                    break;
+                case "firefox":
+                    $caps = DesiredCapabilities::firefox();
+                    if ($GLOBALS["debug"]) {
+                        //TODO: comando EXPORT MOZ_HEADLESS=1
+                    }
+                    $caps->setCapability(FirefoxDriver::PROFILE, file_get_contents('/var/www/drivers/profiles/firefox/profile.zip.b64'));
+                    break;
+                default:
+                    $this->log->error("Unrecognized navigator (on .env config file): " + $navigator);
+                    die();
+            }
+            $caps->setPlatform("Linux");
+            $host = 'http://localhost:4444/wd/hub/';
+
+            $this->selenium = RemoteWebDriver::create($host, $caps);
+        } catch (SessionNotCreatedException $e) {
+            $this->log->error("Firefox drivers not loaded (GeckoDriver). Exiting bot.");
+            exit();
+        } catch (WebDriverCurlException $e) {
+            $this->log->error("Selenium driver not loaded (Did u loaded GeckoDriver?). Details: " . $e->getMessage());
+            exit();
+        }
+    }
+
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        //TODO: revisar si se hq pasado el param debug. si se ha pasado iniciar con debug y sino no.
+        $GLOBALS['debug'] = false;
         try {
 
             /*
@@ -134,6 +193,16 @@ class StartBot extends ContainerAwareCommand
             $this->socketCreate();
 
             /*
+             * Iniciar Selenium Driver.
+             */
+            $this->initSeleniumDriver();
+
+            /*
+             * Check parameters for internal SO headless modes.
+             */
+            $this->bm->wetherHeadless();
+
+            /*
              * Preparar query para la cola.
              */
             $qb = $this->em->createQueryBuilder();
@@ -151,7 +220,6 @@ class StartBot extends ContainerAwareCommand
             /*
              * Procesar cola.
              */
-            $commandManager = new Commands();
             while ($this->processQueue) {
                 if ($this->bm->getBotStatus() === "SS_PAGE_DOWN") {
                     $this->log->error("Página de la seguridad social inactiva. Esperando " . getenv("SS_PAGE_DOWN_SLEEP") . " segundos.");
@@ -171,14 +239,14 @@ class StartBot extends ContainerAwareCommand
                     $this->processTask($task);
                 } else {
                     $this->bm->setBotStatus("WAITING_TASKS");
-                    $commandManager->killProcessByName("firefox");
+                    $this->getContainer()->get("so.commands")->resetNavigator();
                     $this->processQueue = $this->waitForTask();
                 }
             }
             $this->socketKill();
 
         } catch (\Exception $e) {
-            $this->log->error("Ha ocurrido un error interno en el bot [COMANDO]: " . $e->getMessage());
+            $this->log->error("Ha ocurrido un error interno en el comando de procesamiento de cola]: " . $e->getMessage());
         }
     }
 }
