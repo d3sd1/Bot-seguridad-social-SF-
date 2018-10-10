@@ -146,12 +146,13 @@ class StartBot extends ContainerAwareCommand
                 case "chrome":
                     $caps = DesiredCapabilities::chrome();
                     $options = new ChromeOptions();
-                    if ($GLOBALS["debug"]) {
-                        $options->addArguments(array(
-                            '--start-maximized',
-                            'user-data-dir="/home/andrei/.config/google-chrome/Default"'
-                        ));
-                    }
+                    $options->addArguments(array(
+                        '--user-data-dir=/home/andrei/.config/google-chrome',
+                        '--headless',
+                        '--disable-gpu'
+                    ));
+                    $caps->setCapability(ChromeOptions::CAPABILITY, $options);
+
                     break;
                 case "firefox":
                     $caps = DesiredCapabilities::firefox();

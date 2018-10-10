@@ -24,6 +24,7 @@ class BotManager
     }
 
     public function start() {
+        $this->close();
         $this->abortPendingOperations();
 
         $botSession = new BotSession();
