@@ -25,34 +25,11 @@ class BotManager
         $this->ssh = $this->get("app.ssh");
     }
 
-    public function start() {
-        /*
-         * Iniciar estado del servidor.
-         * Dejar sólo un estado del bot (prevenir duplicados).
-         * Marcar el estado como running, y resetear
-         * los demás valores.
-         */
-
-
-
-
+    private function startBotCommands() {
         $ssh = $this->get("app.ssh");
         if (!$ssh->connect()) {
             return $this->container->get("response")->error(500, "SERVER_NOT_CONFIGURED");
         }
-
-        /*
-         * Iniciar sesión del bot.
-         */
-        $botSession = new BotSession();
-        $botSession->setDatetime();
-        $em->persist($botSession);
-        $em->flush();
-        /*
-         * Matar todos procesos el bot que estuvieran corriendo antes.
-         */
-        $ssh->killBotProcess();
-
         /*
          * Establecer modo headless.
          */
@@ -68,9 +45,23 @@ class BotManager
          */
         $ssh->startSelenium();
         $ssh->startBot();
-
+        /*
+         * Matar todos procesos el bot que estuvieran corriendo antes.
+         */
+        $ssh->killBotProcess();
         $this->get("app.dblogger")->success("Servidor iniciado.");
         $ssh->disconnect();
+    }
+
+    public function start() {
+        /*
+         * Iniciar sesión del bot.
+         */
+        $this->startBotCommands();
+        $botSession = new BotSession();
+        $botSession->setDatetime();
+        $this->em->persist($botSession);
+        $this->em->flush();
     }
 
     public function close() {
@@ -173,8 +164,8 @@ class BotManager
             $this->em->persist($bootServer);
             $this->em->flush();
         }
-        $serverRealStatus = $this->em->getRepository("App:ServerStatus")->findOneBy(['id' => 1]);
-        $serverRealStatus->setCurrentStatus($this->em->getRepository("App:ServerStatusOptions")->findOneBy(['status' => "OFFLINE"]));
-        $em->flush();
+        $serverRealStatus = $this->em->getRepository("App:ServerStatus")-> findAll()[0];
+        $serverRealStatus->setCurrentStatus($this->em->getRepository("App:ServerStatusOptions")->findOneBy(['status' => $status]));
+        $this->em->flush();
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Command;
+namespace App\Utils;
 set_time_limit(0);
 
 use App\Entity\Queue;

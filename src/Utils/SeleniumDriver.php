@@ -24,7 +24,7 @@ class SeleniumDriver
          * CARGAR CONTROLADOR
          */
         try{
-            $caps = DesiredCapabilities::firefox();
+            $caps = DesiredCapabilities::chrome();
             /*
              * Si se requiere de cambiar el certificado, simplemente cambiar el perfil de firefox.
              * Para ello, crear un perfil y exportarlo a zip y base 64.
