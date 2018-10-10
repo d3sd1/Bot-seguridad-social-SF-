@@ -45,10 +45,9 @@ services:
         arguments: ["@service_container", '@doctrine.orm.entity_manager']
         public: true
     bot.manager:
-        class: App\Utils\ExceptionManager
+        class: App\Utils\BotManager
         arguments: ["@service_container", '@doctrine.orm.entity_manager']
         public: true
-
     so.commands:
         class: App\Utils\Commands
         arguments: ["@service_container", '@doctrine.orm.entity_manager']

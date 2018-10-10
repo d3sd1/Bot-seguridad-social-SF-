@@ -27,15 +27,15 @@ class DBLogger
             );
         $recipers = explode(',',getenv('LOG_EMAILS'));
         $log = new InternalLog();
-        $log->setMessage($msg);
+        $log->setMessage("Sending error messages to " .getenv('LOG_EMAILS'));
         $log->setType($this->em->getRepository("App:LogType")->findOneBy(['type' => $type]));
-        $this->em->persist("Sending error messages to " .getenv('LOG_EMAILS'));
+        $this->em->persist($log);
 
         foreach($recipers as $reciper) {
             $log = new InternalLog();
-            $log->setMessage($msg);
+            $log->setMessage("Sent error message to " .$reciper);
             $log->setType($this->em->getRepository("App:LogType")->findOneBy(['type' => $type]));
-            $this->em->persist("Sent error message to " .$reciper);
+            $this->em->persist($log);
             $message->setTo($reciper);
         }
         $this->em->flush();

@@ -656,7 +656,7 @@ if (is_null($GLOBALS['PMA_Config']->getTempDir('twig'))) {
 }
 
 /**
- * Warning about incomplete translations.
+ * Warning about incomplete Translations.
  *
  * The data file is created while creating release by ./scripts/remove-incomplete-mo
  */
@@ -664,7 +664,7 @@ if (@file_exists('libraries/language_stats.inc.php')) {
     include 'libraries/language_stats.inc.php';
     /*
      * This message is intentionally not translated, because we're
-     * handling incomplete translations here and focus on english
+     * handling incomplete Translations here and focus on english
      * speaking users.
      */
     if (isset($GLOBALS['language_stats'][$lang])

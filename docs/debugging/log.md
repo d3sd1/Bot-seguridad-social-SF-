@@ -9,3 +9,4 @@ solo se abre el selenium y se tira el comando. y funciona.
 la solucion ideal seria pasar todo lo actual a chrome...
 
 // CAPABILITIES CHROME: http://chromedriver.chromium.org/capabilities
+

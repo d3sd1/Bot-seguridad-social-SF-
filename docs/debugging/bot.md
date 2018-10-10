@@ -34,3 +34,7 @@ java -Dwebdriver.firefox.marionette=false -Dwebdriver.server.session.timeout=999
 geckodriver -v --jsdebugger
 
 php bin/console start-bot
+
+Cosas raras del certificado, si está instalado
+==========
+Hay que desbloquear el key store. Para ello, abre chrome, entra al sistema red, y te pedirá contraseña root.

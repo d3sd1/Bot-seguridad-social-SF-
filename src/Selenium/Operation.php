@@ -13,19 +13,21 @@ abstract class Operation
     protected $operation;
     protected $container;
     protected $em;
+    protected $bm;
     protected $driver;
     protected $operationName;
     protected $server;
 
-    public function __construct(\App\Entity\Operation $operation, ContainerInterface $container, EntityManager $em, ServerStatus $server)
+    public function __construct(\App\Entity\Operation $operation, ContainerInterface $container, EntityManager $em, $seleniumDriver)
     {
         try {
 
             $this->operation = $operation;
             $this->container = $container;
             $this->em = $em;
-            $this->server = $server;
-            $this->driver = $this->container->get("app.selenium")->getDriver();
+            $this->bm = $container->get('bot.manager');
+            $this->server = $this->bm->getBotStatus();
+            $this->driver = $seleniumDriver;
 
             $this->operationName = array_values(array_slice(explode("\\", get_class($operation)), -1))[0];
             $this->container->get("app.dblogger")->success("Iniciando operación " . strtolower($this->operationName) . " ID: " . $this->operation->getId());
@@ -53,130 +55,17 @@ abstract class Operation
         } catch (\Exception $e) {
 
             /* ENDFIX */
-            $this->setServerStatus("CRASHED");
+            $this->bm->setBotStatus("CRASHED");
 
             if($e->getMessage() == 'Notice: Undefined index: ELEMENT'){
-                $this->container->get("app.dblogger")->error("El bot ha crasheado. Motivo: El certificado no está instalado en Firefox o Firefox ha sufrido problemas.");
+                $this->container->get("app.dblogger")->error("El bot ha crasheado. Motivo: El certificado no está instalado en en el navegador o este ha sufrido problemas.");
             }
             else {
                 $this->container->get("app.dblogger")->error("El bot ha crasheado. Motivo: " . $e->getMessage());
             }
-            /* FIX: Ahora reinicia el bot */
-
-            $this->container->get("app.dblogger")->success("Reiniciando servidor...");
-            //CERRAR
-            $ssh = $this->container->get("app.ssh");
-            if (!$ssh->connect()) {
-                return $this->container->get("response")->error(500, "SERVER_NOT_CONFIGURED");
-            }
-            $this->container->get("app.dblogger")->success("Recargado SSH...");
-            /*
-             * Matar todos procesos el bot que estén corriendo.
-             */
-            $ssh->killBotProcess();
-            $ssh->disconnect();
-            $this->container->get("app.dblogger")->success("Desconectado servidor.");
-
-            /*
-             * Marcar servidor como inactivo
-             */
-            $em = $this->get("doctrine.orm.entity_manager");
-            $qb = $em->createQueryBuilder();
-            $server = $qb->select(array('s'))
-                ->from('App:ServerStatus', 's')
-                ->orderBy('s.id', 'ASC')
-                ->getQuery()
-                ->setMaxResults(1)
-                ->getOneOrNullResult();
-            if ($server !== null) {
-                $server->setCurrentStatus($em->getRepository("App:ServerStatusOptions")->findOneBy(['status' => "OFFLINE"]));
-                $em->flush();
-            }
-            $this->container->get("app.dblogger")->success("Servidor marcado como inactivo...");
-            $this->get("app.dblogger")->success("Servidor detenido.");
-
-            //INICIAR
-
-
-            $em = $this->get("doctrine.orm.entity_manager");
-            /*
-             * Iniciar estado del servidor.
-             * Dejar sólo un estado del bot (prevenir duplicados).
-             * Marcar el estado como running, y resetear
-             * los demás valores.
-             */
-
-            $em->createQueryBuilder()
-                ->delete('App:ServerStatus', 's')
-                ->where('s.id != :serverId')
-                ->setParameter('serverId', 1)
-                ->getQuery()->execute();
-
-            $bootServer = $em->getRepository("App:ServerStatus")->findOneBy(['id' => 1]);
-            if ($bootServer === null) {
-                $bootServer = new ServerStatus();
-            }
-
-            /* Abortar todas las peticiones previas */
-
-            $getQueue = $qb->select(array('q'))
-                ->from('App:Queue', 'q')
-                ->orderBy('q.id', 'ASC')
-                ->setMaxResults(1)
-                ->getQuery()->getArrayResult();
-            $abortedStatus = $em->getRepository("App:ProcessStatus")->findOneBy(['status' => "ABORTED"]);
-            foreach($getQueue as $queueProccess) {
-                /* Marcar como abortada */
-                $queueProccess->setStatus($abortedStatus->getId());
-                /* Eliminar de la cola */
-                $em->remove($queueProccess);
-            }
-            $em->flush();
-
-            $bootServer->setId(1);
-            $bootServer->setCurrentStatus($em->getRepository("App:ServerStatusOptions")->findOneBy(['status' => 'BOOTING']));
-            $bootServer->setSessionAlerts(0);
-            $bootServer->setSessionErrors(0);
-            $bootServer->setSessionProcessedRequests(0);
-            $bootServer->setSessionWarnings(0);
-            $em->persist($bootServer);
-            $em->flush();
-
-            $ssh = $this->get("app.ssh");
-            if (!$ssh->connect()) {
-                return $this->container->get("response")->error(500, "SERVER_NOT_CONFIGURED");
-            }
-
-            /*
-             * Iniciar sesión del bot.
-             */
-            $botSession = new BotSession();
-            $botSession->setDatetime();
-            $em->persist($botSession);
-            $em->flush();
-            /*
-             * Matar todos procesos el bot que estuvieran corriendo antes.
-             */
-            $ssh->killBotProcess();
-
-            /*
-             * Establecer modo headless.
-             */
-            $ssh->setBotHeadless(true);
-
-            /*
-             * Abrir interfaz gráfica.
-             */
-            $ssh->startX();
-
-            /*
-             * Iniciar el bot y selenium.
-             */
-            $ssh->startSelenium();
-            $ssh->startBot();
-
-            $this->get("app.dblogger")->success("Servidor iniciado.");
-            $ssh->disconnect();
+            $this->takeScreenShoot();
+            $this->bm->close();
+            $this->bm->start();
         }
     }
 
@@ -201,15 +90,6 @@ abstract class Operation
         }
     }
 
-    /*
-     * Manda el estado del servidor (String)
-     */
-    public function setServerStatus($serverStatus)
-    {
-        $this->server->setCurrentStatus($this->em->getRepository("App:ServerStatusOptions")->findOneBy(['status' => $serverStatus]));
-        $this->em->flush();
-    }
-
     private function manageOperation()
     {
         $this->container->get("app.dblogger")->info("OP INTERNAL NAME: " . strtoupper($this->operationName));
@@ -227,7 +107,7 @@ abstract class Operation
             }
         } else {
             $this->updateStatus("STOPPED");
-            $this->setServerStatus("SS_PAGE_DOWN");
+            $this->bm->setBotStatus("SS_PAGE_DOWN");
             $this->container->get("app.dblogger")->info("La página de la seguridad social no está activa.");
         }
 
@@ -385,7 +265,7 @@ abstract class Operation
         try {
             $this->driver->findElement(WebDriverBy::id('Static001'));
             $this->updateStatus("STOPPED");
-            $this->setServerStatus("SS_PAGE_DOWN");
+            $this->bm->setBotStatus("SS_PAGE_DOWN");
             $this->container->get("app.dblogger")->info("La página de la seguridad social está en mantenimiento.");
             return true;
         } catch (\Exception $e) {

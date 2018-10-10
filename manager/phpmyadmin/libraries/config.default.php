@@ -83,7 +83,7 @@ $cfg['LoginCookieValidityDisableWarning'] = false;
 $cfg['ReservedWordDisableWarning'] = false;
 
 /**
- * Show warning about incomplete translations on certain threshold.
+ * Show warning about incomplete Translations on certain threshold.
  *
  * @global boolean $cfg['TranslationWarningThreshold']
  */

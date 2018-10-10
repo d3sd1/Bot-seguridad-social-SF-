@@ -3,6 +3,7 @@
 namespace App\Command;
 set_time_limit(0);
 
+use App\Entity\Queue;
 use App\Utils\Commands;
 use App\Utils\CommandUtils;
 use Facebook\WebDriver\Chrome\ChromeDriver;
@@ -15,6 +16,7 @@ use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Facebook\WebDriver\Chrome\ChromeOptions;
 
 class StartBot extends ContainerAwareCommand
 {
@@ -115,7 +117,7 @@ class StartBot extends ContainerAwareCommand
              * Instanciar la automatización
              */
 
-            new $taskClass($taskData, $this->getContainer(), $this->em, $this->server);
+            new $taskClass($taskData, $this->getContainer(), $this->em, $this->selenium);
 
         } catch (\Exception $e) {
             $this->log->error("Ha ocurrido un error interno en el bot [BOT TASK MANAGER]: " . $e->getMessage());
@@ -124,6 +126,12 @@ class StartBot extends ContainerAwareCommand
 
     private function initSeleniumDriver()
     {
+
+        /*
+        * Iniciar Selenium driver
+        */
+
+        $this->bm->start();
 
         /*
          * CARGAR CONTROLADOR
@@ -140,11 +148,10 @@ class StartBot extends ContainerAwareCommand
                     $options = new ChromeOptions();
                     if ($GLOBALS["debug"]) {
                         $options->addArguments(array(
-                            '--headless',
-                            '--disable-gpu',
+                            '--start-maximized',
+                            'user-data-dir="/home/andrei/.config/google-chrome/Default"'
                         ));
                     }
-                    $caps->setCapability(ChromeDriver::PROFILE, file_get_contents('/var/www/drivers/profiles/chrome/profile.zip.b64'));
                     break;
                 case "firefox":
                     $caps = DesiredCapabilities::firefox();
@@ -181,6 +188,7 @@ class StartBot extends ContainerAwareCommand
              */
             $this->em = $this->getContainer()->get('doctrine')->getManager();
             $this->bm = $this->getContainer()->get('bot.manager');
+            $this->log = $this->getContainer()->get('app.dblogger');
 
             /*
              * Marcar estado del bot como iniciando.
@@ -196,11 +204,6 @@ class StartBot extends ContainerAwareCommand
              * Iniciar Selenium Driver.
              */
             $this->initSeleniumDriver();
-
-            /*
-             * Check parameters for internal SO headless modes.
-             */
-            $this->bm->wetherHeadless();
 
             /*
              * Preparar query para la cola.

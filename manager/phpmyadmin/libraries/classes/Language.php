@@ -193,7 +193,7 @@ class Language
         $GLOBALS['l']['a_meta_dir'] = $GLOBALS['text_dir'];
         $GLOBALS['l']['a_meta_language'] = $this->code;
 
-        /* TCPDF translations */
+        /* TCPDF Translations */
         $GLOBALS['l']['w_page'] = __('Page number:');
 
         /* Show possible warnings from langauge selection */

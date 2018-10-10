@@ -16,62 +16,62 @@ class BotManager
 {
     private $container;
     private $em;
-    private $ssh;
 
     public function __construct(ContainerInterface $container, EntityManager $em)
     {
         $this->container = $container;
         $this->em = $em;
-        $this->ssh = $this->get("app.ssh");
     }
 
     public function start() {
-        /*
-         * Iniciar sesión del bot.
-         */
+        $this->abortPendingOperations();
 
-        $ssh = $this->get("app.ssh");
-        if (!$ssh->connect()) {
-            return $this->container->get("response")->error(500, "SERVER_NOT_CONFIGURED");
-        }
-
-        /*
-         * Abrir interfaz gráfica.
-         */
-        $ssh->startX();
-
-        /*
-         * Iniciar el bot y selenium.
-         */
-        $ssh->startSelenium();
-        $ssh->startBot();
-        /*
-         * Matar todos procesos el bot que estuvieran corriendo antes.
-         */
-        $ssh->killBotProcess();
-        $this->get("app.dblogger")->success("Servidor iniciado.");
-        $ssh->disconnect();
         $botSession = new BotSession();
         $botSession->setDatetime();
         $this->em->persist($botSession);
         $this->em->flush();
     }
 
-    public function close() {
-        $ssh = $this->get("app.ssh");
-        if (!$ssh->connect()) {
-            return $this->container->get("response")->error(500, "SERVER_NOT_CONFIGURED");
+    private function abortPendingOperations() {
+        /* Abortar todas las peticiones previas */
+        $qb = $this->em->createQueryBuilder();
+        $getQueue = $qb->select(array('q'))
+            ->from('App:Queue', 'q')
+            ->orderBy('q.id', 'ASC')
+            ->getQuery()->getResult();
+
+        $abortedStatus = $this->em->getRepository("App:ProcessStatus")->findOneBy(['status' => "ABORTED"]);
+
+        foreach($getQueue as $queueProccess) {
+            /* Marcar como abortada */
+            $qb = $this->em->createQueryBuilder();
+
+            $mainName = explode("_",strtolower($queueProccess->getProcessType()->getType()));
+            $finalClassName = "";
+            foreach($mainName as $subName) {
+                $finalClassName .= ucfirst($subName);
+            }
+
+            $operation = $qb->select(array('t'))
+                ->from('App:Queue', 'q')
+                ->join("App:" . $finalClassName, "t", "WITH", "q.referenceId = t.id")
+                ->getQuery()
+                ->setMaxResults(1)
+                ->getOneOrNullResult();
+            $operation->setStatus($abortedStatus->getId());
+            /* Eliminar de la cola */
+            $this->container->get("app.dblogger")->success("Abortada petición con ID " . $queueProccess->getId() . " del tipo " . $queueProccess->getProcessType()->getType());
+            $this->em->remove($queueProccess);
         }
-        /*
-         * Matar todos procesos el bot que estén corriendo.
-         */
-        $ssh->killBotProcess();
-        $ssh->disconnect();
+        $this->em->flush();
+    }
+
+    public function close() {
 
         /*
          * Marcar servidor como inactivo
          */
-        $em = $this->get("doctrine.orm.entity_manager");
+        $em = $this->em;
         $qb = $em->createQueryBuilder();
         $server = $qb->select(array('s'))
             ->from('App:ServerStatus', 's')
@@ -83,7 +83,7 @@ class BotManager
             $server->setCurrentStatus($em->getRepository("App:ServerStatusOptions")->findOneBy(['status' => "OFFLINE"]));
             $em->flush();
         }
-        $this->get("app.dblogger")->success("Servidor detenido.");
+        $this->container->get("app.dblogger")->success("Servidor detenido.");
     }
 
     public function status() {

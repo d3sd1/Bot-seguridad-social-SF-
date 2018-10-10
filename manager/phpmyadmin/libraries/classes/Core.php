@@ -316,7 +316,7 @@ class Core
      */
     public static function getPHPDocLink($target)
     {
-        /* List of PHP documentation translations */
+        /* List of PHP documentation Translations */
         $php_doc_languages = array(
             'pt_BR', 'zh', 'fr', 'de', 'it', 'ja', 'pl', 'ro', 'ru', 'fa', 'es', 'tr'
         );

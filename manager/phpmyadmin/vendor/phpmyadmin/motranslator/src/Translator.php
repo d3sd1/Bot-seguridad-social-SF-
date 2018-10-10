@@ -30,7 +30,7 @@ use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
  * the system's gettext abilities.
  * It can read MO files and use them for translating strings.
  *
- * It caches ll strings and translations to speed up the string lookup.
+ * It caches ll strings and Translations to speed up the string lookup.
  */
 class Translator
 {
@@ -120,7 +120,7 @@ class Translator
             $originals = $stream->readint($unpack, 12);
             $translations = $stream->readint($unpack, 16);
 
-            /* get original and translations tables */
+            /* get original and Translations tables */
             $table_originals = $stream->readintarray($unpack, $originals, $total * 2);
             $table_translations = $stream->readintarray($unpack, $translations, $total * 2);
 

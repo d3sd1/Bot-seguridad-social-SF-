@@ -91,7 +91,7 @@ class Session
 
         /*
          * Session initialization is done before selecting language, so we
-         * can not use translations here.
+         * can not use Translations here.
          */
         Core::fatalError(
             'Error during session start; please check your PHP and/or '

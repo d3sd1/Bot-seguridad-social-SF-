@@ -279,7 +279,7 @@ var Documentation = {
   }
 };
 
-// quick alias for translations
+// quick alias for Translations
 _ = Documentation.gettext;
 
 $(document).ready(function() {
