@@ -116,7 +116,6 @@ class BotController extends Controller
         return $this->container->get("response")->success("LAST_SESSION_ID", $sessionId);
     }
 
-    //TODO: hacer todos los status setter and getter ya que ahora no funcionan.
     /**
      * Ver estado del bot.
      * @FOSRest\Get("/status")

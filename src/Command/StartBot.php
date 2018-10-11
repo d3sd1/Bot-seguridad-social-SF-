@@ -154,8 +154,8 @@ class StartBot extends ContainerAwareCommand
                     break;
                 case "firefox":
                     $caps = DesiredCapabilities::firefox();
-                    if ($GLOBALS["debug"]) {
-                        //TODO: comando EXPORT MOZ_HEADLESS=1
+                    if (!$GLOBALS["debug"]) {
+                        $this->bm->setHeadlessEnv();
                     }
                     $caps->setCapability(FirefoxDriver::PROFILE, file_get_contents('/var/www/drivers/profiles/firefox/profile.zip.b64'));
                     break;
@@ -178,7 +178,8 @@ class StartBot extends ContainerAwareCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        //TODO: revisar si se hq pasado el param debug. si se ha pasado iniciar con debug y sino no.
+        //TODO: revisar si se hq pasado el param debug. si se ha pasado iniciar con debug y sino no. ademas revisar que funcionen las globals
+        //TODO: que se manden correpos (ahora mismo no se envía)
         $GLOBALS['debug'] = false;
         try {
 

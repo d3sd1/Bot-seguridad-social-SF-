@@ -50,5 +50,5 @@ services:
         public: true
     so.commands:
         class: App\Utils\Commands
-        arguments: ["@service_container", '@doctrine.orm.entity_manager']
+        arguments: ["@service_container"]
         public: true
