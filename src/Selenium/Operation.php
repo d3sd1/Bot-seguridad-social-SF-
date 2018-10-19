@@ -6,6 +6,7 @@ use Facebook\WebDriver\WebDriverExpectedCondition;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Doctrine\ORM\EntityManager;
 use Facebook\WebDriver\WebDriverBy;
+use Facebook\WebDriver\Remote\LocalFileDetector;
 use App\Entity\ServerStatus;
 
 abstract class Operation
@@ -18,6 +19,7 @@ abstract class Operation
     protected $operationName;
     protected $server;
 
+    //TODO: cerrar driver siempre que pete.s
     public function __construct(\App\Entity\Operation $operation, ContainerInterface $container, EntityManager $em, $seleniumDriver)
     {
         try {
@@ -32,12 +34,35 @@ abstract class Operation
             $this->operationName = array_values(array_slice(explode("\\", get_class($operation)), -1))[0];
             $this->container->get("app.dblogger")->success("Iniciando operación " . strtolower($this->operationName) . " ID: " . $this->operation->getId());
 
-            /*$this->driver->get("chrome://version");
-            $this->takeScreenShoot();
-            $this->driver->get("chrome://policy");
+            /* Fix para chrome: IMPORTAR CERTIFICADO */
+            $this->driver->get("chrome://settings/?search=cert");
+            sleep(2);
             $this->takeScreenShoot();
 
-            die();*/
+            //click on certificate manager
+            $this->driver->findElement(WebDriverBy::cssSelector('settings-ui /deep/ settings-main /deep/ settings-basic-page /deep/ settings-section /deep/ settings-privacy-page /deep/ #manageCertificates'))->click();
+            //click on import
+            // getting the input element
+            $this->driver->findElement(WebDriverBy::cssSelector('settings-ui /deep/ #main /deep/ settings-basic-page /deep/ settings-section  settings-privacy-page /deep/ settings-subpage certificate-manager /deep/ #personalCerts /deep/ #import'))->click();
+
+            sleep(2);
+            $this->takeScreenShoot();
+            die();
+            sleep(2);
+            // upload the file and submit the form
+            $this->driver->switchTo()->activeElement()->sendKeys("/var/www/cert.pem")->submit();
+
+            sleep(1);
+            //input password
+
+            $this->takeScreenShoot();
+            //click on send
+           // $this->driver->findElement(WebDriverBy::cssSelector('settings-ui /deep/ #main /deep/ settings-basic-page /deep/ settings-section  settings-privacy-page /deep/ settings-subpage certificate-manager /deep/ certificate-password-decryption-dialog /deep/ #password /deep/ #input'))->sendKeys(getenv("CERT_PASSWORD"));
+           // $this->driver->findElement(WebDriverBy::cssSelector('settings-ui /deep/ #main /deep/ settings-basic-page /deep/ settings-section  settings-privacy-page /deep/ settings-subpage certificate-manager /deep/ certificate-password-decryption-dialog /deep/ #ok'))->click();
+
+            $this->takeScreenShoot();
+            $this->driver->close();
+            die();
 
 
             /*
