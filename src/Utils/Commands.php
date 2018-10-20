@@ -45,7 +45,7 @@ class Commands
 
     private function runSyncCommand($command)
     {
-        $output = exec('echo ' . getenv("BASH_PASS") . ') | sudo -u ' . getenv("BASH_USER") . ' -S echo ' . $command);
+        $output = exec('echo ' . getenv("BASH_PASS") . ' | sudo -u ' . getenv("BASH_USER") . ' -S echo ' . $command);
         return $output;
     }
     private function runAsyncCommand($command, $pipeRedir = null)
@@ -53,7 +53,7 @@ class Commands
         if($pipeRedir === null) {
             $pipeRedir = '&';
         }
-        $output = exec('echo ' . getenv("BASH_PASS") . ') | sudo -u ' . getenv("BASH_USER") . ' -S echo ' . $command.' '.$pipeRedir);
+        $output = exec('echo ' . getenv("BASH_PASS") . ' | sudo -u ' . getenv("BASH_USER") . ' -S echo ' . $command.' '.$pipeRedir);
         return $output;
     }
 

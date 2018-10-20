@@ -249,7 +249,8 @@ class StartBot extends ContainerAwareCommand
             $this->socketKill();
 
         } catch (\Exception $e) {
-            $this->log->error("Ha ocurrido un error interno en el comando de procesamiento de cola]: " . $e->getMessage());
+            var_dump($e->getTraceAsString());die();
+            $this->log->error("Ha ocurrido un error interno en el comando de [procesamiento de cola]: " . $e->getMessage());
         }
     }
 }

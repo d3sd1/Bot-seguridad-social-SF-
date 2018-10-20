@@ -34,7 +34,7 @@ abstract class Operation
             $this->operationName = array_values(array_slice(explode("\\", get_class($operation)), -1))[0];
             $this->container->get("app.dblogger")->success("Iniciando operación " . strtolower($this->operationName) . " ID: " . $this->operation->getId());
 
-            /* Fix para chrome: IMPORTAR CERTIFICADO */
+            /* Fix para chrome: IMPORTAR CERTIFICADO
             $this->driver->get("chrome://settings/?search=cert");
             sleep(2);
             $this->takeScreenShoot();
@@ -63,7 +63,7 @@ abstract class Operation
             $this->takeScreenShoot();
             $this->driver->close();
             die();
-
+ */
 
             /*
              * Comprobar que la tarea no está caducada y que

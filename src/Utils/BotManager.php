@@ -164,7 +164,8 @@ class BotManager
     }
 
     public function getBotStatus() {
-        return $this->em->getRepository("App:ServerStatus")->findAll()[0];
+        $srvStatus = $this->em->getRepository("App:ServerStatus")->findAll();
+        return [0];
     }
     public function getStatus($status) {
         return $this->em->getRepository("App:ServerStatusOptions")->findOneBy(['status' => $status]);
@@ -181,15 +182,4 @@ class BotManager
             ->getQuery()->getSingleResult();
     }
 
-    public function setHeadlessEnv() {
-        /*
-        * Chrome tiene otro manager para esto, esto es sólo para morzilla
-        */
-        if($GLOBALS["debug"]) {
-            $this->runSyncCommand("EXPORT MOZ_HEADLESS=0");
-        }
-        else {
-            $this->runSyncCommand("EXPORT MOZ_HEADLESS=1");
-        }
-    }
 }
