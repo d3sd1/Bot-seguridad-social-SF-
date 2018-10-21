@@ -25,7 +25,7 @@ class Commands
             "pipe" => null
         ],
         "selenium" => [
-            "command" => "mkdir -p /var/www/debug/Selenium/{{sessionId}} && DISPLAY=:99 nohup java -Dwebdriver.server.session.timeout=99999999 -jar 3.14.0.jar -timeout 99999999",
+            "command" => "mkdir -p /var/www/debug/Selenium/{{sessionId}  && DISPLAY=:99 nohup java -Dwebdriver.server.session.timeout=99999999 -Dwebdriver.gecko.driver=\"/usr/bin/geckodriver\"  -jar /var/www/drivers/selenium-server/3.14.0.jar -port 5000 -timeout 99999999 && nohup /usr/bin/geckodriver",
             "async" => true,
             "pipe" => "&> /var/www/debug/Selenium/{{sessionId}}/sel.log"
         ],
