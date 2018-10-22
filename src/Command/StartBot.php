@@ -120,7 +120,6 @@ class StartBot extends ContainerAwareCommand
             new $taskClass($taskData, $this->getContainer(), $this->em, $this->selenium);
 
         } catch (\Exception $e) {
-            var_dump($e->getMessage());die();
             $this->log->error("Ha ocurrido un error interno en el bot [BOT TASK MANAGER]: " . $e->getMessage());
         }
     }
@@ -155,8 +154,8 @@ class StartBot extends ContainerAwareCommand
                     break;
                 case "firefox":
                     $caps = DesiredCapabilities::firefox();
-                    $caps->setCapability('marionette', true);
-                    $caps->setCapability('webdriver.gecko.driver', "/usr/bin/geckodriver");
+                    //$caps->setCapability('marionette', true);
+                    $caps->setCapability('webdriver.gecko.driver', "/var/www/drivers/gecko/0.20.1");
                     if (!$GLOBALS["debug"]) {
                         $this->bm->setHeadlessEnv();
                     }
@@ -175,7 +174,6 @@ class StartBot extends ContainerAwareCommand
             $this->log->error("Firefox drivers not loaded (GeckoDriver). Exiting bot.");
             exit();
         } catch (WebDriverCurlException $e) {
-            var_dump($e->getMessage());die();
             $this->log->error("Selenium driver not loaded (Did u loaded GeckoDriver?). Details: " . $e->getMessage());
             exit();
         }
@@ -254,7 +252,6 @@ class StartBot extends ContainerAwareCommand
             $this->socketKill();
 
         } catch (\Exception $e) {
-            var_dump($e->getMessage());die();
             $this->log->error("Ha ocurrido un error interno en el comando de [procesamiento de cola]: " . $e->getMessage());
         }
     }

@@ -14,6 +14,10 @@ use Psr\Container\ContainerInterface;
 
 class Commands
 {
+    /*
+     * NOTA:
+     * Se usa el driver 3.8.1, a partir del 3.11 sólo funcionan bien en java porque ya no admite el parámetro enablepasstrought y no reconoce los elementos.
+     */
     private $processes = [
         "java",
         "gecko",
@@ -25,7 +29,7 @@ class Commands
             "pipe" => null
         ],
         "selenium" => [
-            "command" => "mkdir -p /var/www/debug/Selenium/{{sessionId}  && DISPLAY=:99 nohup java -Dwebdriver.server.session.timeout=99999999 -Dwebdriver.gecko.driver=\"/usr/bin/geckodriver\"  -jar /var/www/drivers/selenium-server/3.14.0.jar -port 5000 -timeout 99999999 && nohup /usr/bin/geckodriver",
+            "command" => "Xvfb :99 & export DISPLAY=:99 && export DISPLAY=127.0.0.1:99 && export MOZ_CRASHREPORTER_SHUTDOWN=1 && mkdir -p /var/www/debug/Selenium/{{sessionId} && DISPLAY=:99 java -Dwebdriver.gecko.driver=/var/www/drivers/gecko/0.20.1 -Dwebdriver.server.session.timeout=99999999  -jar 3.8.1.jar   -timeout 99999999 -enablePassThrough false",
             "async" => true,
             "pipe" => "&> /var/www/debug/Selenium/{{sessionId}}/sel.log"
         ],
