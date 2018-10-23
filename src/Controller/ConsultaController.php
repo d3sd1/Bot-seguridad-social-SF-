@@ -119,6 +119,7 @@ class ConsultaController extends Controller
             return $this->container->get("response")->success("CREATED", $consulta->getId());
 
         } catch (\Exception $e) {
+            var_dump($e->getMessage());die();
             return $this->container->get("response")->error(400, $this->get("app.exception")->capture($e));
         }
     }

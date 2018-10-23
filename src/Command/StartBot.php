@@ -51,7 +51,7 @@ class StartBot extends ContainerAwareCommand
                 socket_bind($this->socket, getenv("INTERNAL_SOCKETS_HOST"), getenv("INTERNAL_SOCKETS_PORT"));
                 socket_listen($this->socket, 3);
             } catch (\Exception $e) {
-                $this->log->error("El servidor ya estaba iniciado.");
+                $this->log->error("Error al crear sockets: " . $e->getMessage());
                 exit();
             }
         }
@@ -156,9 +156,6 @@ class StartBot extends ContainerAwareCommand
                     $caps = DesiredCapabilities::firefox();
                     //$caps->setCapability('marionette', true);
                     $caps->setCapability('webdriver.gecko.driver', "/var/www/drivers/gecko/0.20.1");
-                    if (!$GLOBALS["debug"]) {
-                        $this->bm->setHeadlessEnv();
-                    }
 
                     $caps->setCapability(FirefoxDriver::PROFILE, file_get_contents('/var/www/drivers/profiles/firefox/profile.zip.b64'));
                     break;
@@ -181,8 +178,6 @@ class StartBot extends ContainerAwareCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        //TODO: revisar si se hq pasado el param debug. si se ha pasado iniciar con debug y sino no. ademas revisar que funcionen las globals
-        //TODO: que se manden correpos (ahora mismo no se envía)
         $GLOBALS['debug'] = false;
         try {
 

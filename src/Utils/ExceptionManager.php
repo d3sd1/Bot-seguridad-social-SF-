@@ -31,7 +31,7 @@ class ExceptionManager
      */
     public function capture(\Exception $exception)
     {
-        $server = $this->em->getRepository("App:ServerStatus")->findOneBy(['id' => 1]);
+        $server = $this->em->getRepository("App:ServerStatus")->findAll()[0];
         $this->container->get("app.dblogger")->error("Llamada al rest TRACE: [" . $exception->getTraceAsString() . "] EXCEPTION: [" . $exception->getMessage() . "]");
         switch (ltrim(get_class($exception), "\\")) {
             case "JMS\Serializer\Exception\RuntimeException":

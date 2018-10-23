@@ -15,17 +15,20 @@ class InternalSocketClient
     public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
+        $this->getConnection();
     }
 
-    private function connect()
+    public function getConnection()
     {
-        if ($this->con === false) {
-            try {
-                $this->con = socket_create(AF_INET, SOCK_STREAM, 0) or die("Could not create socket\n");
+        try {
+            if ($this->con === false) {
+                $this->con = socket_create(AF_INET, SOCK_STREAM, 0);
                 $status = socket_connect($this->con, getenv("INTERNAL_SOCKETS_HOST"), getenv("INTERNAL_SOCKETS_PORT"));
-            } catch (\Exception $e) {
-                $this->container->get("app.exception")->capture(new \App\Exceptions\SocketCommunicationException("Could not connect trought internal sockets. Server offline: " . $e->getMessage()));
             }
+            return true;
+        } catch (\Exception $e) {
+            $this->container->get("app.exception")->capture(new \App\Exceptions\SocketCommunicationException("Could not create internal sockets. Server offline: " . $e->getMessage()));
+            return false;
         }
     }
 
@@ -34,7 +37,6 @@ class InternalSocketClient
      */
     public function send($data)
     {
-        $this->connect();
         try {
             socket_write($this->con, $data, strlen($data));
             $this->close();

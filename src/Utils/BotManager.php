@@ -24,47 +24,62 @@ class BotManager
     }
 
     public function start() {
-        $this->close();
-        $this->abortPendingOperations();
-
+        $this->setBotStatus("BOOTING");
         $botSession = new BotSession();
         $botSession->setDatetime();
         $this->em->persist($botSession);
         $this->em->flush();
+        $success = $this->abortPendingOperations();
+        if($success) {
+            $this->setBotStatus("WAITING_TASKS");
+        }
+        else {
+            $this->setBotStatus("OFFLINE");
+        }
+        return $success;
     }
 
     private function abortPendingOperations() {
-        /* Abortar todas las peticiones previas */
-        $qb = $this->em->createQueryBuilder();
-        $getQueue = $qb->select(array('q'))
-            ->from('App:Queue', 'q')
-            ->orderBy('q.id', 'ASC')
-            ->getQuery()->getResult();
-
-        $abortedStatus = $this->em->getRepository("App:ProcessStatus")->findOneBy(['status' => "ABORTED"]);
-
-        foreach($getQueue as $queueProccess) {
-            /* Marcar como abortada */
+        try {
+            /* Abortar todas las peticiones previas */
             $qb = $this->em->createQueryBuilder();
-
-            $mainName = explode("_",strtolower($queueProccess->getProcessType()->getType()));
-            $finalClassName = "";
-            foreach($mainName as $subName) {
-                $finalClassName .= ucfirst($subName);
-            }
-
-            $operation = $qb->select(array('t'))
+            $getQueue = $qb->select(array('q'))
                 ->from('App:Queue', 'q')
-                ->join("App:" . $finalClassName, "t", "WITH", "q.referenceId = t.id")
-                ->getQuery()
-                ->setMaxResults(1)
-                ->getOneOrNullResult();
-            $operation->setStatus($abortedStatus->getId());
-            /* Eliminar de la cola */
-            $this->container->get("app.dblogger")->success("Abortada petición con ID " . $queueProccess->getId() . " del tipo " . $queueProccess->getProcessType()->getType());
-            $this->em->remove($queueProccess);
+                ->orderBy('q.id', 'ASC')
+                ->getQuery()->getResult();
+
+            $abortedStatus = $this->em->getRepository("App:ProcessStatus")->findOneBy(['status' => "ABORTED"]);
+
+            foreach ($getQueue as $queueProccess) {
+                /* Marcar como abortada */
+                $qb = $this->em->createQueryBuilder();
+
+                $mainName = explode("_", strtolower($queueProccess->getProcessType()->getType()));
+                $finalClassName = "";
+                foreach ($mainName as $subName) {
+                    $finalClassName .= ucfirst($subName);
+                }
+
+                $operation = $qb->select(array('t'))
+                    ->from('App:Queue', 'q')
+                    ->join("App:" . $finalClassName, "t", "WITH", "q.referenceId = t.id")
+                    ->getQuery()
+                    ->setMaxResults(1)
+                    ->getOneOrNullResult();
+                $operation->setStatus($abortedStatus->getId());
+                /* Eliminar de la cola */
+                $this->container->get("app.dblogger")->success("Abortada petición con ID " . $queueProccess->getId() . " del tipo " . $queueProccess->getProcessType()->getType());
+                $this->em->remove($queueProccess);
+            }
+            $this->em->flush();
         }
-        $this->em->flush();
+        catch(\Exception $e)
+        {
+            $this->container->get("app.dblogger")->success("Excepción al abortar peticiones pendientes: " . $e->getMessage());
+            return false;
+        }
+
+        return true;
     }
 
     public function close() {
@@ -72,22 +87,17 @@ class BotManager
         /*
          * Marcar servidor como inactivo
          */
-        $em = $this->em;
-        $qb = $em->createQueryBuilder();
-        $server = $qb->select(array('s'))
-            ->from('App:ServerStatus', 's')
-            ->orderBy('s.id', 'ASC')
-            ->getQuery()
-            ->setMaxResults(1)
-            ->getOneOrNullResult();
-        if ($server !== null) {
-            $server->setCurrentStatus($em->getRepository("App:ServerStatusOptions")->findOneBy(['status' => "OFFLINE"]));
-            $em->flush();
+        $success = $this->container->get("so.commands")->resetNavigator() && $this->container->get("so.commands")->killBot();
+        if($success) {
+            $this->setBotStatus("OFFLINE");
         }
-        $this->container->get("app.dblogger")->success("Servidor detenido.");
+        else {
+            $this->setBotStatus("CRASHED");
+        }
+        return $success;
     }
 
-    public function status() {
+    public function status() { //DEPRECEATED?
 
         $em = $this->get("doctrine.orm.entity_manager");
         $ssh = $this->get("app.ssh");
@@ -139,7 +149,7 @@ class BotManager
 
     public function setBotStatus($status) {
         $serverStatusRows = $this->em->getRepository("App:ServerStatus")->findAll();
-        if($serverStatusRows >= 2) {
+        if(count($serverStatusRows) >= 2) {
             $this->em->createQueryBuilder()
                 ->delete('App:ServerStatus', 's')
                 ->where('s.id != :serverId')
@@ -147,7 +157,7 @@ class BotManager
                 ->getQuery()->execute();
         }
 
-        if($serverStatusRows <= 0){
+        if(count($serverStatusRows) <= 0){
             $bootServer = new ServerStatus();
             $bootServer->setId(1);
             $bootServer->setCurrentStatus($this->getStatus('OFFLINE'));
@@ -158,6 +168,7 @@ class BotManager
             $this->em->persist($bootServer);
             $this->em->flush();
         }
+        $serverStatusRows = $this->em->getRepository("App:ServerStatus")->findAll();
         $serverRealStatus = $this->getBotStatus();
         $serverRealStatus->setCurrentStatus($this->getStatus($status));
         $this->em->flush();
@@ -165,7 +176,12 @@ class BotManager
 
     public function getBotStatus() {
         $srvStatus = $this->em->getRepository("App:ServerStatus")->findAll();
-        return [0];
+        if(count($srvStatus) == 0)
+        {
+            $this->setBotStatus("OFFLINE");
+            $srvStatus = $this->em->getRepository("App:ServerStatus")->findAll();
+        }
+        return $srvStatus[0];
     }
     public function getStatus($status) {
         return $this->em->getRepository("App:ServerStatusOptions")->findOneBy(['status' => $status]);

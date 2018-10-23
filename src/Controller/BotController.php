@@ -133,6 +133,7 @@ class BotController extends Controller
     {
         if($this->get("bot.manager")->start()) {
             $this->get("app.dblogger")->success("Servidor iniciado correctamente.");
+            $this->container->get("so.commands")->startBot();
             return $this->container->get("response")->success("SERVER_STARTED");
         }
         else {
@@ -147,8 +148,9 @@ class BotController extends Controller
      */
     public function closeBot(Request $request)
     {
+
         if($this->get("bot.manager")->close()) {
-            $this->get("app.dblogger")->success("Servidor iniciado correctamente.");
+            $this->get("app.dblogger")->success("Servidor detenido correctamente.");
             return $this->container->get("response")->success("SERVER_CLOSED");
         }
         else {
