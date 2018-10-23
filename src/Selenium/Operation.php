@@ -289,7 +289,7 @@ abstract class Operation
     protected function hasFormErrors($log = true, $consultaAltasCCC = false)
     {
         if ($log) {
-            $this->container->get("app.dblogger")->warning("Comprobando errores...");
+            $this->container->get("app.dblogger")->info("Comprobando errores...");
         }
 
         /* Primero comprobar errores críticos de la web */
@@ -329,7 +329,7 @@ abstract class Operation
             }
             if ($errorBoxes->isDisplayed() && !$isFalseError) {
                 if ($log) {
-                    $this->container->get("app.dblogger")->warning("Error del formulario encontrado.");
+                    $this->container->get("app.dblogger")->info("Error del formulario encontrado.");
                     $this->updateStatus("ERROR");
                     $this->operation->setErrMsg($errorBoxes->getText());
                     $this->em->flush();

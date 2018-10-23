@@ -19,12 +19,6 @@ class DBLogger
     }
 
     public function sendErrorMail($type,$msg) {
-        $message = (new \Swift_Message('('.$type.') En bot de la seguridad social'))
-            ->setFrom('ss-bot@workout-events.com')
-            ->setBody(
-                'El bot de la seguridad social (192.168.1.32) ha tenido una excepción: '.$msg,
-                'text/html'
-            );
         $recipers = explode(',',getenv('LOG_EMAILS'));
         $log = new InternalLog();
         $log->setMessage("Sending error messages to " .getenv('LOG_EMAILS'));
@@ -36,10 +30,18 @@ class DBLogger
             $log->setMessage("Sent error message to " .$reciper);
             $log->setType($this->em->getRepository("App:LogType")->findOneBy(['type' => $type]));
             $this->em->persist($log);
-            $message->setTo($reciper);
+
+            $message = (new \Swift_Message('('.$type.') En bot de la seguridad social'))
+                ->setFrom('bot-ss@workout-events.com')
+                ->setTo($reciper)
+                ->setBody(
+                    'El bot de la seguridad social (192.168.1.32) ha tenido una excepción: '.$msg,
+                    'text/html'
+                );
+            $this->container->get('mailer')->send($message);
         }
         $this->em->flush();
-        $this->container->get('mailer')->send($message);
+
     }
 
     public function error($msg)

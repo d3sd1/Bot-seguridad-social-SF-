@@ -119,7 +119,6 @@ class Commands
             $this->runAsyncCommand("DISPLAY=:99 java -Dwebdriver.gecko.driver=/var/www/drivers/gecko/0.20.1 -Dwebdriver.server.session.timeout=99999999  -jar /var/www/drivers/selenium-server/3.8.1.jar -timeout 99999999 -enablePassThrough false", "/var/www/debug/Selenium/$sessionId/sel.log");
             sleep(5); //Esperar a que cargue Selenium
             exec("cd /var/www && (nohup php bin/console start-bot >/dev/null 2>&1 &)");
-            echo "inicia";
             $this->container->get("app.dblogger")->success("Iniciado bot correctamente.");
         }
         catch(\Exception $e)
