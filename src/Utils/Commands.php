@@ -117,6 +117,8 @@ class Commands
             $this->runSyncCommand("export DISPLAY=:99 && export DISPLAY=127.0.0.1:99");
             $this->runSyncCommand("export MOZ_CRASHREPORTER_SHUTDOWN=1");
             $this->runAsyncCommand("DISPLAY=:99 java -Dwebdriver.gecko.driver=/var/www/drivers/gecko/0.20.1 -Dwebdriver.server.session.timeout=99999999  -jar /var/www/drivers/selenium-server/3.8.1.jar -timeout 99999999 -enablePassThrough false", "/var/www/debug/Selenium/$sessionId/sel.log");
+
+            $this->runSyncCommand("cd /var/www && php bin/console cache:clear");
             sleep(5); //Esperar a que cargue Selenium
             exec("cd /var/www && (nohup php bin/console start-bot >/dev/null 2>&1 &)");
             $this->container->get("app.dblogger")->success("Iniciado bot correctamente.");

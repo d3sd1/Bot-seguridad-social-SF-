@@ -129,6 +129,7 @@ abstract class Operation
         $this->container->get("app.dblogger")->info("OP SS URL: " . $reqUrl);
         if ($this->checkPageAvailable($reqUrl)) {
             $this->driver->get($reqUrl);
+            sleep(3);
             if ($this->doOperation()) {
                 $this->updateStatus("COMPLETED");
                 $this->removeFromQueue();

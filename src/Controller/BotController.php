@@ -131,8 +131,6 @@ class BotController extends Controller
      */
     public function startBot(Request $request)
     {
-        $this->container->get("app.dblogger")->sendErrorMail("test", "probadno");
-        die("mandados");
         if($this->get("bot.manager")->start()) {
             $this->get("app.dblogger")->success("Servidor iniciado correctamente.");
             $this->container->get("so.commands")->startBot();
