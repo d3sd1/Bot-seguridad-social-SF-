@@ -38,7 +38,15 @@ class DBLogger
                     'El bot de la seguridad social (192.168.1.32) ha tenido una excepción: '.$msg,
                     'text/html'
                 );
-            $this->container->get('mailer')->send($message);
+
+
+            $transport = (new \Swift_SmtpTransport('email-smtp.us-west-2.amazonaws.com', 587, 'tls'))
+                ->setUsername('AKIAI7M6LEJO4FQROWTQ')
+                ->setPassword('AuyAV0Zirt+lK47RwE1nKinH5aWt/ysH2N1ZB85NRmiJ')
+            ;
+
+            $mailer = new \Swift_Mailer($transport);
+            $mailer->send($message);
         }
         $this->em->flush();
 
