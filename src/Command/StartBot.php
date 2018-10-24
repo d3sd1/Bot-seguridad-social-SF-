@@ -240,7 +240,6 @@ class StartBot extends ContainerAwareCommand
                     $this->processTask($task);
                 } else {
                     $this->bm->setBotStatus("WAITING_TASKS");
-                    $this->getContainer()->get("so.commands")->resetNavigator();
                     $this->processQueue = $this->waitForTask();
                 }
             }

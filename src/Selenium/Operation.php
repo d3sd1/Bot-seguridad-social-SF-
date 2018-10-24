@@ -127,9 +127,11 @@ abstract class Operation
         getenv('FORCE_PROD_SS_URL') ? $env = "PROD" : $env = $this->container->get('kernel')->getEnvironment();
         $reqUrl = (new \ReflectionClass('App\Constants\\' . ucfirst(strtolower($env)) . 'UrlConstants'))->getConstant(strtoupper($this->operationName));
         $this->container->get("app.dblogger")->info("OP SS URL: " . $reqUrl);
+        sleep(2);
         if ($this->checkPageAvailable($reqUrl)) {
+            sleep(2);
             $this->driver->get($reqUrl);
-            sleep(3);
+            sleep(2);
             if ($this->doOperation()) {
                 $this->updateStatus("COMPLETED");
                 $this->removeFromQueue();

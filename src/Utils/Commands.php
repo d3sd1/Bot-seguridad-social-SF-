@@ -79,6 +79,7 @@ class Commands
         try
         {
             $this->killProcessByPort(getenv("INTERNAL_SOCKETS_PORT"));
+            $this->killProcessByPort(4444);
             $this->killProcessByName("java");
             $this->killProcessByName("gecko");
             $this->killProcessByName("firefox");
