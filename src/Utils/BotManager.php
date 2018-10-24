@@ -23,6 +23,12 @@ class BotManager
         $this->em = $em;
     }
 
+    public function restartServerSO() {
+        $this->setBotStatus("OFFLINE");
+        $this->abortPendingOperations();
+        $this->container->get("so.commands")->restartServerSO();
+    }
+
     public function start() {
         $this->setBotStatus("BOOTING");
         $botSession = new BotSession();
@@ -95,56 +101,6 @@ class BotManager
             $this->setBotStatus("CRASHED");
         }
         return $success;
-    }
-
-    public function status() { //DEPRECEATED?
-
-        $em = $this->get("doctrine.orm.entity_manager");
-        $ssh = $this->get("app.ssh");
-        if (!$ssh->connect()) {
-            return $this->container->get("response")->error(500, "SERVER_NOT_CONFIGURED");
-        }
-        $botStatus = $ssh->getStatus();
-        $ssh->disconnect();
-
-        /*
-         * Revisar que a nivel de sistema operativo este OK.
-         */
-        if ($botStatus == "") {
-            $cliServerStatus = false;
-        } else {
-            $cliServerStatus = true;
-        }
-        $qb = $em->createQueryBuilder();
-        $serverStatus = $qb->select(array('s'))
-            ->from('App:ServerStatus', 's')
-            ->orderBy('a.id', 'DESC')
-            ->setMaxResults(1)
-            ->orderBy("s.id", "ASC")
-            ->getQuery()
-            ->getOneOrNullResult();
-        if ($serverStatus !== null) {
-            $dbServerStatus = $serverStatus->getCurrentStatus()->getStatus();
-        } else {
-            $dbServerStatus = "UNKNOWN";
-        }
-        /*
-         * Si en la base de datos está marcado como activo
-         * pero no está corriendo, ha crasheado.
-         * Si está corriendo en cli o no se tiene estado, se coge el estado de la DB.
-         * Y si no, es que está offline (si no está cargando).
-         */
-        if (!$cliServerStatus && $dbServerStatus !== "OFFLINE" && $dbServerStatus !== "BOOTING") {
-            $serverStatusName = "CRASHED";
-        } else if (!$cliServerStatus && $dbServerStatus !== "BOOTING") {
-            $serverStatusName = "OFFLINE";
-        } else {
-            $serverStatusName = $dbServerStatus;
-        }
-        if($serverStatusName != "WAITING_TASKS") {
-            //No notificar consultas de estado del servidor.
-            //$this->get("app.dblogger")->success("Estado del servidor consultado: " . $serverStatusName);
-        }
     }
 
     public function setBotStatus($status) {

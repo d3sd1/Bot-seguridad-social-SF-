@@ -74,6 +74,9 @@ class Commands
         return true;
     }
 
+    public function restartServerSO() {
+        $this->runAsyncCommand("reboot now");
+    }
     public function killBot()
     {
         try
