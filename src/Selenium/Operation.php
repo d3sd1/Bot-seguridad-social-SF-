@@ -196,7 +196,7 @@ abstract class Operation
 
     public function takeScreenShoot($element = null)
     {
-        /*if ($this->container->get('kernel')->getEnvironment()) {
+        if ($this->container->get('kernel')->getEnvironment()) {
             $path = $this->container->get('kernel')->getRootDir() . "/../debug/" . $this->operationName . "/" . $this->operation->getId();
             if (!is_dir($path)) {
                 $this->container->get("app.dblogger")->info("Creada carpeta para la operación y su pantallazo.");
@@ -242,7 +242,7 @@ abstract class Operation
 
             return $element_screenshot;
         }
-        return false;*/
+        return false;
     }
 
     protected function waitFormSubmit($expected)
