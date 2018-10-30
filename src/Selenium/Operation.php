@@ -255,7 +255,7 @@ abstract class Operation
             $this->container->get("app.dblogger")->info("Envío satisfactorio. Comprobando errores.");
             $found = true;
         } catch (\Exception $e) {
-            $this->container->get("app.dblogger")->info("Envío erróneo: " . $e->getMessage());
+            $this->container->get("app.dblogger")->info("Envío erróneo (Si hay otro error de envío, este es asociado y no principal): " . $e->getMessage());
             $this->container->get("app.dblogger")->info("SOURCE: " . $this->driver->getPageSource());
             $found = false;
         }
