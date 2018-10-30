@@ -19,7 +19,6 @@ abstract class Operation
     protected $operationName;
     protected $server;
 
-    //TODO: cerrar driver siempre que pete.s
     public function __construct(\App\Entity\Operation $operation, ContainerInterface $container, EntityManager $em, $seleniumDriver)
     {
         try {
@@ -250,13 +249,14 @@ abstract class Operation
         $this->container->get("app.dblogger")->info("Esperando envío del formulario...");
         try {
             $this->container->get("app.dblogger")->info("Comprobando envío...");
-            $this->driver->wait(6, 300)->until(
+            $this->driver->wait(10, 300)->until(
                 WebDriverExpectedCondition::visibilityOfElementLocated($expected)
             );
             $this->container->get("app.dblogger")->info("Envío satisfactorio. Comprobando errores.");
             $found = true;
         } catch (\Exception $e) {
             $this->container->get("app.dblogger")->info("Envío erróneo: " . $e->getMessage());
+            $this->container->get("app.dblogger")->info("SOURCE: " . $this->driver->getPageSource());
             $found = false;
         }
         return $found;
@@ -332,19 +332,19 @@ abstract class Operation
             }
             if ($errorBoxes->isDisplayed() && !$isFalseError) {
                 if ($log) {
-                    $this->container->get("app.dblogger")->info("Error del formulario encontrado.");
+                    $this->container->get("app.dblogger")->warning("Error del formulario encontrado.");
                     $this->updateStatus("ERROR");
                     $this->operation->setErrMsg($errorBoxes->getText());
                     $this->em->flush();
                     $this->removeFromQueue();
-                    $this->container->get("app.dblogger")->error("Error en operación: " . $errorBoxes->getText());
+                    $this->container->get("app.dblogger")->warning("Error en operación: " . $errorBoxes->getText());
                 }
                 return true;
             }
         } catch
         (\Exception $e) {
             if ($log) {
-                $this->container->get("app.dblogger")->info("Formulario sin errores por exception.");
+                $this->container->get("app.dblogger")->error("Formulario sin errores por exception: " + $e->getMessage());
             }
         }
         return false;

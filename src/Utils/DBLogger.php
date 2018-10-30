@@ -68,7 +68,6 @@ class DBLogger
         $log->setMessage($msg);
         $log->setType($this->em->getRepository("App:LogType")->findOneBy(['type' => 'WARNING']));
         $this->em->persist($log);
-        $this->sendErrorMail('WARN',$msg);
         $this->em->flush();
     }
 

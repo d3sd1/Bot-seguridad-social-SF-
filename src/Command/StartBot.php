@@ -240,6 +240,8 @@ class StartBot extends ContainerAwareCommand
                     $this->processTask($task);
                 } else {
                     $this->bm->setBotStatus("WAITING_TASKS");
+                    /* FIX: navegar a otra web para evitar el timeout de la seguridad social. */
+                    $this->selenium->get("http://www.google.es");
                     $this->processQueue = $this->waitForTask();
                 }
             }
