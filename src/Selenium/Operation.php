@@ -33,7 +33,7 @@ abstract class Operation
             $this->operationName = array_values(array_slice(explode("\\", get_class($operation)), -1))[0];
             $this->container->get("app.dblogger")->success("Iniciando operación " . strtolower($this->operationName) . " ID: " . $this->operation->getId());
 
-            /* Fix para chrome: IMPORTAR CERTIFICADO
+            /* DEPRECEATED: Fix para chrome: IMPORTAR CERTIFICADO
             $this->driver->get("chrome://settings/?search=cert");
             sleep(2);
             $this->takeScreenShoot();
@@ -126,11 +126,9 @@ abstract class Operation
         getenv('FORCE_PROD_SS_URL') ? $env = "PROD" : $env = $this->container->get('kernel')->getEnvironment();
         $reqUrl = (new \ReflectionClass('App\Constants\\' . ucfirst(strtolower($env)) . 'UrlConstants'))->getConstant(strtoupper($this->operationName));
         $this->container->get("app.dblogger")->info("OP SS URL: " . $reqUrl);
-        sleep(2);
         if ($this->checkPageAvailable($reqUrl)) {
-            sleep(2);
             $this->driver->get($reqUrl);
-            sleep(2);
+            sleep(10);
             if ($this->doOperation()) {
                 $this->updateStatus("COMPLETED");
                 $this->removeFromQueue();
