@@ -45,7 +45,7 @@ class AnulacionBajaPrevia extends Operation
         /*
          * Seleccionar tipo "anulación baja".
          */
-        $selectBaja = new WebDriverSelect($this->driver->findElement(WebDriverBy::name('cbo_ListaAltasBajas001')));
+        $selectBaja = new WebDriverSelect($this->driver->findElement(WebDriverBy::id('ListaAltasBajas')));
         $selectBaja->selectByVisibleText('Baja');
 
         /*
@@ -60,7 +60,7 @@ class AnulacionBajaPrevia extends Operation
          * Seleccionar el tipo de acción "eliminación".
          */
 
-        $selectBaja = new WebDriverSelect($this->driver->findElement(WebDriverBy::name('cbo_ListaAltasBajas')));
+        $selectBaja = new WebDriverSelect($this->driver->findElement(WebDriverBy::id('ListaAltasBajas')));
         $selectBaja->selectByVisibleText('Eliminación');
 
         /*

@@ -90,8 +90,15 @@ abstract class Operation
             if($e->getMessage() == 'Notice: Undefined index: ELEMENT'){
                 $this->container->get("app.dblogger")->error("El bot ha crasheado. Motivo: El certificado no está instalado en en el navegador o este ha sufrido problemas.");
             }
+            //CRASH PREVENTED
+            else if(!$this->server->getCrashPrevented()) {
+                $this->container->get("app.dblogger")->error("Crash prevented: restarting bot...");
+                $this->container->get("bot.manager")->close();
+                $this->container->get("bot.manager")->start(false);
+            }
             else {
-                $this->container->get("app.dblogger")->error("El bot ha crasheado. Motivo: " . $e->getMessage());
+                $this->container->get("app.dblogger")->error("El bot ha crasheado. URL: ".$this->driver->url()." Motivo: " . $e->getMessage());
+                $this->container->get("app.dblogger")->error("SOURCE: " . $this->driver->getPageSource());
             }
             $this->takeScreenShoot();
             $this->bm->close();
@@ -143,6 +150,9 @@ abstract class Operation
         }
 
         $this->container->get("app.dblogger")->success("Fin de operación " . strtolower($this->operationName) . " ID: " . $this->operation->getId());
+        /* Marcar crash prevented como false ya que se ha realizado correctamente la operación previa que antes si crasheó */
+        $this->server->setCrashPrevented(false);
+        $this->em->flush();
     }
 
     abstract function doOperation();

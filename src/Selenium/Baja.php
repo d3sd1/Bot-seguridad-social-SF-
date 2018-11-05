@@ -31,7 +31,7 @@ class Baja extends Operation
         /*
          * Primero, seleccionar baja en el tipo de formulario.
          */
-        $selectBaja = new WebDriverSelect($this->driver->findElement(WebDriverBy::name('cbo_ListaAltasBajas')));
+        $selectBaja = new WebDriverSelect($this->driver->findElement(WebDriverBy::id('ListaAltasBajas')));
         $selectBaja->selectByVisibleText('Baja');
         /*
          * Rellenar número de afiliación

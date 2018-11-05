@@ -43,6 +43,11 @@ class ServerStatus
     private $sessionProcessedRequests;
 
     /**
+     * @ORM\Column(type="boolean",options={"default": false})
+     */
+    private $crashPrevented;
+
+    /**
      * @return mixed
      */
     public function getId()
@@ -136,6 +141,22 @@ class ServerStatus
     public function setSessionProcessedRequests($sessionProcessedRequests): void
     {
         $this->sessionProcessedRequests = $sessionProcessedRequests;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCrashPrevented()
+    {
+        return $this->crashPrevented;
+    }
+
+    /**
+     * @param mixed $crashPrevented
+     */
+    public function setCrashPrevented($crashPrevented): void
+    {
+        $this->crashPrevented = $crashPrevented;
     }
 
 }

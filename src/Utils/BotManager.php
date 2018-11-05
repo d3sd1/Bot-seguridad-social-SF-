@@ -29,19 +29,23 @@ class BotManager
         $this->container->get("so.commands")->restartServerSO();
     }
 
-    public function start() {
+    public function start($abortPendingOperations = true) {
         $this->setBotStatus("BOOTING");
         $botSession = new BotSession();
         $botSession->setDatetime();
         $this->em->persist($botSession);
         $this->em->flush();
-        $success = $this->abortPendingOperations();
-        if($success) {
-            $this->setBotStatus("WAITING_TASKS");
+        $success = true;
+        if($abortPendingOperations) {
+            $success = $this->abortPendingOperations();
+            if($success) {
+                $this->setBotStatus("WAITING_TASKS");
+            }
+            else {
+                $this->setBotStatus("OFFLINE");
+            }
         }
-        else {
-            $this->setBotStatus("OFFLINE");
-        }
+
         return $success;
     }
 
