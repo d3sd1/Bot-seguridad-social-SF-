@@ -99,7 +99,7 @@ class CambioContratoController extends Controller
 
         if ($cambioTcoCons != null) {
             /* Enviar notificación al bot para procesar cola */
-            $this->get("app.sockets")->notify();
+            //DEPRECEATED $REAL TIME SOCKETS DUE TO PHP BAD SOCKETS $this->get("app.sockets")->notify();
 
             $this->get("app.dblogger")->info("Llamada al rest (COMPROBACIÓN CAMBIO CONTRATO CONSOLIDADo) ID: " . $cambioTcoCons->getId() . ", ESTADO: " . $cambioTcoCons->getStatus());
             $status = $em->getRepository("App:ProcessStatus")->findOneBy(['id' => $cambioTcoCons->getStatus()]);
@@ -196,7 +196,7 @@ class CambioContratoController extends Controller
 
             if ($task != null) {
                 /* Enviar notificación al bot para procesar cola */
-                $this->get("app.sockets")->notify();
+                //DEPRECEATED $REAL TIME SOCKETS DUE TO PHP BAD SOCKETS $this->get("app.sockets")->notify();
 
                 /* Devolver resultado */
                 $this->get("app.dblogger")->info("Llamada al rest (CAMBIO_CONTRATO_CONSOLIDADO). La petición ya existía, así que sólo se devolvió su ID (" . $cambioTcoCons->getId() . ").");
@@ -217,7 +217,7 @@ class CambioContratoController extends Controller
                 $em->flush();
 
                 /* Enviar notificación al bot para procesar cola */
-                $this->get("app.sockets")->notify();
+                //DEPRECEATED $REAL TIME SOCKETS DUE TO PHP BAD SOCKETS $this->get("app.sockets")->notify();
             }
 
             $this->get("app.dblogger")->info("Llamada al rest (CAMBIO_CONTRATO_CONSOLIDADO). La petición se ha creado satisfactoriamente (" . $cambioTcoCons->getId() . ")");

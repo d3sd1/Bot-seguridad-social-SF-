@@ -19,8 +19,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Facebook\WebDriver\Chrome\ChromeOptions;
 use FOS\RestBundle\Request\ParamFetcher;
 use React\EventLoop\Factory;
-use React\Socket\ConnectionInterface;
-use React\Socket\Connector;
 use React\Stream\WritableResourceStream;
 /**
  * Brand controller.
@@ -94,7 +92,7 @@ class AltaController extends Controller
 
         if ($alta != null) {
             /* Enviar notificación al bot para procesar cola */
-            $this->get("app.sockets")->notify();
+            //DEPRECEATED $REAL TIME SOCKETS DUE TO PHP BAD SOCKETS $this->get("app.sockets")->notify();
 
             $this->get("app.dblogger")->info("Llamada al rest (COMPROBACIÓN ALTA) ID: " . $alta->getId() . ", ESTADO: " . $alta->getStatus());
             $status = $em->getRepository("App:ProcessStatus")->findOneBy(['id' => $alta->getStatus()]);
@@ -201,7 +199,7 @@ class AltaController extends Controller
 
             if ($task != null) {
                 /* Enviar notificación al bot para procesar cola */
-                $this->get("app.sockets")->notify();
+                //DEPRECEATED $REAL TIME SOCKETS DUE TO PHP BAD SOCKETS $this->get("app.sockets")->notify();
 
                 /* Devolver resultado */
                 $this->get("app.dblogger")->info("Llamada al rest (ALTA). La petición ya existía, así que sólo se devolvió su ID (" . $alta->getId() . ").");
@@ -222,7 +220,7 @@ class AltaController extends Controller
                 $em->flush();
 
                 /* Enviar notificación al bot para procesar cola */
-                $this->get("app.sockets")->notify();
+                //DEPRECEATED $REAL TIME SOCKETS DUE TO PHP BAD SOCKETS $this->get("app.sockets")->notify();
             }
 
             $this->get("app.dblogger")->info("Llamada al rest (ALTA). La petición se ha creado satisfactoriamente (" . $alta->getId() . ")");

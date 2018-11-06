@@ -36,10 +36,6 @@ services:
         class: App\Utils\RestResponse
         arguments: [ "@service_container" ]
         public: true
-    app.sockets:
-        class: App\Utils\InternalSocketClient
-        arguments: [ "@service_container" ]
-        public: true
     app.exception:
         class: App\Utils\ExceptionManager
         arguments: ["@service_container", '@doctrine.orm.entity_manager']

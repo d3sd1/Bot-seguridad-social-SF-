@@ -23,7 +23,6 @@ class Commands
     public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
-        $this->processes[getenv("INTERNAL_SOCKETS_PORT")] = null;
     }
 
     private function runSyncCommand($command)
@@ -81,7 +80,6 @@ class Commands
     {
         try
         {
-            $this->killProcessByPort(getenv("INTERNAL_SOCKETS_PORT"));
             $this->killProcessByPort(4444);
             $this->killProcessByName("java");
             $this->killProcessByName("gecko");

@@ -21,12 +21,11 @@ use Facebook\WebDriver\Chrome\ChromeOptions;
 class StartBot extends ContainerAwareCommand
 {
 
-    private $processQueue = true;
-    private $socket = false;
     private $selenium = false;
     private $em;
     private $bm;
     private $log;
+    private $processingQueue = true;
 
     protected function configure()
     {
@@ -38,48 +37,43 @@ class StartBot extends ContainerAwareCommand
     }
 
     /*
-     * Iniciar escuchadores y prevenir que se deniegue la ejecución.
+     * Procesar cola
      */
-    public function socketCreate()
+    public function processQueue()
     {
-        if ($this->socket === false) {
-            try {
-                $this->socket = socket_create(AF_INET, SOCK_STREAM, 0);
-                socket_set_option($this->socket, SOL_SOCKET, SO_REUSEADDR, 1);
-                socket_set_option($this->socket, SOL_SOCKET, SO_RCVTIMEO, array('sec' => 0, 'usec' => 0));
-                socket_set_option($this->socket, SOL_SOCKET, SO_SNDTIMEO, array('sec' => 0, 'usec' => 0));
-                socket_bind($this->socket, getenv("INTERNAL_SOCKETS_HOST"), getenv("INTERNAL_SOCKETS_PORT"));
-                socket_listen($this->socket, 3);
-            } catch (\Exception $e) {
-                $this->log->error("Error al crear sockets: " . $e->getMessage());
-                exit();
+        /*
+         * Preparar query para la cola.
+         */
+        $qb = $this->em->createQueryBuilder();
+        $taskQuery = $qb->select(array('q'))
+            ->from('App:Queue', 'q')
+            ->orderBy('q.id', 'ASC')
+            ->setMaxResults(1)
+            ->getQuery();
+        while ($this->processingQueue) {
+            if ($this->bm->getBotStatus() === "SS_PAGE_DOWN") {
+                $this->log->error("Página de la seguridad social inactiva. Esperando " . getenv("SS_PAGE_DOWN_SLEEP") . " segundos.");
+                sleep(getenv("SS_PAGE_DOWN_SLEEP"));
+            }
+            /*
+             * Recuperar los resultados actuales.
+             */
+            $task = $taskQuery->getOneOrNullResult();
+
+            /*
+             * Si hay cosas por hacer, se hacen.
+             * Si no, esperar a intervalos de 5s.
+             */
+            if ($task != null) {
+                $this->bm->setBotStatus("RUNNING");
+                $this->processTask($task);
+            } else {
+                $this->bm->setBotStatus("WAITING_TASKS");
+                /* FIX: navegar a otra web para evitar el timeout de la seguridad social. */
+                $this->selenium->get("http://www.google.es");
+                sleep(10);
             }
         }
-        return $this->socket;
-    }
-
-    /*
-     * Cerrar escuchadores.
-     */
-    public function socketKill()
-    {
-        socket_close($this->socket);
-    }
-
-    /*
-     * Esperar a operación por sockets.
-     */
-    public function waitForTask()
-    {
-        try {
-            $spawn = socket_accept($this->socket);
-            $input = socket_read($spawn, 1024);
-            $data = trim($input);
-            socket_close($spawn);
-        } catch (\Exception $e) {
-            return false;
-        }
-        return true;
     }
 
     /*
@@ -203,15 +197,6 @@ class StartBot extends ContainerAwareCommand
              */
             $this->initSeleniumDriver();
 
-            /*
-             * Preparar query para la cola.
-             */
-            $qb = $this->em->createQueryBuilder();
-            $taskQuery = $qb->select(array('q'))
-                ->from('App:Queue', 'q')
-                ->orderBy('q.id', 'ASC')
-                ->setMaxResults(1)
-                ->getQuery();
 
             /*
              * Marcar estado del bot como iniciando.
@@ -221,34 +206,12 @@ class StartBot extends ContainerAwareCommand
             /*
              * Procesar cola.
              */
-            while ($this->processQueue) {
-                if ($this->bm->getBotStatus() === "SS_PAGE_DOWN") {
-                    $this->log->error("Página de la seguridad social inactiva. Esperando " . getenv("SS_PAGE_DOWN_SLEEP") . " segundos.");
-                    sleep(getenv("SS_PAGE_DOWN_SLEEP"));
-                }
-                /*
-                 * Recuperar los resultados actuales.
-                 */
-                $task = $taskQuery->getOneOrNullResult();
 
-                /*
-                 * Si hay cosas por hacer, se hacen.
-                 * Si no, esperar a que haya algo por sockets.
-                 */
-                if ($task != null) {
-                    $this->bm->setBotStatus("RUNNING");
-                    $this->processTask($task);
-                } else {
-                    $this->bm->setBotStatus("WAITING_TASKS");
-                    /* FIX: navegar a otra web para evitar el timeout de la seguridad social. */
-                    $this->selenium->get("http://www.google.es");
-                    $this->processQueue = $this->waitForTask();
-                }
-            }
-            $this->socketKill();
+            $this->processQueue();
 
         } catch (\Exception $e) {
             $this->log->error("Ha ocurrido un error interno en el comando de [procesamiento de cola]: " . $e->getMessage());
+            $this->processingQueue = false;
         }
     }
 }

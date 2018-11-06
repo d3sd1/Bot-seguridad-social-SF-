@@ -91,7 +91,6 @@ class AnulacionBajaController extends Controller
 
         if ($alta != null) {
             /* Enviar notificación al bot para procesar cola */
-            $this->get("app.sockets")->notify();
 
             $this->get("app.dblogger")->info("Llamada al rest (COMPROBACIÓN ANULACIÓN BAJA PREVIA) ID: " . $alta->getId() . ", ESTADO: " . $alta->getStatus());
             $status = $em->getRepository("App:ProcessStatus")->findOneBy(['id' => $alta->getStatus()]);
@@ -167,7 +166,7 @@ class AnulacionBajaController extends Controller
 
             if ($task != null) {
                 /* Enviar notificación al bot para procesar cola */
-                $this->get("app.sockets")->notify();
+                //DEPRECEATED $REAL TIME SOCKETS DUE TO PHP BAD SOCKETS $this->get("app.sockets")->notify();
 
                 /* Devolver resultado */
                 $this->get("app.dblogger")->info("Llamada al rest (ANULACION_BAJA_PREVIA). La petición ya existía, así que sólo se devolvió su ID (" . $anulacionBaja->getId() . ").");
@@ -188,7 +187,7 @@ class AnulacionBajaController extends Controller
                 $em->flush();
 
                 /* Enviar notificación al bot para procesar cola */
-                $this->get("app.sockets")->notify();
+                //DEPRECEATED $REAL TIME SOCKETS DUE TO PHP BAD SOCKETS $this->get("app.sockets")->notify();
             }
 
             $this->get("app.dblogger")->info("Llamada al rest (ANULACION_BAJA_PREVIA). La petición se ha creado satisfactoriamente (" . $anulacionBaja->getId() . ")");
@@ -268,7 +267,7 @@ class AnulacionBajaController extends Controller
 
         if ($alta != null) {
             /* Enviar notificación al bot para procesar cola */
-            $this->get("app.sockets")->notify();
+            //DEPRECEATED $REAL TIME SOCKETS DUE TO PHP BAD SOCKETS $this->get("app.sockets")->notify();
 
             $this->get("app.dblogger")->info("Llamada al rest (COMPROBACIÓN ANULACIÓN BAJA CONSOLIDADA) ID: " . $alta->getId() . ", ESTADO: " . $alta->getStatus());
             $status = $em->getRepository("App:ProcessStatus")->findOneBy(['id' => $alta->getStatus()]);
@@ -340,7 +339,7 @@ class AnulacionBajaController extends Controller
 
             if ($task != null) {
                 /* Enviar notificación al bot para procesar cola */
-                $this->get("app.sockets")->notify();
+                //DEPRECEATED $REAL TIME SOCKETS DUE TO PHP BAD SOCKETS $this->get("app.sockets")->notify();
 
                 /* Devolver resultado */
                 $this->get("app.dblogger")->info("Llamada al rest (ANULACION_BAJA_CONSOLIDADA). La petición ya existía, así que sólo se devolvió su ID (" . $anulacionBaja->getId() . ").");
@@ -361,7 +360,7 @@ class AnulacionBajaController extends Controller
                 $em->flush();
 
                 /* Enviar notificación al bot para procesar cola */
-                $this->get("app.sockets")->notify();
+                //DEPRECEATED $REAL TIME SOCKETS DUE TO PHP BAD SOCKETS $this->get("app.sockets")->notify();
             }
 
             $this->get("app.dblogger")->info("Llamada al rest (ANULACION_BAJA_CONSOLIDADA). La petición se ha creado satisfactoriamente (" . $anulacionBaja->getId() . ")");

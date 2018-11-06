@@ -90,7 +90,7 @@ class BajaController extends Controller
 
         if ($baja != null) {
             /* Enviar notificación al bot para procesar cola */
-            $this->get("app.sockets")->notify();
+            //DEPRECEATED $REAL TIME SOCKETS DUE TO PHP BAD SOCKETS $this->get("app.sockets")->notify();
 
             $this->get("app.dblogger")->info("Llamada al rest (COMPROBACIÓN BAJA) ID: " . $baja->getId() . ", ESTADO: " . $baja->getStatus());
             $status = $em->getRepository("App:ProcessStatus")->findOneBy(['id' => $baja->getStatus()]);
@@ -189,7 +189,7 @@ class BajaController extends Controller
 
             if ($task != null) {
                 /* Enviar notificación al bot para procesar cola */
-                $this->get("app.sockets")->notify();
+                //DEPRECEATED $REAL TIME SOCKETS DUE TO PHP BAD SOCKETS $this->get("app.sockets")->notify();
 
                 /* Devolver resultado */
                 $this->get("app.dblogger")->info("Llamada al rest (BAJA). La petición ya existía, así que sólo se devolvió su ID (" . $baja->getId() . ").");
@@ -210,7 +210,7 @@ class BajaController extends Controller
                 $em->flush();
 
                 /* Enviar notificación al bot para procesar cola */
-                $this->get("app.sockets")->notify();
+                //DEPRECEATED $REAL TIME SOCKETS DUE TO PHP BAD SOCKETS $this->get("app.sockets")->notify();
             }
 
             $this->get("app.dblogger")->info("Llamada al rest (BAJA). La petición se ha creado satisfactoriamente (" . $baja->getId() . ")");
