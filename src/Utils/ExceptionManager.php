@@ -37,24 +37,6 @@ class ExceptionManager
             case "JMS\Serializer\Exception\RuntimeException":
                 return "INVALID_OBJECT";
                 break;
-            case "App\Exceptions\SocketCommunicationException":
-                /*
-                 * Comprobar si la opción de reinicio automático está activada.
-                 */
-                if (getenv("FORCE_SERVER_RELOAD") == true) {
-                    /*
-                     * Encender el servidor. Antes de iniciarlo lo apaga, así que sin problema. Pero hay que comprobar que no esté en "booting" (prevenir loops).
-
-                    if ($server->getCurrentStatus() == "BOOTING") {
-                        $this->container->get("app.dblogger")->error("REINICIANDO SERVIDOR FORZADAMENTE POR MOTIVOS TÉCNICOS (AUTOMÁTICO).");
-                        $this->container->get("bot.manager")->close();
-                        $this->container->get("bot.manager")->start();
-                    } else {
-                        $this->container->get("app.dblogger")->error("ESPERANDO REINICIO SERVIDOR (AUTOMÁTICO).");
-                    } */
-                }
-                return "SOCKETS_OFFLINE";
-                break;
             default:
                 return "UNCAUGHT_EXCEPTION";
         }

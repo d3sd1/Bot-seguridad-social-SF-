@@ -41,6 +41,7 @@ class StartBot extends ContainerAwareCommand
      */
     public function processQueue()
     {
+        $this->log->info("Comenzando procesamiento de cola!");
         /*
          * Preparar query para la cola.
          */
@@ -52,7 +53,7 @@ class StartBot extends ContainerAwareCommand
             ->getQuery();
         while ($this->processingQueue) {
             if ($this->bm->getBotStatus() === "SS_PAGE_DOWN") {
-                $this->log->error("Página de la seguridad social inactiva. Esperando " . getenv("SS_PAGE_DOWN_SLEEP") . " segundos.");
+                $this->log->info("Página de la seguridad social inactiva. Esperando " . getenv("SS_PAGE_DOWN_SLEEP") . " segundos.");
                 sleep(getenv("SS_PAGE_DOWN_SLEEP"));
             }
             /*
@@ -71,7 +72,10 @@ class StartBot extends ContainerAwareCommand
                 $this->bm->setBotStatus("WAITING_TASKS");
                 /* FIX: navegar a otra web para evitar el timeout de la seguridad social. */
                 $this->selenium->get("http://www.google.es");
-                sleep(10);
+                while($task == null) {
+                    sleep(10);
+                    $task = $taskQuery->getOneOrNullResult();
+                }
             }
         }
     }
@@ -188,14 +192,11 @@ class StartBot extends ContainerAwareCommand
             $this->bm->setBotStatus("BOOTING");
 
             /*
-             * Iniciar escuchadores BOT - REST.
-             */
-            $this->socketCreate();
-
-            /*
              * Iniciar Selenium Driver.
              */
+            $this->log->info("Cargando driver Selenium...");
             $this->initSeleniumDriver();
+            $this->log->info("¡Cargado driver Selenium!");
 
 
             /*
@@ -206,7 +207,7 @@ class StartBot extends ContainerAwareCommand
             /*
              * Procesar cola.
              */
-
+            $this->log->info("Cargando procesamiento de cola...");
             $this->processQueue();
 
         } catch (\Exception $e) {

@@ -92,13 +92,15 @@ abstract class Operation
             }
             //CRASH PREVENTED
             else if(!$this->server->getCrashPrevented()) {
-                $this->container->get("app.dblogger")->error("Crash prevented: restarting bot...");
+                $this->bm->setBotStatus("OFFLINE");
+                $this->container->get("app.dblogger")->warning("Crash prevented: restarting bot...");
+                $this->container->get("app.dblogger")->warning("Crash prevented msg: " . $e->getMessage());
                 $this->container->get("bot.manager")->close();
                 $this->container->get("bot.manager")->start(false);
             }
             else {
                 $this->container->get("app.dblogger")->error("El bot ha crasheado. URL: ".$this->driver->url()." Motivo: " . $e->getMessage());
-                $this->container->get("app.dblogger")->error("SOURCE: " . $this->driver->getPageSource());
+                $this->container->get("app.dblogger")->info("SOURCE: " . $this->driver->getPageSource());
             }
             $this->takeScreenShoot();
             $this->bm->close();
