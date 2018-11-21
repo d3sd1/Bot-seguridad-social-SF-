@@ -325,12 +325,12 @@ abstract class Operation
             $notErrorBoxCodes = [
                 3408 => "Operación realizada correctamente (alta)",
                 3083 => "INTRODUZCA LOS DATOS Y PULSE CONTINUAR",
+                9125 => "ALTA REALIZADA. ASIGNADO CONVENIO DE LA CUENTA",
             ];
             if ($consultaAltasCCC) {
                 $notErrorBoxCodes[3543] = "NO EXISTEN DATOS PARA ESTA CONSULTA";
                 $notErrorBoxCodes[3251] = "HAY MAS AFILIADOS A CONSULTAR";
                 $notErrorBoxCodes[3083] = "INTRODUZCA LOS DATOS Y PULSE CONTINUAR";
-                $notErrorBoxCodes[9125] = "ALTA REALIZADA. ASIGNADO CONVENIO DE LA CUENTA";
             }
             $isFalseError = false;
             foreach ($notErrorBoxCodes as $code => $desc) {
