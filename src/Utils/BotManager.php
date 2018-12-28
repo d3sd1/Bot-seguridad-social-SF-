@@ -158,4 +158,16 @@ class BotManager
             ->getQuery()->getSingleResult();
     }
 
+    /* Esta función previene al bot de colgarse si algo va mal */
+    public function preventHanging() {
+        if($this->container->get("so.commands")->isBotHanging()) {
+            $this->container->get("app.dblogger")->success("Bot is hanging on. We are restarting it...");
+            $this->close();
+            if($this->start()) {
+                $this->container->get("so.commands")->startBot();
+                $this->container->get("app.dblogger")->success("Bot hanging restarted success and running!");
+            }
+        }
+    }
+
 }

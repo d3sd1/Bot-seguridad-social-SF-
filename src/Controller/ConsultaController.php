@@ -22,6 +22,7 @@ class ConsultaController extends Controller
      */
     public function getEstadoNafAction(Request $request)
     {
+
         $em = $this->get("doctrine.orm.entity_manager");
         $qb = $em->createQueryBuilder();
         $consulta = $qb->select(array('a'))
