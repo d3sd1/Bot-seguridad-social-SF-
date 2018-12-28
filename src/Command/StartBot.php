@@ -78,6 +78,7 @@ class StartBot extends ContainerAwareCommand
                 }
             }
         }
+        $this->log->info("Deteniendo loop de procesamiento de cola...");
     }
 
     /*

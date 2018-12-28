@@ -55,7 +55,7 @@ class DBLogger
     public function error($msg)
     {
         $log = new InternalLog();
-        $log->setMessage($msg);
+        $log->setMessage(strip_tags($msg));
         $log->setType($this->em->getRepository("App:LogType")->findOneBy(['type' => 'ERROR']));
         $this->em->persist($log);
         $this->sendErrorMail('ERROR',$msg);
@@ -65,7 +65,7 @@ class DBLogger
     public function warning($msg)
     {
         $log = new InternalLog();
-        $log->setMessage($msg);
+        $log->setMessage(strip_tags($msg));
         $log->setType($this->em->getRepository("App:LogType")->findOneBy(['type' => 'WARNING']));
         $this->em->persist($log);
         $this->em->flush();
@@ -74,7 +74,7 @@ class DBLogger
     public function info($msg)
     {
         $log = new InternalLog();
-        $log->setMessage($msg);
+        $log->setMessage(strip_tags($msg));
         $log->setType($this->em->getRepository("App:LogType")->findOneBy(['type' => 'INFO']));
         $this->em->persist($log);
         $this->em->flush();
@@ -83,7 +83,7 @@ class DBLogger
     public function success($msg)
     {
         $log = new InternalLog();
-        $log->setMessage($msg);
+        $log->setMessage(strip_tags($msg));
         $log->setType($this->em->getRepository("App:LogType")->findOneBy(['type' => 'SUCCESS']));
         $this->em->persist($log);
         $this->em->flush();
