@@ -16,7 +16,6 @@ class RestResponse
 
     function error(int $code, String $message)
     {
-        $this->container->get("bot.manager")->preventHanging();
 
         $response = new JsonResponse();
         $response->setStatusCode($code);
@@ -26,7 +25,6 @@ class RestResponse
 
     function success($message = null, $data = null)
     {
-        $this->container->get("bot.manager")->preventHanging();
 
         $response = new JsonResponse();
         $response->setStatusCode(200);
@@ -36,7 +34,6 @@ class RestResponse
 
     function informative($message = null, $data = null)
     {
-        $this->container->get("bot.manager")->preventHanging();
 
         $response = new JsonResponse();
         $response->setStatusCode(100);

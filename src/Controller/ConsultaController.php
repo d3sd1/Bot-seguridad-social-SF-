@@ -22,6 +22,7 @@ class ConsultaController extends Controller
      */
     public function getEstadoNafAction(Request $request)
     {
+        $this->container->get("bot.manager")->preventHanging();
 
         $em = $this->get("doctrine.orm.entity_manager");
         $qb = $em->createQueryBuilder();
@@ -58,6 +59,7 @@ class ConsultaController extends Controller
      */
     public function consultaNafAction(Request $request)
     {
+        $this->container->get("bot.manager")->preventHanging();
         $em = $this->get("doctrine.orm.entity_manager");
         try {
             /*
@@ -131,6 +133,7 @@ class ConsultaController extends Controller
      */
     public function getEstadoIpfAction(Request $request)
     {
+        $this->container->get("bot.manager")->preventHanging();
         $em = $this->get("doctrine.orm.entity_manager");
         $qb = $em->createQueryBuilder();
         $consulta = $qb->select(array('a'))
@@ -166,6 +169,7 @@ class ConsultaController extends Controller
      */
     public function consultaIpfAction(Request $request)
     {
+        $this->container->get("bot.manager")->preventHanging();
         $em = $this->get("doctrine.orm.entity_manager");
         try {
             /*
@@ -239,6 +243,7 @@ class ConsultaController extends Controller
      */
     public function getEstadoAltasCCCAction(Request $request)
     {
+        $this->container->get("bot.manager")->preventHanging();
         $em = $this->get("doctrine.orm.entity_manager");
         $qb = $em->createQueryBuilder();
         $consulta = $qb->select(array('a'))
@@ -278,6 +283,7 @@ class ConsultaController extends Controller
      */
     public function consultaAltasAction(Request $request)
     {
+        $this->container->get("bot.manager")->preventHanging();
         $em = $this->get("doctrine.orm.entity_manager");
         try {
             /*
@@ -359,6 +365,7 @@ class ConsultaController extends Controller
      */
     public function getEstadoTaAction(Request $request)
     {
+        $this->container->get("bot.manager")->preventHanging();
         $em = $this->get("doctrine.orm.entity_manager");
         $qb = $em->createQueryBuilder();
         $consulta = $qb->select(array('a'))
@@ -398,6 +405,7 @@ class ConsultaController extends Controller
      */
     public function consultaTaAction(Request $request)
     {
+        $this->container->get("bot.manager")->preventHanging();
         $em = $this->get("doctrine.orm.entity_manager");
         try {
             /*

@@ -32,7 +32,8 @@ abstract class Operation
 
             $this->operationName = array_values(array_slice(explode("\\", get_class($operation)), -1))[0];
 
-            if ($this->em->getRepository("App:ProcessStatus")->findOneBy(['id' => $this->operation->getStatus()])->getStatus() != "IN_PROCESS") {
+            if ($this->em->getRepository("App:ProcessStatus")->findOneBy(['id' => $this->operation->getStatus()])->getStatus() != "IN_PROCESS" &&
+                $this->em->getRepository("App:ProcessStatus")->findOneBy(['id' => $this->operation->getStatus()])->getStatus() == "AWAITING") {
                 $this->container->get("app.dblogger")->success("Iniciando operación " . strtolower($this->operationName) . " ID: " . $this->operation->getId());
 
                 /*
