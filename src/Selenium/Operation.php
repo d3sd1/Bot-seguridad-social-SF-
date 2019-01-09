@@ -31,55 +31,27 @@ abstract class Operation
             $this->driver = $seleniumDriver;
 
             $this->operationName = array_values(array_slice(explode("\\", get_class($operation)), -1))[0];
-            $this->container->get("app.dblogger")->success("Iniciando operación " . strtolower($this->operationName) . " ID: " . $this->operation->getId());
 
-            /* DEPRECEATED: Fix para chrome: IMPORTAR CERTIFICADO
-            $this->driver->get("chrome://settings/?search=cert");
-            sleep(2);
-            $this->takeScreenShoot();
+            if ($this->em->getRepository("App:ProcessStatus")->findOneBy(['id' => $this->operation->getStatus()])->getStatus() != "IN_PROCESS") {
+                $this->container->get("app.dblogger")->success("Iniciando operación " . strtolower($this->operationName) . " ID: " . $this->operation->getId());
 
-            //click on certificate manager
-            $this->driver->findElement(WebDriverBy::cssSelector('settings-ui /deep/ settings-main /deep/ settings-basic-page /deep/ settings-section /deep/ settings-privacy-page /deep/ #manageCertificates'))->click();
-            //click on import
-            // getting the input element
-            $this->driver->findElement(WebDriverBy::cssSelector('settings-ui /deep/ #main /deep/ settings-basic-page /deep/ settings-section  settings-privacy-page /deep/ settings-subpage certificate-manager /deep/ #personalCerts /deep/ #import'))->click();
+                /*
+                 * Comprobar que la tarea no está caducada y que
+                 * hay algo por hacer.
+                 */
 
-            sleep(2);
-            $this->takeScreenShoot();
-            die();
-            sleep(2);
-            // upload the file and submit the form
-            $this->driver->switchTo()->activeElement()->sendKeys("/var/www/cert.pem")->submit();
+                if ($this->operation->getDateInit() != null && $this->operation->getDateInit()->diff(new \DateTime())->s > getenv('OPERATION_TIMEOUT_SECONDS')) {
+                    /* Eliminar de la cola */
+                    $this->removeFromQueue();
 
-            sleep(1);
-            //input password
+                    /* Marcar operación como TIMED_OUT */
+                    $this->updateStatus("TIMED_OUT");
+                } else {
+                    /* Si no, procesar operación */
+                    $this->updateStatus("IN_PROCESS");
+                    $this->manageOperation();
+                }
 
-            $this->takeScreenShoot();
-            //click on send
-           // $this->driver->findElement(WebDriverBy::cssSelector('settings-ui /deep/ #main /deep/ settings-basic-page /deep/ settings-section  settings-privacy-page /deep/ settings-subpage certificate-manager /deep/ certificate-password-decryption-dialog /deep/ #password /deep/ #input'))->sendKeys(getenv("CERT_PASSWORD"));
-           // $this->driver->findElement(WebDriverBy::cssSelector('settings-ui /deep/ #main /deep/ settings-basic-page /deep/ settings-section  settings-privacy-page /deep/ settings-subpage certificate-manager /deep/ certificate-password-decryption-dialog /deep/ #ok'))->click();
-
-            $this->takeScreenShoot();
-            $this->driver->close();
-            die();
- */
-
-            /*
-             * Comprobar que la tarea no está caducada y que
-             * hay algo por hacer.
-             */
-
-            if ($this->operation->getDateInit() != null && $this->operation->getDateInit()->diff(new \DateTime())->s > getenv('OPERATION_TIMEOUT_SECONDS')) {
-                /* Eliminar de la cola */
-                $this->removeFromQueue();
-
-                /* Marcar operación como TIMED_OUT */
-                $this->updateStatus("TIMED_OUT");
-            }
-            else {
-                /* Si no, procesar operación */
-                $this->updateStatus("IN_PROCESS");
-                $this->manageOperation();
             }
 
         } catch (\Exception $e) {
@@ -87,19 +59,17 @@ abstract class Operation
             /* ENDFIX */
             $this->bm->setBotStatus("CRASHED");
 
-            if($e->getMessage() == 'Notice: Undefined index: ELEMENT'){
+            if ($e->getMessage() == 'Notice: Undefined index: ELEMENT') {
                 $this->container->get("app.dblogger")->error("El bot ha crasheado. Motivo: El certificado no está instalado en en el navegador o este ha sufrido problemas.");
-            }
-            //CRASH PREVENTED
-            else if(!$this->server->getCrashPrevented()) {
+            } //CRASH PREVENTED
+            else if (!$this->server->getCrashPrevented()) {
                 $this->bm->setBotStatus("OFFLINE");
                 $this->container->get("app.dblogger")->warning("Crash prevented: restarting bot...");
                 $this->container->get("app.dblogger")->warning("Crash prevented msg: " . $e->getMessage());
                 $this->container->get("bot.manager")->close();
                 $this->container->get("bot.manager")->start(false);
-            }
-            else {
-                $this->container->get("app.dblogger")->error("El bot ha crasheado. URL: ".$this->driver->url()." Motivo: " . $e->getMessage());
+            } else {
+                $this->container->get("app.dblogger")->error("El bot ha crasheado. URL: " . $this->driver->url() . " Motivo: " . $e->getMessage());
                 $this->container->get("app.dblogger")->info("SOURCE: " . $this->driver->getPageSource());
             }
             $this->takeScreenShoot();
