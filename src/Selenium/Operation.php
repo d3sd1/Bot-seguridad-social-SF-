@@ -303,6 +303,7 @@ abstract class Operation
                 $notErrorBoxCodes[3251] = "HAY MAS AFILIADOS A CONSULTAR";
                 $notErrorBoxCodes[3083] = "INTRODUZCA LOS DATOS Y PULSE CONTINUAR";
                 $notErrorBoxCodes[9125] = "ALTA REALIZADA. ASIGNADO CONVENIO DE LA CUENTA";
+                $notErrorBoxCodes[4359] = "MOVIMIENTO PREVIO ERRONEO - AFILIADO EN ALTA PREVIA";
             }
             $isFalseError = false;
             foreach ($notErrorBoxCodes as $code => $desc) {
