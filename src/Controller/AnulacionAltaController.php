@@ -42,7 +42,7 @@ class AnulacionAltaController extends Controller
             ->getOneOrNullResult();
         if ($operation != null) {
             $status = $em->getRepository("App:ProcessStatus")->findOneBy(['id' => $operation->getStatus()]);
-            $this->get("app.dblogger")->info("Llamada al rest (ELIMINACIÓN ANULACIÓN ALTA) ID: " . $operation->getId() . ", ESTADO: " . $operation->getStatus());
+            $this->get("app.dblogger")->info("Llamada al rest (ELIMINACIÓN ANULACIÓN ALTA) ID: " . $this->em->getRepository("App:ProcessStatus")->findOneBy(['id' => $this->operation->getStatus()])->getStatus() . ", ESTADO: " . $operation->getStatus());
             if ($status != null && ($status->getStatus() == "AWAITING" || $status->getStatus() == "STOPPED")) {
                 $rmStatus = $em->getRepository("App:ProcessStatus")->findOneBy(['status' => "REMOVED"]);
                 $operation->setStatus($rmStatus->getId());
@@ -221,7 +221,7 @@ class AnulacionAltaController extends Controller
             ->getOneOrNullResult();
         if ($operation != null) {
             $status = $em->getRepository("App:ProcessStatus")->findOneBy(['id' => $operation->getStatus()]);
-            $this->get("app.dblogger")->info("Llamada al rest (ELIMINACIÓN ANULACIÓN ALTA) ID: " . $operation->getId() . ", ESTADO: " . $operation->getStatus());
+            $this->get("app.dblogger")->info("Llamada al rest (ELIMINACIÓN ANULACIÓN ALTA) ID: " . $this->em->getRepository("App:ProcessStatus")->findOneBy(['id' => $this->operation->getStatus()])->getStatus() . ", ESTADO: " . $operation->getStatus());
             if ($status != null && ($status->getStatus() == "AWAITING" || $status->getStatus() == "STOPPED")) {
                 $rmStatus = $em->getRepository("App:ProcessStatus")->findOneBy(['status' => "REMOVED"]);
                 $operation->setStatus($rmStatus->getId());

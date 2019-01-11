@@ -102,7 +102,6 @@ abstract class Operation
 
     private function manageOperation()
     {
-        $this->container->get("app.dblogger")->info("OP INTERNAL NAME: " . strtoupper($this->operationName));
         getenv('FORCE_PROD_SS_URL') ? $env = "PROD" : $env = $this->container->get('kernel')->getEnvironment();
         $reqUrl = (new \ReflectionClass('App\Constants\\' . ucfirst(strtolower($env)) . 'UrlConstants'))->getConstant(strtoupper($this->operationName));
         $this->container->get("app.dblogger")->info("OP SS URL: " . $reqUrl);
@@ -122,7 +121,7 @@ abstract class Operation
             $this->container->get("app.dblogger")->info("La página de la seguridad social no está activa.");
         }
 
-        $this->container->get("app.dblogger")->success("Fin de operación " . strtolower($this->operationName) . " ID: " . $this->operation->getId());
+        $this->container->get("app.dblogger")->success("Fin de operación " . strtolower($this->operationName) . " ID: " . $this->operation->getId() . ". Resolución: " . $this->em->getRepository("App:ProcessStatus")->findOneBy(['id' => $this->operation->getStatus()])->getStatus());
         /* Marcar crash prevented como false ya que se ha realizado correctamente la operación previa que antes si crasheó */
         $this->server->setCrashPrevented(false);
         $this->em->flush();
