@@ -38,12 +38,14 @@ class BotManager
         $success = true;
         if($abortPendingOperations) {
             $success = $this->abortPendingOperations();
-            if($success) {
-                $this->setBotStatus("WAITING_TASKS");
-            }
-            else {
-                $this->setBotStatus("OFFLINE");
-            }
+
+        }
+
+        if($success) {
+            $this->setBotStatus("WAITING_TASKS");
+        }
+        else {
+            $this->setBotStatus("OFFLINE");
         }
 
         return $success;
@@ -98,6 +100,7 @@ class BotManager
          * Marcar servidor como inactivo
          */
         $success = $this->container->get("so.commands")->resetNavigator() && $this->container->get("so.commands")->killBot();
+        $this->container->get("app.dblogger")->success("Bot cerrado: " . $success);
         if($success) {
             $this->setBotStatus("OFFLINE");
         }
