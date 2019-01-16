@@ -43,7 +43,7 @@ class AltaController extends Controller
             ->getOneOrNullResult();
         if ($operation != null) {
             $status = $em->getRepository("App:ProcessStatus")->findOneBy(['id' => $operation->getStatus()]);
-            $this->get("app.dblogger")->info("Llamada al rest (ELIMINACIÓN ALTA) ID: " . $operation->getId() . ", ESTADO: " . $operation->getStatus());
+            $this->get("app.dblogger")->info("Llamada al rest (ELIMINACIÓN ALTA) ID: " . $this->em->getRepository("App:ProcessStatus")->findOneBy(['id' => $this->operation->getStatus()])->getStatus() . ", ESTADO: " . $operation->getStatus());
             if ($status != null && ($status->getStatus() == "AWAITING" || $status->getStatus() == "STOPPED")) {
                 $rmStatus = $em->getRepository("App:ProcessStatus")->findOneBy(['status' => "REMOVED"]);
                 $operation->setStatus($rmStatus->getId());
@@ -80,6 +80,7 @@ class AltaController extends Controller
      */
     public function getAltaAction(Request $request)
     {
+        $this->container->get("bot.manager")->preventHanging();
         $em = $this->get("doctrine.orm.entity_manager");
         $qb = $em->createQueryBuilder();
         $alta = $qb->select(array('a'))
@@ -108,6 +109,7 @@ class AltaController extends Controller
      */
     public function altaAction(Request $request)
     {
+        $this->container->get("bot.manager")->preventHanging();
         try {
             $em = $this->get("doctrine.orm.entity_manager");
             /*

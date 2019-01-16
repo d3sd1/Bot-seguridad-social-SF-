@@ -41,7 +41,7 @@ class BajaController extends Controller
             ->getOneOrNullResult();
         if ($operation != null) {
             $status = $em->getRepository("App:ProcessStatus")->findOneBy(['id' => $operation->getStatus()]);
-            $this->get("app.dblogger")->info("Llamada al rest (ELIMINACIÓN BAJA) ID: " . $operation->getId() . ", ESTADO: " . $operation->getStatus());
+            $this->get("app.dblogger")->info("Llamada al rest (ELIMINACIÓN BAJA) ID: " . $this->em->getRepository("App:ProcessStatus")->findOneBy(['id' => $this->operation->getStatus()])->getStatus() . ", ESTADO: " . $operation->getStatus());
             if ($status != null && ($status->getStatus() == "AWAITING" || $status->getStatus() == "STOPPED")) {
                 $rmStatus = $em->getRepository("App:ProcessStatus")->findOneBy(['status' => "REMOVED"]);
                 $operation->setStatus($rmStatus->getId());
@@ -78,6 +78,7 @@ class BajaController extends Controller
      */
     public function getBajaAction(Request $request)
     {
+        $this->container->get("bot.manager")->preventHanging();
         $em = $this->get("doctrine.orm.entity_manager");
         $qb = $em->createQueryBuilder();
         $baja = $qb->select(array('a'))
@@ -106,6 +107,7 @@ class BajaController extends Controller
      */
     public function bajaAction(Request $request)
     {
+        $this->container->get("bot.manager")->preventHanging();
         try {
             $em = $this->get("doctrine.orm.entity_manager");
             /*

@@ -41,7 +41,7 @@ class CambioContratoController extends Controller
             ->getOneOrNullResult();
         if ($operation != null) {
             $status = $em->getRepository("App:ProcessStatus")->findOneBy(['id' => $operation->getStatus()]);
-            $this->get("app.dblogger")->info("Llamada al rest (ELIMINACIÓN CAMBIO CONTRATO CONSOLIDADO) ID: " . $operation->getId() . ", ESTADO: " . $operation->getStatus());
+            $this->get("app.dblogger")->info("Llamada al rest (ELIMINACIÓN CAMBIO CONTRATO CONSOLIDADO) ID: " . $this->em->getRepository("App:ProcessStatus")->findOneBy(['id' => $this->operation->getStatus()])->getStatus() . ", ESTADO: " . $operation->getStatus());
             if ($status != null && ($status->getStatus() == "AWAITING" || $status->getStatus() == "STOPPED")) {
                 $rmStatus = $em->getRepository("App:ProcessStatus")->findOneBy(['status' => "REMOVED"]);
                 $operation->setStatus($rmStatus->getId());
@@ -87,6 +87,7 @@ class CambioContratoController extends Controller
      */
     public function getCambioContratoConsolidadoAction(Request $request)
     {
+        $this->container->get("bot.manager")->preventHanging();
         $em = $this->get("doctrine.orm.entity_manager");
         $qb = $em->createQueryBuilder();
         $cambioTcoCons = $qb->select(array('a'))
@@ -115,6 +116,7 @@ class CambioContratoController extends Controller
      */
     public function cambioContratoConsolidadoAction(Request $request)
     {
+        $this->container->get("bot.manager")->preventHanging();
         try {
             $em = $this->get("doctrine.orm.entity_manager");
             /*

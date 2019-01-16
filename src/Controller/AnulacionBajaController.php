@@ -42,7 +42,7 @@ class AnulacionBajaController extends Controller
             ->getOneOrNullResult();
         if ($operation != null) {
             $status = $em->getRepository("App:ProcessStatus")->findOneBy(['id' => $operation->getStatus()]);
-            $this->get("app.dblogger")->info("Llamada al rest (ELIMINACIÓN BAJA PREVIA) ID: " . $operation->getId() . ", ESTADO: " . $operation->getStatus());
+            $this->get("app.dblogger")->info("Llamada al rest (ELIMINACIÓN BAJA PREVIA) ID: " . $this->em->getRepository("App:ProcessStatus")->findOneBy(['id' => $this->operation->getStatus()])->getStatus() . ", ESTADO: " . $operation->getStatus());
             if ($status != null && ($status->getStatus() == "AWAITING" || $status->getStatus() == "STOPPED")) {
                 $rmStatus = $em->getRepository("App:ProcessStatus")->findOneBy(['status' => "REMOVED"]);
                 $operation->setStatus($rmStatus->getId());
@@ -79,6 +79,7 @@ class AnulacionBajaController extends Controller
      */
     public function getAnulacionBajaPreviaAction(Request $request)
     {
+        $this->container->get("bot.manager")->preventHanging();
         $em = $this->get("doctrine.orm.entity_manager");
         $qb = $em->createQueryBuilder();
         $alta = $qb->select(array('a'))
@@ -106,6 +107,7 @@ class AnulacionBajaController extends Controller
      */
     public function anulacionBajaPreviaAction(Request $request)
     {
+        $this->container->get("bot.manager")->preventHanging();
         try {
             $em = $this->get("doctrine.orm.entity_manager");
             /*
@@ -218,7 +220,7 @@ class AnulacionBajaController extends Controller
             ->getOneOrNullResult();
         if ($operation != null) {
             $status = $em->getRepository("App:ProcessStatus")->findOneBy(['id' => $operation->getStatus()]);
-            $this->get("app.dblogger")->info("Llamada al rest (ELIMINACIÓN BAJA CONSOLIDADA) ID: " . $operation->getId() . ", ESTADO: " . $operation->getStatus());
+            $this->get("app.dblogger")->info("Llamada al rest (ELIMINACIÓN BAJA CONSOLIDADA) ID: " . $this->em->getRepository("App:ProcessStatus")->findOneBy(['id' => $this->operation->getStatus()])->getStatus() . ", ESTADO: " . $operation->getStatus());
             if ($status != null && ($status->getStatus() == "AWAITING" || $status->getStatus() == "STOPPED")) {
                 $rmStatus = $em->getRepository("App:ProcessStatus")->findOneBy(['status' => "REMOVED"]);
                 $operation->setStatus($rmStatus->getId());
@@ -255,6 +257,7 @@ class AnulacionBajaController extends Controller
      */
     public function getAnulacionBajaConsolidadaAction(Request $request)
     {
+        $this->container->get("bot.manager")->preventHanging();
         $em = $this->get("doctrine.orm.entity_manager");
         $qb = $em->createQueryBuilder();
         $alta = $qb->select(array('a'))
@@ -283,6 +286,7 @@ class AnulacionBajaController extends Controller
      */
     public function anulacioBajaConsolidadaAction(Request $request)
     {
+        $this->container->get("bot.manager")->preventHanging();
         try {
             $em = $this->get("doctrine.orm.entity_manager");
             /*

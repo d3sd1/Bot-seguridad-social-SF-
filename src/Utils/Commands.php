@@ -55,7 +55,14 @@ class Commands
     {
         $p = substr_replace($p, "[", 0, 0);
         $p = substr_replace($p, "]", 2, 0);
-        return "ps aux | grep $p";
+        return $this->runSyncCommand("ps aux | grep $p");
+    }
+
+    public function isBotHanging() {
+        if($this->processStatus("php") == "") { //Bot is hanging since no proccess is running
+            return true;
+        }
+        return false;
     }
 
     public function resetNavigator() {

@@ -78,6 +78,7 @@ class StartBot extends ContainerAwareCommand
                 }
             }
         }
+        $this->log->info("Deteniendo loop de procesamiento de cola...");
     }
 
     /*
@@ -114,8 +115,16 @@ class StartBot extends ContainerAwareCommand
             /*
              * Instanciar la automatización
              */
+            $status = $this->em->getRepository("App:ProcessStatus")->findOneBy(['id' => $taskData->getStatus()])->getStatus();
 
-            new $taskClass($taskData, $this->getContainer(), $this->em, $this->selenium);
+            if($status == "AWAITING") {
+                new $taskClass($taskData, $this->getContainer(), $this->em, $this->selenium);
+            }
+
+            while($status == "IN_PROCESS" || $status == "AWAITING") {
+                sleep(2);
+                $status = $this->em->getRepository("App:ProcessStatus")->findOneBy(['id' => $taskData->getStatus()])->getStatus();
+            }
 
         } catch (\Exception $e) {
             $this->log->error("Ha ocurrido un error interno en el bot [BOT TASK MANAGER]: " . $e->getMessage());
