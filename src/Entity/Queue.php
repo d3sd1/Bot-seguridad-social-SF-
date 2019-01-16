@@ -30,6 +30,13 @@ class Queue
      */
     private $referenceId;
 
+
+    /**
+     * Fecha de recepción de la operación
+     * @ORM\Column(type="datetime")
+     */
+    private $dateAdded;
+
     /**
      * @return mixed
      */
@@ -93,4 +100,5 @@ class Queue
     {
         $this->referenceId = $referenceId;
     }
+
 }

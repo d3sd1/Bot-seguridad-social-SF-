@@ -132,10 +132,7 @@ class AltaController extends Controller
              * Paseo del tipo de identificación en caso de que sea necesario.
              */
             if ($alta->getIpt() == 6) {
-                $iptFirstCode = substr($alta->getIpf(), 0, 1);
-                if ($iptFirstCode === "X" || $iptFirstCode === "x") {
-                    $alta->setIpf(substr_replace($alta->getIpf(), "0", 1, 0));
-                }
+                $alta->setIpf("0" . $alta->getIpf());
             }
             /*
              * La primera comprobación es básica: El alta no puede sobrepasar 60 días posteriores

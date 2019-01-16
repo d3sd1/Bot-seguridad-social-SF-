@@ -137,10 +137,7 @@ class CambioContratoController extends Controller
              * Parseo del tipo de identificación en caso de que sea necesario.
              */
             if ($cambioTcoCons->getIpt() == 6) {
-                $iptFirstCode = substr($cambioTcoCons->getIpf(), 0, 1);
-                if ($iptFirstCode === "X" || $iptFirstCode === "x") {
-                    $cambioTcoCons->setIpf(substr_replace($cambioTcoCons->getIpf(), "0", 1, 0));
-                }
+                $cambioTcoCons->setIpf("0" . $cambioTcoCons->getIpf());
             }
             /*
              * La primera comprobación es básica: El cambio de contrato consolidado no debe sobrepasar 2 días.

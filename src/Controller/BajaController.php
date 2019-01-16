@@ -127,10 +127,7 @@ class BajaController extends Controller
              * Paseo del tipo de identificación en caso de que sea necesario.
              */
             if ($baja->getIpt() == 6) {
-                $iptFirstCode = substr($baja->getIpf(), 0, 1);
-                if ($iptFirstCode === "X" || $iptFirstCode === "x") {
-                    $baja->setIpf(substr_replace($baja->getIpf(), "0", 1, 0));
-                }
+                $baja->setIpf("0" . $baja->getIpf());
             }
 
             /*
