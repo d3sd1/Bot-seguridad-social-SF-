@@ -95,7 +95,6 @@ class Commands
             $this->killProcessByName("php");
             $this->killProcessByName("selenium");
             $this->killProcessByName("Xvfb");
-            $this->killProcessByName("xvfb");
         }
         catch(\Exception $e) {
             $this->container->get("app.dblogger")->success("Excepción al matar al bot: " . $e->getMessage());

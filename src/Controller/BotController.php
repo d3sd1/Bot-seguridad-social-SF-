@@ -29,6 +29,7 @@ class BotController extends Controller
             ->getRepository('App:InternalLog')
             ->createQueryBuilder('l')
             ->orderBy("l.datetime", "DESC")
+            ->setMaxResults(200)
             ->getQuery();
         $result = $query->getResult(Query::HYDRATE_ARRAY);
 
@@ -49,6 +50,7 @@ class BotController extends Controller
             ->getRepository('App:Queue')
             ->createQueryBuilder('q')
             ->orderBy("q.id", "ASC")
+            ->setMaxResults(200)
             ->getQuery();
         $result = $query->getResult();
         if (count($result) > 0) {
@@ -75,7 +77,7 @@ class BotController extends Controller
             $selLogs = file_get_contents("/var/www/debug/Selenium/$sessionId/sel.log");
             return $this->container->get("response")->success("LOADED", $selLogs);
         } catch (\Exception $e) {
-            $this->get("app.dblogger")->success("No se han podido cargar los logs de selenium: " . $e->getMessage());
+            //$this->get("app.dblogger")->success("No se han podido cargar los logs de selenium: " . $e->getMessage());
             return $this->container->get("response")->error(500, "SELENIUM_SESSION_LOGFILE_ERROR");
         }
 
@@ -93,7 +95,7 @@ class BotController extends Controller
             $selLogs = file_get_contents("/var/www/debug/Selenium/$sessionId/sel.log");
             return $this->container->get("response")->success("LOADED", $selLogs);
         } catch (\Exception $e) {
-            $this->get("app.dblogger")->success("No se han podido cargar los logs de selenium: " . $e->getMessage());
+            //$this->get("app.dblogger")->success("No se han podido cargar los logs de selenium: " . $e->getMessage());
             return $this->container->get("response")->error(500, "SELENIUM_SESSION_LOGFILE_ERROR");
         }
 
