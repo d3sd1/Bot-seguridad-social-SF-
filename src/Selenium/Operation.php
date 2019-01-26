@@ -257,8 +257,13 @@ abstract class Operation
         $this->operation->setData($data);
     }
 
+    private function setProcessTime() {
+        $this->operation->updateProcessTime();
+    }
+
     protected function removeFromQueue()
     {
+        $this->setProcessTime();
         /*
          * Eliminar de la cola.
          */

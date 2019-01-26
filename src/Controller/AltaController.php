@@ -47,6 +47,7 @@ class AltaController extends Controller
             if ($status != null && ($status->getStatus() == "AWAITING" || $status->getStatus() == "STOPPED")) {
                 $rmStatus = $em->getRepository("App:ProcessStatus")->findOneBy(['status' => "REMOVED"]);
                 $operation->setStatus($rmStatus->getId());
+                $operation->setProcessTime(0);
                 $queueOperation = $em->createQueryBuilder()->select(array('q'))
                     ->from('App:Queue', 'q')
                     ->where('q.referenceId = :refId')
@@ -130,6 +131,7 @@ class AltaController extends Controller
             $alta->setCca($em->getRepository("App:ContractAccounts")->findOneBy(['name' => $alta->getCca()]));
 
             $alta->setDateInit();
+            $alta->setProcessTime(0);
             /*
              * Paseo del tipo de identificación en caso de que sea necesario.
              */

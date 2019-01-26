@@ -103,6 +103,7 @@ class ConsultaController extends Controller
                 $consulta->setDateProcessed();
                 $consulta->setStatus(4);
                 $consulta->setDateInit();
+                $consulta->setProcessTime(0);
                 $em->persist($consulta);
                 $em->flush();
 
@@ -213,6 +214,7 @@ class ConsultaController extends Controller
                 /* Agregar consulta */
                 $consulta->setDateProcessed();
                 $consulta->setStatus(4);
+                $consulta->setProcessTime(0);
                 $em->persist($consulta);
                 $em->flush();
 
@@ -336,6 +338,7 @@ class ConsultaController extends Controller
                 /* Agregar consulta */
                 $consulta->setDateProcessed();
                 $consulta->setStatus(4);
+                $consulta->setProcessTime(0);
                 $em->persist($consulta);
                 $em->flush();
 
@@ -465,6 +468,7 @@ class ConsultaController extends Controller
                 /* Agregar consulta */
                 $consulta->setDateProcessed();
                 $consulta->setStatus(4);
+                $consulta->setProcessTime(0);
                 $em->persist($consulta);
                 $em->flush();
 

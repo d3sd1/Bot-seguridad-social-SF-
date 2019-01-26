@@ -45,6 +45,7 @@ class CambioContratoController extends Controller
             if ($status != null && ($status->getStatus() == "AWAITING" || $status->getStatus() == "STOPPED")) {
                 $rmStatus = $em->getRepository("App:ProcessStatus")->findOneBy(['status' => "REMOVED"]);
                 $operation->setStatus($rmStatus->getId());
+                $operation->setProcessTime(0);
                 $queueOperation = $em->createQueryBuilder()->select(array('q'))
                     ->from('App:Queue', 'q')
                     ->where('q.referenceId = :refId')
@@ -134,6 +135,7 @@ class CambioContratoController extends Controller
             $cambioTcoCons->setCoe($em->getRepository("App:ContractCoefficient")->findOneBy(['coefficient' => $cambioTcoCons->getCoe()]));
             $cambioTcoCons->setCca($em->getRepository("App:ContractAccounts")->findOneBy(['name' => $cambioTcoCons->getCca()]));
 
+            $cambioTcoCons->setProcessTime(0);
             $cambioTcoCons->setDateInit();
             /*
              * Parseo del tipo de identificación en caso de que sea necesario.

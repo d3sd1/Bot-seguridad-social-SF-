@@ -160,4 +160,35 @@ class BotController extends Controller
             return $this->container->get("response")->success("SERVER_NOT_CLOSED");
         }
     }
+    /**
+     * Cerrar bot.
+     * @FOSRest\Get("/time/avg")
+     */
+    public function avgTimeBot(Request $request)
+    {
+        $avgTime = 0;
+        $avgCount = 0;
+
+        /* ALTAS */
+        $avgTime += $this->getDoctrine()
+            ->getRepository('App:Alta')->createQueryBuilder('op.')
+            ->select("avg(op.processTime)")
+            ->where('op. != :identifier')
+            ->setParameter('identifier', 1)
+            ->getQuery()->getResult()[0][1];
+        $avgCount++;
+
+        /* BAJAS */
+        $avgTime += $this->getDoctrine()
+            ->getRepository('App:Baja')->createQueryBuilder('g')
+            ->select("avg(g.processTime)")
+            ->getQuery()->getResult()[0][1];
+        $avgCount++;
+
+        /* AÑADIR AQUI el resto de operaciones cuando se usen */
+
+        $finalAvg = $avgTime/$avgCount;
+
+        return $this->container->get("response")->success("AVG_TIME", $finalAvg);
+    }
 }

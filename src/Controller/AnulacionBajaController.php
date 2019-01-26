@@ -46,6 +46,7 @@ class AnulacionBajaController extends Controller
             if ($status != null && ($status->getStatus() == "AWAITING" || $status->getStatus() == "STOPPED")) {
                 $rmStatus = $em->getRepository("App:ProcessStatus")->findOneBy(['status' => "REMOVED"]);
                 $operation->setStatus($rmStatus->getId());
+                $operation->setProcessTime(0);
                 $queueOperation = $em->createQueryBuilder()->select(array('q'))
                     ->from('App:Queue', 'q')
                     ->where('q.referenceId = :refId')
@@ -125,6 +126,7 @@ class AnulacionBajaController extends Controller
             $anulacionBaja->setCca($em->getRepository("App:ContractAccounts")->findOneBy(['name' => $anulacionBaja->getCca()]));
 
             $anulacionBaja->setDateInit();
+            $anulacionBaja->setProcessTime(0);
             /*
              * La primera comprobación es básica: La petición de baja previa no puede sobrepasar 60 días posteriores
              * al actual.
@@ -224,6 +226,7 @@ class AnulacionBajaController extends Controller
             if ($status != null && ($status->getStatus() == "AWAITING" || $status->getStatus() == "STOPPED")) {
                 $rmStatus = $em->getRepository("App:ProcessStatus")->findOneBy(['status' => "REMOVED"]);
                 $operation->setStatus($rmStatus->getId());
+                $operation->setProcessTime(0);
                 $queueOperation = $em->createQueryBuilder()->select(array('q'))
                     ->from('App:Queue', 'q')
                     ->where('q.referenceId = :refId')
@@ -304,6 +307,7 @@ class AnulacionBajaController extends Controller
             $anulacionBaja->setCca($em->getRepository("App:ContractAccounts")->findOneBy(['name' => $anulacionBaja->getCca()]));
 
             $anulacionBaja->setDateInit();
+            $anulacionBaja->setProcessTime(0);
             /*
              * La primera comprobación es básica: La petición de baja consolidada no puede ser anterior a la actual.
              */

@@ -46,6 +46,7 @@ class AnulacionAltaController extends Controller
             if ($status != null && ($status->getStatus() == "AWAITING" || $status->getStatus() == "STOPPED")) {
                 $rmStatus = $em->getRepository("App:ProcessStatus")->findOneBy(['status' => "REMOVED"]);
                 $operation->setStatus($rmStatus->getId());
+                $operation->setProcessTime(0);
                 $queueOperation = $em->createQueryBuilder()->select(array('q'))
                     ->from('App:Queue', 'q')
                     ->where('q.referenceId = :refId')
@@ -127,6 +128,7 @@ class AnulacionAltaController extends Controller
             $anulacionAlta->setCca($em->getRepository("App:ContractAccounts")->findOneBy(['name' => $anulacionAlta->getCca()]));
 
             $anulacionAlta->setDateInit();
+            $anulacionAlta->setProcessTime(0);
             /*
              * La primera comprobación es básica: La petición de alta previa no puede sobrepasar 60 días posteriores
              * al actual.
@@ -225,6 +227,7 @@ class AnulacionAltaController extends Controller
             if ($status != null && ($status->getStatus() == "AWAITING" || $status->getStatus() == "STOPPED")) {
                 $rmStatus = $em->getRepository("App:ProcessStatus")->findOneBy(['status' => "REMOVED"]);
                 $operation->setStatus($rmStatus->getId());
+                $operation->setProcessTime(0);
                 $queueOperation = $em->createQueryBuilder()->select(array('q'))
                     ->from('App:Queue', 'q')
                     ->where('q.referenceId = :refId')
@@ -305,6 +308,7 @@ class AnulacionAltaController extends Controller
             $anulacionAlta->setCca($em->getRepository("App:ContractAccounts")->findOneBy(['name' => $anulacionAlta->getCca()]));
 
             $anulacionAlta->setDateInit();
+            $anulacionAlta->setProcessTime(0);
             /*
              * Validar el tipo de empresa.
              */

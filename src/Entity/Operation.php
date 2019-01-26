@@ -49,6 +49,20 @@ class Operation
      */
     private $errMsg;
 
+    /**
+     * Tiempo de procesamiento (segundos).
+     * @ORM\Column(type="integer", options={"default":0})
+     */
+    private $processTime;
+
+    /**
+     * Operation constructor.
+     */
+    public function __construct()
+    {
+        $this->setProcessTime(0);
+    }
+
 
     /**
      * @return mixed
@@ -130,5 +144,30 @@ class Operation
     {
         $this->errMsg = $errMsg;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getProcessTime()
+    {
+        return $this->processTime;
+    }
+
+    /**
+     * @param mixed $processTime
+     */
+    public function setProcessTime($processTime): void
+    {
+        $this->processTime = $processTime;
+    }
+    /**
+     * @param mixed $processTime
+     */
+    public function updateProcessTime(): void
+    {
+        $this->processTime = (new \DateTime())->getTimestamp() - $this->getDateInit()->getTimestamp();
+    }
+
+
 
 }
