@@ -133,12 +133,11 @@ class BotController extends Controller
      */
     public function startBot(Request $request)
     {
-        if($this->get("bot.manager")->start()) {
+        if ($this->get("bot.manager")->start()) {
             $this->get("app.dblogger")->success("Servidor iniciado correctamente.");
             $this->container->get("so.commands")->startBot();
             return $this->container->get("response")->success("SERVER_STARTED");
-        }
-        else {
+        } else {
             $this->get("app.dblogger")->success("El servidor no se pudo iniciar. Para más información lanza el bot en modo debug GUI-BASH.");
             return $this->container->get("response")->success("SERVER_NOT_STARTED");
         }
@@ -151,18 +150,18 @@ class BotController extends Controller
     public function closeBot(Request $request)
     {
 
-        if($this->get("bot.manager")->close()) {
+        if ($this->get("bot.manager")->close()) {
             $this->get("app.dblogger")->success("Servidor detenido correctamente.");
             return $this->container->get("response")->success("SERVER_CLOSED");
-        }
-        else {
+        } else {
             $this->get("app.dblogger")->success("El servidor no se pudo iniciar. Para más información lanza el bot en modo debug GUI-BASH.");
             return $this->container->get("response")->success("SERVER_NOT_CLOSED");
         }
     }
+
     /**
-     * Cerrar bot.
-     * @FOSRest\Get("/time/avg")
+     * Estudio de tiempos de procesamiento.
+     * @FOSRest\Get("/timings")
      */
     public function avgTimeBot(Request $request)
     {
@@ -176,7 +175,6 @@ class BotController extends Controller
             ->where('op.processTime != :pt')
             ->setParameter('pt', 0)
             ->getQuery()->getResult()[0][1];
-        var_dump($avgTime);die();
         $avgCount++;
 
         /* BAJAS */
@@ -190,8 +188,70 @@ class BotController extends Controller
 
         /* AÑADIR AQUI el resto de operaciones cuando se usen */
 
-        $finalAvg = $avgTime/$avgCount;
+        $finalAvg = $avgTime / $avgCount;
 
-        return $this->container->get("response")->success("AVG_TIME", $finalAvg);
+        $result = new \stdClass();
+
+        $result->botGlobalAvg = $finalAvg;
+        $result->botGlobalMax = $this->getDoctrine()
+            ->getRepository('App:Baja')->createQueryBuilder('op')
+            ->select("max(op.processTime)")
+            ->where('op.processTime != :pt')
+            ->setParameter('pt', 0)
+            ->getQuery()->getResult()[0][1];
+        $result->botGlobalMin = $this->getDoctrine()
+            ->getRepository('App:Baja')->createQueryBuilder('op')
+            ->select("min(op.processTime)")
+            ->where('op.processTime != :pt')
+            ->setParameter('pt', 0)
+            ->getQuery()->getResult()[0][1];
+
+
+        return $this->container->get("response")->success("RESULT", json_encode($result));
+    }
+
+    /**
+     * Estudio de resultados de procesamiento.
+     * @FOSRest\Get("/results")
+     */
+    public function resultsBot(Request $request)
+    {
+        $errors = 0;
+        $total = 0;
+
+        /* ALTAS */
+        $total += $this->getDoctrine()
+            ->getRepository('App:Alta')->createQueryBuilder('op')
+            ->select('count(op.id)')
+            ->getQuery()->getSingleScalarResult();
+        $errors += $this->getDoctrine()
+            ->getRepository('App:Alta')->createQueryBuilder('op')
+            ->select('count(op.id)')
+            ->where('op.status = 5')
+            ->getQuery()->getSingleScalarResult();
+
+        /* BAJAS */
+        $total += $this->getDoctrine()
+            ->getRepository('App:Baja')->createQueryBuilder('op')
+            ->select('count(op.id)')
+            ->getQuery()->getSingleScalarResult();
+        $errors += $this->getDoctrine()
+            ->getRepository('App:Baja')->createQueryBuilder('op')
+            ->select('count(op.id)')
+            ->where('op.status = 5')
+            ->getQuery()->getSingleScalarResult();
+
+        /* AÑADIR AQUI el resto de operaciones cuando se usen */
+
+        $result = new \stdClass();
+
+        $result->errorPercentage = $errors/$total * 100;
+        $result->totalOperations = $total;
+        $result->totalErrors = $errors;
+        $result->totalSuccess = $total - $errors;
+
+
+
+        return $this->container->get("response")->success("RESULT", json_encode($result));
     }
 }
