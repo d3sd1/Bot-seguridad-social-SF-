@@ -19,7 +19,8 @@ BODY:
          "gco": "08",
          "tco": "502",
          "coe": "500",
-         "cca": "WORKOUT"
+         "cca": "WORKOUT",
+         "callback_url": "{URL_CALLBACK}"
     }
 
 * **naf**: Número de afiliación a la seguridad social.

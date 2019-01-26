@@ -10,7 +10,8 @@ URL REST: **/consulta/ipf**
 BODY: 
 
        {
-            "naf": "281420515224"
+            "naf": "281420515224",
+            "callback_url": "{URL_CALLBACK}"
         }
 
 * **naf**: Número de afiliación.

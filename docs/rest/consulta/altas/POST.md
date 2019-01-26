@@ -10,7 +10,8 @@ URL REST: **/consulta/altas**
 BODY: 
 
     {
-         "cca": "WORKOUT"
+         "cca": "WORKOUT",
+         "callback_url": "{URL_CALLBACK}"
     }
 
 * **cca**: Cuenta de cotización de la empresa para el alta del trabajador. Valores válidos: [ver aquí](../../data/data-cuentas-cotizacion.json).

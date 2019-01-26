@@ -266,7 +266,31 @@ abstract class Operation
 
     protected function removeFromQueue()
     {
+        /* Set proccess time for debugging */
         $this->setProcessTime();
+
+        /* Do callback if needed */
+
+        if(
+            $this->operation->getCallbackUrl() != null &&
+            $this->operation->getCallbackUrl() != ""
+        ) {
+            $base64Response = new \stdClass();
+            $base64Response->id = $this->operation->getId();
+            $base64Response->optype = strtolower($this->operationName);
+            $base64Response->result = $this->em->getRepository("App:ProcessStatus")->findOneBy(['id' => $this->operation->getStatus()])->getStatus();
+            $base64Response->resultmessage = $this->operation->getErrMsg();
+
+            $base64Response = base64_encode(json_encode($base64Response));
+
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $this->operation->getCallbackUrl() . '?response='.$base64Response);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-type: application/json')); // Assuming you're requesting JSON
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+
+            $response = curl_exec($ch);
+        }
+
         /*
          * Eliminar de la cola.
          */

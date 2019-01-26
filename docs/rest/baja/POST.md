@@ -18,7 +18,8 @@ BODY:
          "frb": "2018-05-30",
          "sit": "08",
          "ffv": "2018-09-30",
-         "cca": "WORKOUT"
+         "cca": "WORKOUT",
+         "callback_url": "{URL_CALLBACK}"
     }
 
 * **naf**: Número de afiliación a la seguridad social.

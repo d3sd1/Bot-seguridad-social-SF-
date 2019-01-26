@@ -56,6 +56,12 @@ class Operation
     private $processTime;
 
     /**
+     * Tiempo de procesamiento (segundos).
+     * @ORM\Column(type="string", options={"default":null})
+     */
+    private $callbackUrl;
+
+    /**
      * Operation constructor.
      */
     public function __construct()
@@ -168,6 +174,20 @@ class Operation
         $this->processTime = (new \DateTime())->getTimestamp() - $this->getDateProcessed()->getTimestamp();
     }
 
+    /**
+     * @return mixed
+     */
+    public function getCallbackUrl()
+    {
+        return $this->callbackUrl;
+    }
 
+    /**
+     * @param mixed $callbackUrl
+     */
+    public function setCallbackUrl($callbackUrl): void
+    {
+        $this->callbackUrl = $callbackUrl;
+    }
 
 }

@@ -13,7 +13,8 @@ BODY:
            "ipt": "01",
            "ipf": "53457069D",
            "ap1": "GARCIA",
-           "ap2": "CUADRA"
+           "ap2": "CUADRA",
+           "callback_url": "{URL_CALLBACK}"
        }
 
 * **ipt**: Tipo de identificador a utilizar. Puede ser **dni** (Código 01), **pasaporte** (Código 02) o **nie** (Código 06).
