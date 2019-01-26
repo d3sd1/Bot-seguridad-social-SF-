@@ -50,6 +50,9 @@ abstract class Operation
                 } else {
                     /* Si no, procesar operación */
                     $this->updateStatus("IN_PROCESS");
+                    $this->operation->setDateProcessed();
+                    $this->em->flush();
+
                     $this->manageOperation();
                 }
 

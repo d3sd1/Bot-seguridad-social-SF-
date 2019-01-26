@@ -171,17 +171,20 @@ class BotController extends Controller
 
         /* ALTAS */
         $avgTime += $this->getDoctrine()
-            ->getRepository('App:Alta')->createQueryBuilder('op.')
+            ->getRepository('App:Alta')->createQueryBuilder('op')
             ->select("avg(op.processTime)")
-            ->where('op. != :identifier')
-            ->setParameter('identifier', 1)
+            ->where('op.processTime != :pt')
+            ->setParameter('pt', 0)
             ->getQuery()->getResult()[0][1];
+        var_dump($avgTime);die();
         $avgCount++;
 
         /* BAJAS */
         $avgTime += $this->getDoctrine()
-            ->getRepository('App:Baja')->createQueryBuilder('g')
-            ->select("avg(g.processTime)")
+            ->getRepository('App:Baja')->createQueryBuilder('op')
+            ->select("avg(op.processTime)")
+            ->where('op.processTime != :pt')
+            ->setParameter('pt', 0)
             ->getQuery()->getResult()[0][1];
         $avgCount++;
 

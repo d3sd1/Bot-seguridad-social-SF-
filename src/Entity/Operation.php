@@ -165,7 +165,7 @@ class Operation
      */
     public function updateProcessTime(): void
     {
-        $this->processTime = (new \DateTime())->getTimestamp() - $this->getDateInit()->getTimestamp();
+        $this->processTime = (new \DateTime())->getTimestamp() - $this->getDateProcessed()->getTimestamp();
     }
 
 
