@@ -102,11 +102,11 @@ class Operation
      */
     public function getDateProcessed()
     {
-        return $this->dateProccesed;
+        return $this->dateProcessed;
     }
 
     /**
-     * @param mixed $dateProccesed
+     * @param mixed $dateProcessed
      */
     public function setDateProcessed()
     {
