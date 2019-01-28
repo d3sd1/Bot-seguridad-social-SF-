@@ -57,9 +57,9 @@ class Operation
 
     /**
      * Tiempo de procesamiento (segundos).
-     * @ORM\Column(type="string", options={"default":null})
+     * @ORM\Column(type="string", nullable=true, options={"default":null})
      */
-    private $callbackUrl;
+    private $callbackUrl = null;
 
     /**
      * Operation constructor.
