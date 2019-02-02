@@ -19,7 +19,7 @@ class ConsultaAltasCcc extends Consulta
      * @ORM\ManyToOne(targetEntity="App\Entity\ContractAccounts")
      * @ORM\JoinColumn(referencedColumnName="name")
      */
-    private $cca;
+    private $cca = null;
 
     /**
      * @return mixed

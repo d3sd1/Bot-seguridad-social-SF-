@@ -25,13 +25,13 @@ class Operation
      * Fecha de procesamiento
      * @ORM\Column(type="datetime")
      */
-    private $dateProcessed;
+    private $dateProcessed = null;
 
     /**
      * Fecha de recepción de la operación
      * @ORM\Column(type="datetime")
      */
-    private $dateInit;
+    private $dateInit = null;
 
     /**
      * @JMS\Exclude(if="context.getDirection() === 0")
@@ -39,7 +39,7 @@ class Operation
      * @ORM\JoinColumn(referencedColumnName="id")
      * @ORM\Column(options={"default":4})
      */
-    private $status;
+    private $status = null;
 
     /**
      * Mensaje de error (si procede).
@@ -47,13 +47,13 @@ class Operation
      * @JMS\Type("string")
      * @ORM\Column(type="string", unique=false, nullable=true)
      */
-    private $errMsg;
+    private $errMsg = null;
 
     /**
      * Tiempo de procesamiento (segundos).
      * @ORM\Column(type="integer", options={"default":0})
      */
-    private $processTime;
+    private $processTime = null;
 
     /**
      * Tiempo de procesamiento (segundos).

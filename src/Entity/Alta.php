@@ -19,7 +19,7 @@ class Alta extends Operation
      * @ORM\ManyToOne(targetEntity="App\Entity\ContractAccounts")
      * @ORM\JoinColumn(referencedColumnName="name")
      */
-    private $cca;
+    private $cca = null;
 
     /**
      * Número de afiliación.
@@ -28,7 +28,7 @@ class Alta extends Operation
      * @Assert\Length(min=12,max=12)
      * @ORM\Column(type="bigint", columnDefinition="BIGINT(12) UNSIGNED ZEROFILL")
      */
-    private $naf;
+    private $naf = null;
 
     /**
      * Identificación de personas físicas (Código)
@@ -36,7 +36,7 @@ class Alta extends Operation
      * @Assert\Length(min=5,max=15)
      * @ORM\Column(type="string")
      */
-    private $ipf;
+    private $ipf = null;
 
     /**
      * Identificación de personas físicas.
@@ -44,14 +44,14 @@ class Alta extends Operation
      * @Assert\Length(min=2,max=2)
      * @ORM\Column(type="integer", columnDefinition="INT(2) UNSIGNED ZEROFILL")
      */
-    private $ipt;
+    private $ipt = null;
 
     /**
      * Fecha real del alta
      * @JMS\Type("DateTime<'Y-m-d','','|Y-m-d'>")
      * @ORM\Column(type="datetime")
      */
-    private $fra;
+    private $fra = null;
 
 
     /**
@@ -60,7 +60,7 @@ class Alta extends Operation
      * @Assert\Length(min=2,max=2)
      * @ORM\Column(type="integer", columnDefinition="INT(2) UNSIGNED ZEROFILL")
      */
-    private $gco;
+    private $gco = null;
 
     /**
      * Situación
@@ -68,7 +68,7 @@ class Alta extends Operation
      * @Assert\Length(min=2,max=2)
      * @ORM\Column(type="integer", columnDefinition="INT(2) UNSIGNED ZEROFILL")
      */
-    private $sit;
+    private $sit = null;
 
     /**
      * Tipo de contrato. Debe existir en la DB local.
@@ -76,7 +76,7 @@ class Alta extends Operation
      * @ORM\ManyToOne(targetEntity="App\Entity\ContractKey")
      * @ORM\JoinColumn(referencedColumnName="ckey")
      */
-    private $tco;
+    private $tco = null;
 
 
     /**
@@ -85,7 +85,7 @@ class Alta extends Operation
      * @ORM\ManyToOne(targetEntity="App\Entity\ContractCoefficient")
      * @ORM\JoinColumn(referencedColumnName="coefficient")
      */
-    private $coe;
+    private $coe = null;
 
     /**
      * @return mixed

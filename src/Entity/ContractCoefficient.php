@@ -17,12 +17,12 @@ class ContractCoefficient
      * @ORM\Id()
      * @ORM\Column(type="integer",unique=true,nullable=false,length=3)
      */
-    private $coefficient;
+    private $coefficient = null;
 
     /**
      * @ORM\Column(type="string")
      */
-    private $description;
+    private $description = null;
 
     /**
      * @return mixed

@@ -20,7 +20,7 @@ class ConsultaIpf extends Consulta
      * @Assert\Length(min=12,max=12)
      * @ORM\Column(type="bigint", columnDefinition="BIGINT(12) UNSIGNED ZEROFILL")
      */
-    private $naf;
+    private $naf = null;
 
     /**
      * @return mixed

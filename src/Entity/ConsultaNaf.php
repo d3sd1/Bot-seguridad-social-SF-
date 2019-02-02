@@ -18,7 +18,7 @@ class ConsultaNaf extends Consulta
      * @Assert\Length(min=5,max=15)
      * @ORM\Column(type="string")
      */
-    private $ipf;
+    private $ipf = null;
 
     /**
      * Identificación de personas físicas (Tipo).
@@ -26,21 +26,21 @@ class ConsultaNaf extends Consulta
      * @Assert\Length(min=2,max=2)
      * @ORM\Column(type="integer", columnDefinition="INT(2) UNSIGNED ZEROFILL")
      */
-    private $ipt;
+    private $ipt = null;
 
     /**
      * Primer apellido.
      * @JMS\Type("string")
      * @ORM\Column(type="string")
      */
-    private $ap1;
+    private $ap1 = null;
 
     /**
      * Segundo apellido.
      * @JMS\Type("string")
      * @ORM\Column(type="string")
      */
-    private $ap2;
+    private $ap2 = null;
 
     /**
      * @return mixed

@@ -20,7 +20,7 @@ class Consulta extends Operation
      * @JMS\Type("string")
      * @ORM\Column(type="string", unique=false, nullable=true)
      */
-    private $data;
+    private $data = null;
 
     /**
      * @return mixed

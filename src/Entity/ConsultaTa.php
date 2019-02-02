@@ -20,7 +20,7 @@ class ConsultaTa extends Consulta
      * @Assert\Length(min=12,max=12)
      * @ORM\Column(type="bigint", columnDefinition="BIGINT(12) UNSIGNED ZEROFILL")
      */
-    private $naf;
+    private $naf = null;
 
     /**
      * Tipo de empresa.
@@ -28,14 +28,14 @@ class ConsultaTa extends Consulta
      * @ORM\ManyToOne(targetEntity="App\Entity\ContractAccounts")
      * @ORM\JoinColumn(referencedColumnName="name")
      */
-    private $cca;
+    private $cca = null;
 
     /**
      * Fecha real de la consulta
      * @JMS\Type("DateTime<'Y-m-d','','|Y-m-d'>")
      * @ORM\Column(type="datetime")
      */
-    private $frc;
+    private $frc = null;
 
     /**
      * @return mixed
