@@ -108,6 +108,7 @@ abstract class Operation
     private function manageOperation()
     {
         getenv('FORCE_PROD_SS_URL') ? $env = "PROD" : $env = $this->container->get('kernel')->getEnvironment();
+
         $reqUrl = (new \ReflectionClass('App\Constants\\' . ucfirst(strtolower($env)) . 'UrlConstants'))->getConstant(strtoupper($this->operationName));
         $this->container->get("app.dblogger")->info("OP SS URL: " . $reqUrl);
         if ($this->checkPageAvailable($reqUrl)) {
@@ -132,7 +133,9 @@ abstract class Operation
         $this->em->flush();
     }
 
-    abstract function doOperation();
+    //TODO: eliminar selenium driver de php para evitar que siga reventando el programa...
+    abstract function doOperation();//TODO: sustituir esta función por pasarlo a python!!! pasar el resto de operaciones  a python y gestionarlas desde allí.
+
 
     public function clearTmpFolder()
     {
