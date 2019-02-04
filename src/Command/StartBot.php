@@ -138,17 +138,17 @@ class StartBot extends ContainerAwareCommand
         * Iniciar Selenium driver
         */
 
-        $this->bm->start();
+        //$this->bm->start();
 
         /*
          * CARGAR CONTROLADOR
-         */
+         *
         try {
             $navigator = getenv("SELENIUM_NAVIGATOR");
             /*
              * Si se requiere de cambiar el certificado, simplemente cambiar el perfil de firefox.
              * Para ello, crear un perfil y exportarlo a zip y base 64.
-             */
+             *
             switch ($navigator) {
                 case "chrome":
                     $caps = DesiredCapabilities::chrome();
@@ -164,7 +164,7 @@ class StartBot extends ContainerAwareCommand
                     //$caps->setCapability('marionette', true);
                     $caps->setCapability('webdriver.gecko.driver', "/var/www/drivers/gecko/0.20.1");
 
-                    $caps->setCapability(FirefoxDriver::PROFILE, file_get_contents('/var/www/drivers/profiles/firefox/profile.zip.b64'));
+                    $caps->setCapability(FirefoxDriver::PROFILE, file_get_contents());
                     break;
                 default:
                     $this->log->error("Unrecognized navigator (on .env config file): " + $navigator);
@@ -180,7 +180,7 @@ class StartBot extends ContainerAwareCommand
         } catch (WebDriverCurlException $e) {
             $this->log->error("Selenium driver not loaded (Did u loaded GeckoDriver?). Details: " . $e->getMessage());
             exit();
-        }
+        }*/
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
