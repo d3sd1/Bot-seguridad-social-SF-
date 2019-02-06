@@ -111,7 +111,6 @@ class StartBot extends ContainerAwareCommand
                 ->setMaxResults(1)
                 ->getOneOrNullResult();
 
-
             /*
              * Instanciar la automatización
              */
@@ -120,7 +119,6 @@ class StartBot extends ContainerAwareCommand
             if($status == "AWAITING") {
                 new $taskClass($taskData, $this->getContainer(), $this->em, $this->selenium);
             }
-            //xd
 
             while($status == "IN_PROCESS" || $status == "AWAITING") {
                 sleep(2);
