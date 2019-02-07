@@ -2,6 +2,7 @@
 
 namespace App\Selenium;
 
+use Facebook\WebDriver\Exception\NoSuchElementException;
 use Facebook\WebDriver\WebDriverExpectedCondition;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Doctrine\ORM\EntityManager;
@@ -58,6 +59,11 @@ abstract class Operation
 
             }
 
+        } catch (NoSuchElementException $e) { // Programming exception
+            $this->container->get("app.dblogger")->warning("Programming error for debugging purposes while coding: " . $e->getMessage());
+            $this->container->get("bot.manager")->close();
+            sleep(20);
+            $this->container->get("bot.manager")->start(false);
         } catch (\Exception $e) {
 
             /* ENDFIX */

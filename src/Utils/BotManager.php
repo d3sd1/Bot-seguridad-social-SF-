@@ -29,7 +29,7 @@ class BotManager
         $this->container->get("so.commands")->restartServerSO();
     }
 
-    public function start($abortPendingOperations = true) {
+    public function start($abortPendingOperations = false) {
         $this->setBotStatus("BOOTING");
         $botSession = new BotSession();
         $botSession->setDatetime();
