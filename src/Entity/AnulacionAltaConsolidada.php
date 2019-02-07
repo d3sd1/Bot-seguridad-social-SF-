@@ -19,7 +19,7 @@ class AnulacionAltaConsolidada extends Operation
      * @ORM\ManyToOne(targetEntity="App\Entity\ContractAccounts")
      * @ORM\JoinColumn(referencedColumnName="name")
      */
-    private $cca;
+    private $cca = null;
 
     /**
      * Número de afiliación.
@@ -28,7 +28,7 @@ class AnulacionAltaConsolidada extends Operation
      * @Assert\Length(min=12,max=12)
      * @ORM\Column(type="bigint", columnDefinition="BIGINT(12) UNSIGNED ZEROFILL")
      */
-    private $naf;
+    private $naf = null;
 
     /**
      * @return mixed

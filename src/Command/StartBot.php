@@ -111,7 +111,6 @@ class StartBot extends ContainerAwareCommand
                 ->setMaxResults(1)
                 ->getOneOrNullResult();
 
-
             /*
              * Instanciar la automatización
              */

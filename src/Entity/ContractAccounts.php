@@ -14,18 +14,18 @@ class ContractAccounts
      * @ORM\Id()
      * @ORM\Column(type="string", unique=true, nullable=false)
      */
-    private $name;
+    private $name = null;
 
     /**
      * @ORM\Column(type="bigint", unique=true, columnDefinition="BIGINT(11) UNSIGNED ZEROFILL")
      */
-    private $ccc;
+    private $ccc = null;
 
     /**
      * Régimen
      * @ORM\Column(type="integer", columnDefinition="INT(4) UNSIGNED ZEROFILL")
      */
-    private $reg;
+    private $reg = null;
 
 
     /**

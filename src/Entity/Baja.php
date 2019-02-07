@@ -19,7 +19,7 @@ class Baja extends Operation
      * @ORM\ManyToOne(targetEntity="App\Entity\ContractAccounts")
      * @ORM\JoinColumn(referencedColumnName="name")
      */
-    private $cca;
+    private $cca = null;
 
     /**
      * Número de afiliación.
@@ -28,7 +28,7 @@ class Baja extends Operation
      * @Assert\Length(min=12,max=12)
      * @ORM\Column(type="bigint", columnDefinition="BIGINT(12) UNSIGNED ZEROFILL")
      */
-    private $naf;
+    private $naf = null;
 
     /**
      * Identificación de personas físicas.
@@ -36,7 +36,7 @@ class Baja extends Operation
      * @Assert\Length(min=5,max=15)
      * @ORM\Column(type="string")
      */
-    private $ipf;
+    private $ipf = null;
 
     /**
      * Identificación de personas físicas.
@@ -44,7 +44,7 @@ class Baja extends Operation
      * @Assert\Length(min=2,max=2)
      * @ORM\Column(type="integer", columnDefinition="INT(2) UNSIGNED ZEROFILL")
      */
-    private $ipt;
+    private $ipt = null;
 
 
     /**
@@ -53,14 +53,14 @@ class Baja extends Operation
      * @Assert\Length(min=2,max=2)
      * @ORM\Column(type="integer", columnDefinition="INT(2) UNSIGNED ZEROFILL")
      */
-    private $sit;
+    private $sit = null;
 
     /**
      * Fecha real de la baja
      * @JMS\Type("DateTime<'Y-m-d','','|Y-m-d'>")
      * @ORM\Column(type="datetime")
      */
-    private $frb;
+    private $frb = null;
 
 
     /**
@@ -68,7 +68,7 @@ class Baja extends Operation
      * @JMS\Type("DateTime<'Y-m-d','','|Y-m-d'>")
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $ffv;
+    private $ffv = null;
 
     /**
      * @return mixed
