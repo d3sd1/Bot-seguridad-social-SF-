@@ -388,11 +388,11 @@ class ConsultaController extends Controller
 
             $data = "";
             if ($status->getStatus() === "COMPLETED") {
-                $data = base64_encode(file_get_contents($consulta->getData());
+                $data = base64_encode(file_get_contents($consulta->getData()));
             } else if ($status->getStatus() === "ERROR") {
                 $data = $consulta->getErrMsg();
             }
-            return $this->container->get("response")->success($status->getStatus(), $fileContents);
+            return $this->container->get("response")->success($status->getStatus(), $data);
         } else {
             return $this->container->get("response")->error(400, "NOT_FOUND");
         }
@@ -522,11 +522,7 @@ class ConsultaController extends Controller
             } else if ($status->getStatus() === "ERROR") {
                 $data = $consulta->getErrMsg();
             }
-            $fileContents = "";
-            if (file_exists($data)) {
-                $fileContents = base64_encode(file_get_contents($data));
-            }
-            return $this->container->get("response")->success($status->getStatus(), $fileContents);
+            return $this->container->get("response")->success($status->getStatus(), $data);
         } else {
             return $this->container->get("response")->error(400, "NOT_FOUND");
         }
