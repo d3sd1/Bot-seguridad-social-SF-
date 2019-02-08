@@ -99,16 +99,36 @@ class ConsultaAlta extends Operation
             return false;
         }
         $this->container->get("app.dblogger")->info("Clickando elemento...");
-        $pdfTrigger = $this->driver->findElement(WebDriverBy::id('Sub0900112079_1_0'));
-        $this->driver->getMouse()->doubleClick($pdfTrigger->getCoordinates());
 
-        /*
-         * Esperar a se descargue el TA.
-         */
-        if (!$this->waitTmpDownload()) {
-            $this->container->get("app.dblogger")->info("No se pudo descargar el TA.");
-            return false;
+
+        $op = new \stdClass();
+        $op->alta = new \stdClass();
+        $op->baja = new \stdClass();
+
+        $fil = 0;
+        while(true) {
+            $elKeyname = "Sub0900112079_{{col}}_{{fil}}";
+            if(count($this->driver->findElements(WebDriverBy::id(str_replace(array("{{col}}","{{fil}}"),array("1",$fil),$elKeyname)))) === 0) {
+                break;
+            }
+            $elSsName = $this->driver->findElement(WebDriverBy::id(str_replace(array("{{col}}","{{fil}}"),array("1",$fil),$elKeyname)))->getText();
+            if(stristr($elSsName, 'alta') !== false) {
+                $op->alta->nombreSS = $elSsName;
+                $op->alta->fecha = $this->driver->findElement(WebDriverBy::id(str_replace(array("{{col}}","{{fil}}"),array("2",$fil),$elKeyname)))->getText();
+            }
+            else if(stristr($elSsName, 'baja') !== false) {
+                $op->alta->nombreSS = $elSsName;
+                $op->alta->fecha = $this->driver->findElement(WebDriverBy::id(str_replace(array("{{col}}","{{fil}}"),array("2",$fil),$elKeyname)))->getText();
+            }
+
+            $fil++;
         }
+        /*
+         * Guardar en la DB.
+         */
+        $this->updateConsultaData(
+            json_encode($op)
+        );
 
         return true;
     }
