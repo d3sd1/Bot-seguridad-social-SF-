@@ -50,4 +50,8 @@ class ProdUrlConstants
      * Duplicados de TA
      */
     const CONSULTATA = "https://w2.seg-social.es/Xhtml?JacadaApplicationName=SGIRED&TRANSACCION=ATR65&E=I&AP=AFIR";
+    /*
+     * Consulta de alta contra la seguridad social
+     */
+    const CONSULTAALTA = "https://w2.seg-social.es/Xhtml?JacadaApplicationName=SGIRED&TRANSACCION=ATR65&E=I&AP=AFIR";
 }

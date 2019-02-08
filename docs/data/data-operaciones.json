@@ -32,6 +32,10 @@
       "type":"CONSULTA_ALTAS_CCC"
    },
    {
+      "id":13,
+      "type":"CONSULTA_ALTA"
+   },
+   {
       "id":8,
      "type": "CONSULTA_IPF"
    },
