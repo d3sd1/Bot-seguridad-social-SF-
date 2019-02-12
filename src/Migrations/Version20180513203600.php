@@ -70,7 +70,7 @@ final class Version20180513203600 extends AbstractMigration
         $this->addSql('INSERT INTO process_type (TYPE) VALUES
                             ("ALTA"),("BAJA"),("ANULACION_ALTA_PREVIA"),("ANULACION_ALTA_CONSOLIDADA"),
                             ("ANULACION_BAJA_PREVIA"), ("ANULACION_BAJA_CONSOLIDADA"), ("CAMBIO_CONTRATO_CONSOLIDADO"), ("CAMBIO_CONTRATO_PREVIO"),("CONSULTA_IPF"),
-                            ("CONSULTA_NAF"),("CONSULTA_ALTAS_CCC"),("CONSULTA_TA")');
+                            ("CONSULTA_NAF"),("CONSULTA_ALTAS_CCC"),("CONSULTA_TA"),("CONSULTA_ALTA")');
         $this->addSql('INSERT INTO contract_accounts (reg,ccc,name) VALUES (0111,28149794464,"WORKOUT"),(0111,28223561449,"WORKOUT_RETAIL")');
     }
 

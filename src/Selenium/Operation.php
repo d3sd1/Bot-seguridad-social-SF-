@@ -159,6 +159,12 @@ abstract class Operation
     {
         $tmpDir = "/var/www/tmp";
         $pdfDir = "/var/www/pdf";
+        if (!file_exists($tmpDir)) {
+            mkdir($tmpDir);
+        }
+        if (!file_exists($pdfDir)) {
+            mkdir($pdfDir);
+        }
         $filesFound = false;
         $attempts = 0;
         $destinationFolder = $pdfDir . "/" . $this->operationName;

@@ -388,15 +388,11 @@ class ConsultaController extends Controller
 
             $data = "";
             if ($status->getStatus() === "COMPLETED") {
-                $data = $consulta->getData();
+                $data = base64_encode(file_get_contents($consulta->getData()));
             } else if ($status->getStatus() === "ERROR") {
                 $data = $consulta->getErrMsg();
             }
-            $fileContents = "";
-            if (file_exists($data)) {
-                $fileContents = base64_encode(file_get_contents($data));
-            }
-            return $this->container->get("response")->success($status->getStatus(), $fileContents);
+            return $this->container->get("response")->success($status->getStatus(), $data);
         } else {
             return $this->container->get("response")->error(400, "NOT_FOUND");
         }
@@ -468,6 +464,7 @@ class ConsultaController extends Controller
                 /* Agregar consulta */
                 $consulta->setDateProcessed();
                 $consulta->setStatus(4);
+                $consulta->setDateInit();
                 $consulta->setProcessTime(0);
                 $em->persist($consulta);
                 $em->flush();
@@ -484,7 +481,138 @@ class ConsultaController extends Controller
                 //DEPRECEATED $REAL TIME SOCKETS DUE TO PHP BAD SOCKETS $this->get("app.sockets")->notify();
             }
 
-            $this->get("app.dblogger")->info("Llamada al rest (CONSULTA NAF). La petición se ha creado satisfactoriamente (" . $consulta->getId() . ")");
+            $this->get("app.dblogger")->info("Llamada al rest (CONSULTA TA). La petición se ha creado satisfactoriamente (" . $consulta->getId() . ")");
+            return $this->container->get("response")->success("CREATED", $consulta->getId());
+
+        } catch (\Exception $e) {
+            return $this->container->get("response")->error(400, $this->get("app.exception")->capture($e));
+        }
+    }
+
+
+
+
+    /**
+     * Consultar el estado de una petición de consulta de Alta.
+     * @FOSRest\Get("/alta/{id}")
+     */
+    public function getEstadoAltaConsultaAction(Request $request)
+    {
+        $this->container->get("bot.manager")->preventHanging();
+        $em = $this->get("doctrine.orm.entity_manager");
+        $qb = $em->createQueryBuilder();
+        $consulta = $qb->select(array('a'))
+            ->from('App:ConsultaAlta', 'a')
+            ->where('a.id = :id')
+            ->setParameter('id', $request->get("id"))
+            ->orderBy('a.id', 'DESC')
+            ->getQuery()
+            ->getOneOrNullResult();
+
+        if ($consulta != null) {
+            /* Enviar notificación al bot para procesar cola */
+            //DEPRECEATED $REAL TIME SOCKETS DUE TO PHP BAD SOCKETS $this->get("app.sockets")->notify();
+
+            $this->get("app.dblogger")->info("Llamada al rest (COMPROBACIÓN CONSULTA ALTA) ID: " . $consulta->getId() . ", ESTADO: " . $consulta->getStatus());
+            $status = $em->getRepository("App:ProcessStatus")->findOneBy(['id' => $consulta->getStatus()]);
+
+            $data = "";
+            if ($status->getStatus() === "COMPLETED") {
+                $data = $consulta->getData();
+            } else if ($status->getStatus() === "ERROR") {
+                $data = $consulta->getErrMsg();
+            }
+            return $this->container->get("response")->success($status->getStatus(), $data);
+        } else {
+            return $this->container->get("response")->error(400, "NOT_FOUND");
+        }
+    }
+
+    /**
+     * Consultar estado Alta.
+     * @FOSRest\Post("/alta")
+     */
+    public function consultaAltaAction(Request $request)
+    {
+        $this->container->get("bot.manager")->preventHanging();
+        $em = $this->get("doctrine.orm.entity_manager");
+        try {
+            /*
+             * Deserializar a la entidad Consulta NAF.
+             */
+            $consulta = $this->get("jms_serializer")->deserialize($request->getContent(), 'App\Entity\ConsultaAlta', 'json');
+            $validationErrors = $this->get('validator')->validate($consulta);
+            if (count($validationErrors) > 0) {
+                throw new \JMS\Serializer\Exception\RuntimeException("Could not deserialize entity: " . $validationErrors);
+            }
+            $consulta->setCca($em->getRepository("App:ContractAccounts")->findOneBy(['name' => $consulta->getCca()]));
+
+            /*
+             * Validar el tipo de empresa.
+             */
+            if ($consulta->getCca() === null) {
+                return $this->container->get("response")->error(400, "CONTRACT_ACCOUNT_NOT_FOUND");
+            }
+
+            /*
+             * Validar la fecha.
+             */
+            if ($consulta->getFrc() === null) {
+                return $this->container->get("response")->error(400, "INVALID_DATE");
+            }
+            /*
+             * Comprobar que no exista una solicitud similar y esté pendiente.
+             * Si no hay ninguna, se crea una nueva y se agrega a la cola para el bot.
+             * Si existe una previa, se devuelve la ID de la previa, excepto:
+             * Si existe y esta en estado de error o completada, que se genera una nueva.
+             */
+
+            $qb = $em->createQueryBuilder();
+            $task = $qb->select(array('c'))
+                ->from('App:ConsultaAlta', 'c')
+                ->join("App:Queue", "q", "WITH", "q.referenceId = c.id")
+                ->where('c.status != :statusError')
+                ->andWhere('c.status != :statusCompleted')
+                ->andWhere("c.naf = :naf")
+                ->setParameter('statusError', $em->getRepository("App:ProcessStatus")->findOneBy(['status' => 'ERROR']))
+                ->setParameter('statusCompleted', $em->getRepository("App:ProcessStatus")->findOneBy(['status' => 'COMPLETED']))
+                ->setParameter('naf', $consulta->getNaf())
+                ->orderBy('c.dateProcessed', 'DESC')
+                ->getQuery()
+                ->setMaxResults(1)
+                ->getOneOrNullResult();
+
+            if ($task != null) {
+                /* Enviar notificación al bot para procesar cola */
+                //DEPRECEATED $REAL TIME SOCKETS DUE TO PHP BAD SOCKETS $this->get("app.sockets")->notify();
+
+                /* Devolver resultado */
+                $this->get("app.dblogger")->info("Llamada al rest (Consulta ALTA). La petición ya existía, así que sólo se devolvió su ID (" . $consulta->getId() . ").");
+                return $this->container->get("response")->success("RETRIEVED", $task->getId());
+            } else {
+
+
+                /* Agregar consulta */
+                $consulta->setDateProcessed();
+                $consulta->setStatus(4);
+                $consulta->setDateInit();
+                $consulta->setProcessTime(0);
+                $em->persist($consulta);
+                $em->flush();
+
+                /* Agregar consulta a la cola */
+                $queue = new Queue();
+                $queue->setReferenceId($consulta->getId());
+                $queue->setDateAdded();
+                $queue->setProcessType($em->getRepository("App:ProcessType")->findOneBy(['type' => 'CONSULTA_ALTA']));
+                $em->persist($queue);
+                $em->flush();
+
+                /* Enviar notificación al bot para procesar cola */
+                //DEPRECEATED $REAL TIME SOCKETS DUE TO PHP BAD SOCKETS $this->get("app.sockets")->notify();
+            }
+
+            $this->get("app.dblogger")->info("Llamada al rest (CONSULTA ALTA). La petición se ha creado satisfactoriamente (" . $consulta->getId() . ")");
             return $this->container->get("response")->success("CREATED", $consulta->getId());
 
         } catch (\Exception $e) {
