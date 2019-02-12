@@ -144,7 +144,19 @@ class BotManager
             $this->setBotStatus("OFFLINE");
             $srvStatus = $this->em->getRepository("App:ServerStatus")->findAll();
         }
-        return $srvStatus[0];
+
+        $serverStatus = $srvStatus[0];
+        /*
+        * Check if bot queue has data and it's not being proccessed.
+        */
+        if(count($this->em->getRepository("App:Queue")->findAll()) > 0) {
+            $actualAction = $this->em->getRepository("App:Queue")->findOneBy(array('id' => 'ASC'));
+            if(null != $actualAction && null != $actualAction->getDateAdded() && $actualAction->getDateAdded()->modify("+5 minutes") < (new DateTime())) {
+                $serverStatus = $this->em->getRepository("App:ServerStatusOptions")->findOneBy(array('status' => 'CRASHED'));
+            }
+        }
+
+        return $serverStatus;
     }
     public function getStatus($status) {
         return $this->em->getRepository("App:ServerStatusOptions")->findOneBy(['status' => $status]);
