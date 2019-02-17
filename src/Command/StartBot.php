@@ -174,10 +174,10 @@ class StartBot extends ContainerAwareCommand
 
             $this->selenium = RemoteWebDriver::create($host, $caps);
         } catch (SessionNotCreatedException $e) {
-            $this->log->error("Firefox drivers not loaded (GeckoDriver). Exiting bot.");
+            $this->log->warning("Firefox drivers not loaded (GeckoDriver). Exiting bot.");
             exit();
         } catch (WebDriverCurlException $e) {
-            $this->log->error("Selenium driver not loaded (Did u loaded GeckoDriver?). Details: " . $e->getMessage());
+            $this->log->warning("Selenium driver not loaded (Did u loaded GeckoDriver?). Details: " . $e->getMessage());
             exit();
         }
     }
