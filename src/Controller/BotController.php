@@ -124,7 +124,7 @@ class BotController extends Controller
      */
     public function statusAction(Request $request)
     {
-        if($this->get("so.commands")->isBotHanging()) {
+        if(!$this->get("so.commands")->isBotHanging()) {
             return $this->container->get("response")->success($this->get("bot.manager")->getBotStatus());
         }
         else {
