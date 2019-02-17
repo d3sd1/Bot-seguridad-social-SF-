@@ -30,14 +30,15 @@ class Commands
         $output = exec('echo ' . getenv("BASH_PASS") . ' | sudo -u ' . getenv("BASH_USER") . ' -S ' . $command);
         return $output;
     }
+
     private function runAsyncCommand($command, $outputFile = null)
     {
-        if($outputFile === null) {
+        if ($outputFile === null) {
             $outputFile = '/dev/null';
         }
         //TODO: no funcioa redirigir a otra cosa que no sea /dev/null. si rediriges a un fichero.log no funciona.
         $outputFile = '/dev/null';//eliminar esto si se arregla el todo de arrbia.
-        exec('echo ' . getenv("BASH_PASS") . ' | sudo -u ' . getenv("BASH_USER") . ' -S '.$command.'  >'.$outputFile.' 2>&1 &');
+        exec('echo ' . getenv("BASH_PASS") . ' | sudo -u ' . getenv("BASH_USER") . ' -S ' . $command . '  >' . $outputFile . ' 2>&1 &');
         return true;
     }
 
@@ -58,36 +59,38 @@ class Commands
         return $this->runSyncCommand("ps aux | grep $p | awk \"{ print \$2 }\"");
     }
 
-    public function isBotHanging() {
-        $this->container->get("app.dblogger")->success("Process status: " .$this->processStatus("php"));
-        if($this->processStatus("php") == "" || $this->processStatus("java") == "") { //Bot is hanging since no proccess is running
+    public function isBotHanging()
+    {
+        $this->container->get("app.dblogger")->success("Process status: " . $this->processStatus("php"));
+
+        if ($this->processStatus("php") == "" || $this->processStatus("java") == "") { //Bot is hanging since no proccess is running
             return true;
         }
         return false;
     }
 
-    public function resetNavigator() {
-        try
-        {
+    public function resetNavigator()
+    {
+        try {
             $this->killProcessByName("firefox");
             $this->killProcessByName("chrome");
             $this->killProcessByName("edge");
             $this->killProcessByName("safari");
-        }
-        catch(\Exception $e) {
+        } catch (\Exception $e) {
             $this->container->get("app.dblogger")->success("Excepción al resetear navegadores: " . $e->getMessage());
             return false;
         }
         return true;
     }
 
-    public function restartServerSO() {
+    public function restartServerSO()
+    {
         $this->runAsyncCommand("reboot now");
     }
+
     public function killBot()
     {
-        try
-        {
+        try {
             $this->killProcessByPort(4444);
             $this->killProcessByName("java");
             $this->killProcessByName("gecko");
@@ -96,8 +99,7 @@ class Commands
             $this->killProcessByName("php");
             $this->killProcessByName("selenium");
             $this->killProcessByName("Xvfb");
-        }
-        catch(\Exception $e) {
+        } catch (\Exception $e) {
             $this->container->get("app.dblogger")->success("Excepción al matar al bot: " . $e->getMessage());
             return false;
         }
@@ -130,9 +132,7 @@ class Commands
             sleep(8); //Esperar a que cargue Selenium
             exec("cd /var/www && (nohup php bin/console start-bot >/dev/null 2>&1 &)");
             $this->container->get("app.dblogger")->success("Iniciado bot correctamente.");
-        }
-        catch(\Exception $e)
-        {
+        } catch (\Exception $e) {
             $this->container->get("app.dblogger")->error("Excepción al iniciar al bot: " . $e->getMessage());
             return false;
         }
@@ -140,7 +140,8 @@ class Commands
         return true;
     }
 
-    public function runCronChecker() {
+    public function runCronChecker()
+    {
         $this->runSyncCommand("cd /var/www && php bin/console bot-cron");
     }
 

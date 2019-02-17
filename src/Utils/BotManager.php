@@ -100,7 +100,6 @@ class BotManager
          * Marcar servidor como inactivo
          */
         $success = $this->container->get("so.commands")->resetNavigator() && $this->container->get("so.commands")->killBot();
-        $this->container->get("app.dblogger")->success("Bot cerrado desde el gestor.");
         if($success) {
             $this->setBotStatus("OFFLINE");
         }
