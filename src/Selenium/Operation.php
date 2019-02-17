@@ -64,7 +64,7 @@ abstract class Operation
         } catch (NoSuchElementException $e) { // Programming exception
             $this->container->get("app.dblogger")->warning("Programming error for debugging purposes while coding: " . $e->getMessage());
             $this->container->get("bot.manager")->close();
-            sleep(20);
+            sleep(5);
             $this->container->get("bot.manager")->start(false);
         } catch (\Exception $e) {
 
@@ -80,7 +80,7 @@ abstract class Operation
                 $this->container->get("app.dblogger")->warning("Crash prevented msg: " . $e->getMessage());
                 $this->container->get("app.dblogger")->sendErrorMail("CRASH", "El bot ha crasheado (forzado reinicio). Motivo: " . $e->getMessage());
                 $this->container->get("bot.manager")->close();
-                sleep(20);
+                sleep(5);
                 $this->container->get("bot.manager")->start(false);
             } else {
                 $this->container->get("app.dblogger")->error("El bot ha crasheado. URL: " . $this->driver->url() . " Motivo: " . $e->getMessage());
@@ -88,7 +88,7 @@ abstract class Operation
             }
             $this->takeScreenShoot();
             $this->bm->close();
-            $this->bm->start();
+            $this->bm->start(false);
         }
     }
 

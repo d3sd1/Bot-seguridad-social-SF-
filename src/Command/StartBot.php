@@ -73,7 +73,7 @@ class StartBot extends ContainerAwareCommand
                 /* FIX: navegar a otra web para evitar el timeout de la seguridad social. */
                 $this->selenium->get("http://www.google.es");
                 while($task == null) {
-                    sleep(10);
+                    sleep(5);
                     $task = $taskQuery->getOneOrNullResult();
                 }
             }
@@ -137,7 +137,7 @@ class StartBot extends ContainerAwareCommand
         * Iniciar Selenium driver
         */
 
-        $this->bm->start();
+        $this->bm->start(false);
 
         /*
          * CARGAR CONTROLADOR

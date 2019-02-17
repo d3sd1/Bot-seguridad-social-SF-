@@ -61,9 +61,9 @@ class Commands
 
     public function isBotHanging()
     {
-        $this->container->get("app.dblogger")->success("Process status: " . $this->processStatus("php"));
-
-        if ($this->processStatus("php") == "" || $this->processStatus("java") == "") { //Bot is hanging since no proccess is running
+        $this->container->get("app.dblogger")->success("Process status: " . $this->processStatus("java"));
+        if (stristr($this->processStatus("php"), "php bin/console start-bot")
+            || stristr($this->processStatus("java"), "selenium-server") ) { //Bot is hanging since no proccess is running
             return true;
         }
         return false;
@@ -129,7 +129,7 @@ class Commands
             $this->runSyncCommand("export MOZ_CRASHREPORTER_SHUTDOWN=1");
             $this->runAsyncCommand("DISPLAY=:99 java -Dwebdriver.gecko.driver=/var/www/drivers/gecko/0.20.1 -Dwebdriver.server.session.timeout=99999999  -jar /var/www/drivers/selenium-server/3.8.1.jar -timeout 99999999 -enablePassThrough false", "/var/www/debug/Selenium/$sessionId/sel.log");
             $this->runSyncCommand("cd /var/www && php bin/console cache:clear");
-            sleep(8); //Esperar a que cargue Selenium
+            sleep(5); //Esperar a que cargue Selenium
             exec("cd /var/www && (nohup php bin/console start-bot >/dev/null 2>&1 &)");
             $this->container->get("app.dblogger")->success("Iniciado bot correctamente.");
         } catch (\Exception $e) {

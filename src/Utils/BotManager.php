@@ -39,6 +39,9 @@ class BotManager
         if($abortPendingOperations) {
             $success = $this->abortPendingOperations();
         }
+        else {
+            $success = $this->markPendingAsWaiting();
+        }
 
         if($success) {
             $this->setBotStatus("WAITING_TASKS");
@@ -46,7 +49,6 @@ class BotManager
         else {
             $this->setBotStatus("OFFLINE");
         }
-        sleep(3);
 
         return $success;
     }
@@ -88,6 +90,47 @@ class BotManager
         catch(\Exception $e)
         {
             $this->container->get("app.dblogger")->success("Excepción al abortar peticiones pendientes: " . $e->getMessage());
+            return false;
+        }
+
+        return true;
+    }
+    private function markPendingAsWaiting() {
+        try {
+            /* Abortar todas las peticiones previas */
+            $qb = $this->em->createQueryBuilder();
+            $getQueue = $qb->select(array('q'))
+                ->from('App:Queue', 'q')
+                ->orderBy('q.id', 'ASC')
+                ->getQuery()->getResult();
+
+            $awaitingStatus = $this->em->getRepository("App:ProcessStatus")->findOneBy(['status' => "AWAITING"]);
+
+            foreach ($getQueue as $queueProccess) {
+                /* Marcar como abortada */
+                $qb = $this->em->createQueryBuilder();
+
+                $mainName = explode("_", strtolower($queueProccess->getProcessType()->getType()));
+                $finalClassName = "";
+                foreach ($mainName as $subName) {
+                    $finalClassName .= ucfirst($subName);
+                }
+
+                $operation = $qb->select(array('t'))
+                    ->from('App:Queue', 'q')
+                    ->join("App:" . $finalClassName, "t", "WITH", "q.referenceId = t.id")
+                    ->getQuery()
+                    ->setMaxResults(1)
+                    ->getOneOrNullResult();
+                $operation->setStatus($awaitingStatus->getId());
+                /* Eliminar de la cola */
+                $this->container->get("app.dblogger")->success("Verificaca (ante reinicio) petición con ID " . $queueProccess->getId() . " del tipo " . $queueProccess->getProcessType()->getType());
+            }
+            $this->em->flush();
+        }
+        catch(\Exception $e)
+        {
+            $this->container->get("app.dblogger")->success("Excepción al verificar peticiones pendientes: " . $e->getMessage());
             return false;
         }
 
@@ -173,13 +216,13 @@ class BotManager
     }
 
     /* Esta función previene al bot de colgarse si algo va mal */
-    public function preventHanging() {
-        if($this->container->get("so.commands")->isBotHanging()) {
+    public function preventHanging() { //DEPRECEATED DUE TO ONLY USED IN CONTROLLERS
+        /*if($this->container->get("so.commands")->isBotHanging()) {
             $this->container->get("app.dblogger")->success("Bot is hanging on. We are restarting it...");
             $this->close();
             // Aqui tirar el mismo comando que en el cron: checker para ver estado e iniciar si es necesario
             $this->container->get("so.commands")->runCronChecker();
-        }
+        }*/
     }
 
 }
