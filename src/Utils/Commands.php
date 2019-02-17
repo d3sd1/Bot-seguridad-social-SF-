@@ -55,11 +55,11 @@ class Commands
     {
         $p = substr_replace($p, "[", 0, 0);
         $p = substr_replace($p, "]", 2, 0);
-        return $this->runSyncCommand("ps aux | grep $p");
+        return $this->runSyncCommand("ps -C $p -f");
     }
 
     public function isBotHanging() {
-        if($this->processStatus("php") == "") { //Bot is hanging since no proccess is running
+        if(strpos($this->processStatus("php")) === false) { //Bot is hanging since no proccess is running
             return true;
         }
         return false;
