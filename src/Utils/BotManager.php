@@ -38,7 +38,6 @@ class BotManager
         $success = true;
         if($abortPendingOperations) {
             $success = $this->abortPendingOperations();
-
         }
 
         if($success) {
@@ -47,6 +46,7 @@ class BotManager
         else {
             $this->setBotStatus("OFFLINE");
         }
+        sleep(3);
 
         return $success;
     }
@@ -100,7 +100,7 @@ class BotManager
          * Marcar servidor como inactivo
          */
         $success = $this->container->get("so.commands")->resetNavigator() && $this->container->get("so.commands")->killBot();
-        $this->container->get("app.dblogger")->success("Bot cerrado: " . $success);
+        $this->container->get("app.dblogger")->success("Bot cerrado desde el gestor.");
         if($success) {
             $this->setBotStatus("OFFLINE");
         }
@@ -178,10 +178,8 @@ class BotManager
         if($this->container->get("so.commands")->isBotHanging()) {
             $this->container->get("app.dblogger")->success("Bot is hanging on. We are restarting it...");
             $this->close();
-            if($this->start()) {
-                $this->container->get("so.commands")->startBot();
-                $this->container->get("app.dblogger")->success("Bot hanging restarted success and running!");
-            }
+            // Aqui tirar el mismo comando que en el cron: checker para ver estado e iniciar si es necesario
+            $this->container->get("so.commands")->runCronChecker();
         }
     }
 
