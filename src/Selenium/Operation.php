@@ -78,17 +78,13 @@ abstract class Operation
                 $this->bm->setBotStatus("OFFLINE");
                 $this->container->get("app.dblogger")->warning("Crash prevented: restarting bot...");
                 $this->container->get("app.dblogger")->warning("Crash prevented msg: " . $e->getMessage());
-                $this->container->get("app.dblogger")->sendErrorMail("CRASH", "El bot ha crasheado (forzado reinicio). Motivo: " . $e->getMessage());
-                $this->container->get("bot.manager")->close();
-                sleep(5);
-                $this->container->get("bot.manager")->start(false);
+                //$this->container->get("app.dblogger")->sendErrorMail("CRASH", "El bot ha crasheado (forzado reinicio). Motivo: " . $e->getMessage());
             } else {
                 $this->container->get("app.dblogger")->error("El bot ha crasheado. URL: " . $this->driver->url() . " Motivo: " . $e->getMessage());
                 $this->container->get("app.dblogger")->info("SOURCE: " . $this->driver->getPageSource());
             }
             $this->takeScreenShoot();
             $this->bm->close();
-            $this->bm->start(false);
         }
     }
 
