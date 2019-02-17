@@ -62,8 +62,8 @@ class Commands
     public function isBotHanging()
     {
         $this->container->get("app.dblogger")->success("Process status: " . $this->processStatus("java"));
-        if (stristr($this->processStatus("php"), "php bin/console start-bot")
-            || stristr($this->processStatus("java"), "selenium-server") ) { //Bot is hanging since no proccess is running
+        if (!stristr($this->processStatus("php"), "php bin/console start-bot")
+            || !stristr($this->processStatus("java"), "selenium-server") ) { //Bot is hanging since no proccess is running
             return true;
         }
         return false;
