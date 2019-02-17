@@ -124,7 +124,7 @@ class BotManager
                     ->getOneOrNullResult();
                 $operation->setStatus($awaitingStatus->getId());
                 /* Eliminar de la cola */
-                $this->container->get("app.dblogger")->success("Verificaca (ante reinicio) petición con ID " . $queueProccess->getId() . " del tipo " . $queueProccess->getProcessType()->getType());
+                $this->container->get("app.dblogger")->success("Verificaca (ante reinicio) petición con ID de cola " . $queueProccess->getId() . " del tipo " . $queueProccess->getProcessType()->getType());
             }
             $this->em->flush();
         }
