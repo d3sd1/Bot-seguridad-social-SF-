@@ -46,18 +46,7 @@ class BotTester extends ContainerAwareCommand
             $this->bm = $this->getContainer()->get('bot.manager');
             $this->log = $this->getContainer()->get('app.dblogger');
 
-            $this->log->info("[CRON-TESTER] Bot tester running operation!");
-            if ($this->getContainer()->get("so.commands")->isBotHanging()) {
-                if ($this->getContainer()->get("bot.manager")->start(false)) {
-                    $this->log->warning("[CRON] Bot Restarted success.");
-                    $this->getContainer()->get("so.commands")->startBot();
-                }
-                else {
-                    $this->log->error("[CRON] Bot Restarted FAILED.");
-                }
-            } else {
-                $this->log->info("[CRON] Bot OK");
-            }
+            $this->log->info("[CRON-TESTER] Bot running test!");
 
         } catch (\Exception $e) {
             $this->log->error("Ha ocurrido un error interno en el comando de [reseteo estado]: " . $e->getMessage());
