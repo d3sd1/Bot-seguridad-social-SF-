@@ -124,13 +124,7 @@ class BotController extends Controller
      */
     public function statusAction(Request $request)
     {
-        if(!$this->get("so.commands")->isBotHanging()) {
-            return $this->container->get("response")->success($this->get("bot.manager")->getBotStatus());
-        }
-        else {
-            $this->container->get("response")->success($this->get("bot.manager")->setBotStatus("CRASHED"));
-            return $this->container->get("response")->success($this->get("bot.manager")->getBotStatus());
-        }
+        return $this->container->get("response")->success($this->get("bot.manager")->getBotStatus());
     }
 
     /**
@@ -176,28 +170,28 @@ class BotController extends Controller
         // Para añadir más operaciones al estudio, añadir aquí el nombre de su entidad respetando mayus/minus.
         $operations = ["Alta", "Baja"];
 
-        foreach($operations as $op) {
+        foreach ($operations as $op) {
 
             $result->{$op} = new \stdClass();
             $result->{$op}->count = $this->getDoctrine()
-                ->getRepository('App:'.$op)->createQueryBuilder('op')
+                ->getRepository('App:' . $op)->createQueryBuilder('op')
                 ->select('count(op.id)')
                 ->getQuery()->getSingleScalarResult();
             $result->{$op}->avg = $this->getDoctrine()
-                ->getRepository('App:'.$op)->createQueryBuilder('op')
+                ->getRepository('App:' . $op)->createQueryBuilder('op')
                 ->select("avg(op.processTime)")
                 ->where('op.processTime != :pt')
                 ->setParameter('pt', 0)
                 ->getQuery()->getResult()[0][1];
 
             $result->{$op}->max = $this->getDoctrine()
-                ->getRepository('App:'.$op)->createQueryBuilder('op')
+                ->getRepository('App:' . $op)->createQueryBuilder('op')
                 ->select("max(op.processTime)")
                 ->where('op.processTime != :pt')
                 ->setParameter('pt', 0)
                 ->getQuery()->getResult()[0][1];
             $result->{$op}->min = $this->getDoctrine()
-                ->getRepository('App:'.$op)->createQueryBuilder('op')
+                ->getRepository('App:' . $op)->createQueryBuilder('op')
                 ->select("min(op.processTime)")
                 ->where('op.processTime != :pt')
                 ->setParameter('pt', 0)
@@ -218,19 +212,19 @@ class BotController extends Controller
         // Para añadir más operaciones al estudio, añadir aquí el nombre de su entidad respetando mayus/minus.
         $operations = ["Alta", "Baja"];
 
-        foreach($operations as $op) {
+        foreach ($operations as $op) {
 
             $result->{$op} = new \stdClass();
             $result->{$op}->total = $this->getDoctrine()
-                ->getRepository('App:'.$op)->createQueryBuilder('op')
+                ->getRepository('App:' . $op)->createQueryBuilder('op')
                 ->select('count(op.id)')
                 ->getQuery()->getSingleScalarResult();
             $result->{$op}->errors = $this->getDoctrine()
-                ->getRepository('App:'.$op)->createQueryBuilder('op')
+                ->getRepository('App:' . $op)->createQueryBuilder('op')
                 ->select('count(op.id)')
                 ->where('op.status = 5')
                 ->getQuery()->getSingleScalarResult();
-            $result->{$op}->success = $result->{$op}->total -  $result->{$op}->errors;
+            $result->{$op}->success = $result->{$op}->total - $result->{$op}->errors;
             $result->{$op}->errorPercentage = $result->{$op}->errors / $result->{$op}->total * 100;
         }
 
