@@ -19,10 +19,12 @@ class Commands
      * Se usa el driver 3.8.1, a partir del 3.11 sólo funcionan bien en java porque ya no admite el parámetro enablepasstrought y no reconoce los elementos.
      */
     private $container;
+    private $bm;
 
     public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
+        $this->bm = $this->container->get('bot.manager');
     }
 
     private function runSyncCommand($command)
@@ -54,17 +56,21 @@ class Commands
 
     private function processRunning($p)
     {
-        exec("ps -U ".getenv("BASH_USER")." -u ".getenv("BASH_USER")." u", $output, $result);
-        foreach ($output AS $line) if(strpos($line, $p)) return true;
-        $output = $this->runSyncCommand("ps -U root -u root u");
-        return false;
+        $result = $this->runSyncCommand("ps -C \"$p\" -f");
+        if (stristr($result, $p) === false) {
+            return false;
+        }
+        return true;
     }
 
     public function isBotHanging()
     {
-        $this->bm->getBotStatus() == "";
-        if (!$this->processRunning("php bin/console start-bot")
-            || !$this->processRunning("selenium-server")) { //Bot is hanging since no proccess is running
+        if (
+            $this->bm->getBotStatus()->getCurrentStatus()->getStatus() != "BOOTING" &&
+            $this->bm->getBotStatus()->getCurrentStatus()->getStatus() != "AWAITING" &&
+            (!$this->processRunning("php bin/console start-bot")
+                || !$this->processRunning("selenium-server"))
+        ) { //Bot is hanging since no proccess is running
             $this->container->get("app.dblogger")->warning("Bot hanging... Taking it out. (isBotHanging())");
             return true;
         }
@@ -119,8 +125,8 @@ class Commands
 
             $this->runSyncCommand("mkdir -p /var/www/debug/Xvfb");
             $this->runSyncCommand("touch /var/www/debug/Xvfb/$sessionId.log");
-            $this->runSyncCommand("mkdir -p /var/www/debug/Selenium");
-            $this->runSyncCommand("touch /var/www/debug/Selenium/$sessionId.log");
+            //$this->runSyncCommand("mkdir -p /var/www/debug/Selenium");
+            //$this->runSyncCommand("touch /var/www/debug/Selenium/$sessionId.log");
             if ($GLOBALS['debug']) {
                 $this->runSyncCommand("export MOZ_HEADLESS=1");
             } else {
@@ -129,7 +135,7 @@ class Commands
             $this->runAsyncCommand("nohup Xvfb :99", "/var/www/debug/Xvfb/$sessionId.log");
             $this->runSyncCommand("export DISPLAY=:99 && export DISPLAY=127.0.0.1:99");
             $this->runSyncCommand("export MOZ_CRASHREPORTER_SHUTDOWN=1");
-            $this->runAsyncCommand("DISPLAY=:99 java -Dwebdriver.gecko.driver=/var/www/drivers/gecko/0.20.1 -Dwebdriver.server.session.timeout=99999999  -jar /var/www/drivers/selenium-server/3.8.1.jar -timeout 99999999 -enablePassThrough false", "/var/www/debug/Selenium/$sessionId/sel.log");
+            $this->runAsyncCommand("DISPLAY=:99 java -Dwebdriver.gecko.driver=/var/www/drivers/gecko/0.20.1 -Dwebdriver.server.session.timeout=99999999  -jar /var/www/drivers/selenium-server/3.8.1.jar -timeout 99999999 -enablePassThrough false", ""); //"/var/www/debug/Selenium/$sessionId/sel.log"
             $this->runSyncCommand("cd /var/www && php bin/console cache:clear");
             sleep(5); //Esperar a que cargue Selenium
             exec("cd /var/www && (nohup php bin/console start-bot >/dev/null 2>&1 &)");

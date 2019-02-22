@@ -3,6 +3,7 @@
 namespace App\Selenium;
 
 use Facebook\WebDriver\Exception\NoSuchElementException;
+use Facebook\WebDriver\WebDriverDimension;
 use Facebook\WebDriver\WebDriverExpectedCondition;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Doctrine\ORM\EntityManager;
@@ -30,6 +31,8 @@ abstract class Operation
             $this->bm = $container->get('bot.manager');
             $this->server = $this->bm->getBotStatus();
             $this->driver = $seleniumDriver;
+            $window = new WebDriverDimension(1920, 1080);
+            $this->driver->manage()->window()->setSize($window);
 
             $this->operationName = array_values(array_slice(explode("\\", get_class($operation)), -1))[0];
 
@@ -57,6 +60,8 @@ abstract class Operation
                     $this->em->flush();
 
                     $this->manageOperation();
+
+                    $this->takeScreenShoot();
                 }
 
             }
@@ -154,7 +159,9 @@ abstract class Operation
     protected $tmpDir = "/var/www/tmp";
     protected $pdfDir = "/var/www/pdf";
     protected $destinationFolder;
-    public function prepareTmpDownload() {
+
+    public function prepareTmpDownload()
+    {
 
         if (!file_exists($this->tmpDir)) {
             mkdir($this->tmpDir);
@@ -167,6 +174,7 @@ abstract class Operation
             mkdir($this->destinationFolder);
         }
     }
+
     public function waitTmpDownload()
     {
         $filesFound = false;
@@ -195,6 +203,44 @@ abstract class Operation
         return $filesFound;
     }
 
+    public function takeFullScreenshot($screenshot_name)
+    {
+        $total_width = $this->driver->executeScript('return Math.max.apply(null, [document.body.clientWidth, document.body.scrollWidth, document.documentElement.scrollWidth, document.documentElement.clientWidth])');
+        $total_height = $this->driver->executeScript('return Math.max.apply(null, [document.body.clientHeight, document.body.scrollHeight, document.documentElement.scrollHeight, document.documentElement.clientHeight])');
+        $viewport_width = $this->driver->executeScript('return document.documentElement.clientWidth');
+        $viewport_height = $this->driver->executeScript('return document.documentElement.clientHeight');
+        $this->driver->executeScript('window.scrollTo(0, 0)');
+        $full_capture = imagecreatetruecolor($total_width, $total_height);
+        $repeat_x = ceil($total_width / $viewport_width);
+        $repeat_y = ceil($total_height / $viewport_height);
+        for ($x = 0; $x < $repeat_x; $x++) {
+            $x_pos = $x * $viewport_width;
+            $before_top = -1;
+            for ($y = 0; $y < $repeat_y; $y++) {
+                $y_pos = $y * $viewport_height;
+                $this->driver->executeScript("window.scrollTo({$x_pos}, {$y_pos})");
+                $scroll_left = $this->driver->executeScript("return window.pageXOffset");
+                $scroll_top = $this->driver->executeScript("return window.pageYOffset");
+                if ($before_top == $scroll_top) {
+                    break;
+                }
+                $tmp_name = "{$screenshot_name}.tmp";
+                $this->driver->takeScreenshot($tmp_name);
+                if (!file_exists($tmp_name)) {
+                    throw new Exception('Could not save screenshot');
+                }
+                $tmp_image = imagecreatefrompng($tmp_name);
+                imagecopy($full_capture, $tmp_image, $scroll_left, $scroll_top, 0, 0, $viewport_width, $viewport_height);
+                imagedestroy($tmp_image);
+                unlink($tmp_name);
+                $before_top = $scroll_top;
+            }
+        }
+        imagepng($full_capture, $screenshot_name);
+        imagedestroy($full_capture);
+    }
+
+
     public function takeScreenShoot($element = null)
     {
         if ($this->container->get('kernel')->getEnvironment()) {
@@ -207,6 +253,8 @@ abstract class Operation
 
             $screenshot = $path . "/page_" . microtime(true) . ".png";
 
+            $this->takeFullScreenshot($screenshot);
+            /*
             // Change the driver instance
             $this->driver->takeScreenshot($screenshot);
             if (!file_exists($screenshot)) {
@@ -214,6 +262,8 @@ abstract class Operation
             }
             $this->container->get("app.dblogger")->info("Capturando pantalla del formulario: " . $screenshot);
 
+            return $screenshot;
+            /* DEPRECEATED
             if (!(bool)$element) {
                 return $screenshot;
             }
@@ -241,13 +291,14 @@ abstract class Operation
                 throw new Exception('Could not save element screenshot');
             }
 
-            return $element_screenshot;
+            return $element_screenshot;*/
         }
         return false;
     }
 
     protected function waitFormSubmit($expected)
     {
+        $this->takeScreenShoot();
         $this->container->get("app.dblogger")->info("Esperando envío del formulario...");
         try {
             $this->container->get("app.dblogger")->info("Comprobando envío...");
@@ -277,7 +328,8 @@ abstract class Operation
         $this->operation->setData($data);
     }
 
-    private function setProcessTime() {
+    private function setProcessTime()
+    {
         $this->operation->updateProcessTime();
     }
 
@@ -288,7 +340,7 @@ abstract class Operation
 
         /* Do callback if needed */
 
-        if(
+        if (
             $this->operation->getCallbackUrl() != null &&
             $this->operation->getCallbackUrl() != ""
         ) {
@@ -301,7 +353,7 @@ abstract class Operation
             $base64Response = base64_encode(json_encode($base64Response));
 
             $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, $this->operation->getCallbackUrl() . '?response='.$base64Response);
+            curl_setopt($ch, CURLOPT_URL, $this->operation->getCallbackUrl() . '?response=' . $base64Response);
             curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-type: application/json')); // Assuming you're requesting JSON
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 

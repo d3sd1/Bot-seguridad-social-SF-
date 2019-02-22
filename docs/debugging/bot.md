@@ -5,7 +5,7 @@ Pantallazos:
 Se pueden ver los pantallazos post-relleno de formulario en todas las operaciones en la ruta 
 **/var/www/debug/{operacion}/{id}**, sustituyendo {operacion} por el nombre de la operación (alta, baja, etc.).
 
-Sesiones del bot
+Sesiones del bot (DEPRECEATED)
 =======
 Se puede ver un log detallado de Selenium server para la sesión actual en 
 **/var/www/debug/Selenium/{sessionId}**, o también mediante el [REST](/rest/bot/logs/selenium/GET.md).

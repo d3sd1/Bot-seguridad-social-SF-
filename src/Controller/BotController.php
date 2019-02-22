@@ -74,8 +74,8 @@ class BotController extends Controller
             ->orderBy('s.id', 'DESC')
             ->getQuery()->getSingleResult()->getId();
         try {
-            $selLogs = file_get_contents("/var/www/debug/Selenium/$sessionId/sel.log");
-            return $this->container->get("response")->success("LOADED", $selLogs);
+            //$selLogs = file_get_contents("/var/www/debug/Selenium/$sessionId/sel.log");
+            return $this->container->get("response")->success("LOADED", "");
         } catch (\Exception $e) {
             //$this->get("app.dblogger")->success("No se han podido cargar los logs de selenium: " . $e->getMessage());
             return $this->container->get("response")->error(500, "SELENIUM_SESSION_LOGFILE_ERROR");
@@ -92,8 +92,8 @@ class BotController extends Controller
         $em = $this->container->get("doctrine.orm.entity_manager");
         $sessionId = $request->get("sessionId");
         try {
-            $selLogs = file_get_contents("/var/www/debug/Selenium/$sessionId/sel.log");
-            return $this->container->get("response")->success("LOADED", $selLogs);
+            //$selLogs = file_get_contents("/var/www/debug/Selenium/$sessionId/sel.log");
+            return $this->container->get("response")->success("LOADED", "");
         } catch (\Exception $e) {
             //$this->get("app.dblogger")->success("No se han podido cargar los logs de selenium: " . $e->getMessage());
             return $this->container->get("response")->error(500, "SELENIUM_SESSION_LOGFILE_ERROR");
