@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Command;
-set_time_limit(0);
+set_time_limit(60);
 
 use App\Entity\Queue;
 use App\Utils\Commands;

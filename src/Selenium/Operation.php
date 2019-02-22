@@ -23,7 +23,7 @@ abstract class Operation
     public function __construct(\App\Entity\Operation $operation, ContainerInterface $container, EntityManager $em, $seleniumDriver)
     {
         try {
-
+            $this->destinationFolder = $this->pdfDir . "/" . $this->operationName;
             $this->operation = $operation;
             $this->container = $container;
             $this->em = $em;
@@ -151,32 +151,36 @@ abstract class Operation
         }
     }
 
+    protected $tmpDir = "/var/www/tmp";
+    protected $pdfDir = "/var/www/pdf";
+    protected $destinationFolder;
+    public function prepareTmpDownload() {
+
+        if (!file_exists($this->tmpDir)) {
+            mkdir($this->tmpDir);
+        }
+        if (!file_exists($this->pdfDir)) {
+            mkdir($this->pdfDir);
+        }
+
+        if (!file_exists($this->destinationFolder)) {
+            mkdir($this->destinationFolder);
+        }
+    }
     public function waitTmpDownload()
     {
-        $tmpDir = "/var/www/tmp";
-        $pdfDir = "/var/www/pdf";
-        if (!file_exists($tmpDir)) {
-            mkdir($tmpDir);
-        }
-        if (!file_exists($pdfDir)) {
-            mkdir($pdfDir);
-        }
         $filesFound = false;
         $attempts = 0;
-        $destinationFolder = $pdfDir . "/" . $this->operationName;
-        if (!file_exists($destinationFolder)) {
-            mkdir($destinationFolder);
-        }
         while (!$filesFound) {
-            $files = array_diff(scandir($tmpDir), array('.', '..'));
+            $files = array_diff(scandir($this->tmpDir), array('.', '..'));
             $this->container->get("app.dblogger")->info("Escaneando archivos ($attempts de 100).");
             if (count($files) > 0) {
-                rename($tmpDir . "/" . array_values($files)[0], $destinationFolder . "/" . $this->operation->getId() . ".pdf");
+                rename($this->tmpDir . "/" . array_values($files)[0], $this->destinationFolder . "/" . $this->operation->getId() . ".pdf");
                 /*
                  * Guardar su base 64 del pdf en la base de datos.
                  */
                 $this->updateConsultaData(
-                    $destinationFolder . "/" . $this->operation->getId() . ".pdf"
+                    $this->destinationFolder . "/" . $this->operation->getId() . ".pdf"
                 );
                 $filesFound = true;
                 break;

@@ -52,18 +52,19 @@ class Commands
         return $this->runSyncCommand("fuser -k -n tcp $port");
     }
 
-    private function processStatus($p)
+    private function processRunning($p)
     {
-        $p = substr_replace($p, "[", 0, 0);
-        $p = substr_replace($p, "]", 2, 0);
-        return $this->runSyncCommand("ps aux | grep $p | awk \"{ print \$2 }\"");
+        $output = $this->runSyncCommand("ps -U root -u root u");
+        $this->container->get("app.dblogger")->warning("DEBUG OUTPUT: " . $output);
+        foreach ($output AS $line) if(strpos($line, $p)) return true;
+        return false;
     }
 
     public function isBotHanging()
     {
-        $this->container->get("app.dblogger")->success("Process status: " . $this->processStatus("java"));
-        if (!stristr($this->processStatus("php"), "php bin/console start-bot")
-            || !stristr($this->processStatus("java"), "selenium-server") ) { //Bot is hanging since no proccess is running
+        if (!$this->processRunning("php bin/console start-bot")
+            || !$this->processRunning("selenium-server")) { //Bot is hanging since no proccess is running
+            $this->container->get("app.dblogger")->warning("Bot hanging... Taking it out. (isBotHanging())");
             return true;
         }
         return false;
