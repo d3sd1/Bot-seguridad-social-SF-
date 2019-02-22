@@ -56,7 +56,7 @@ class Commands
 
     private function processRunning($p)
     {
-        $result = $this->runSyncCommand("ps -C \"$p\" -f");
+        $result = $this->runSyncCommand("ps aux | grep \"$p\" | grep -v \"grep\"");
         if (stristr($result, $p) === false) {
             return false;
         }

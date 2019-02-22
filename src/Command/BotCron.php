@@ -46,7 +46,6 @@ class BotCron extends ContainerAwareCommand
             $this->bm = $this->getContainer()->get('bot.manager');
             $this->log = $this->getContainer()->get('app.dblogger');
 
-
             $this->log->info("[CRON] Check if bot is hanging...");
             $actualAction = $this->em->getRepository("App:Queue")->findAll(array('id' => 'ASC'));
             if(null != $actualAction) {
