@@ -35,22 +35,14 @@ class BotManager
         $botSession->setDatetime();
         $this->em->persist($botSession);
         $this->em->flush();
-        $success = true;
         if($abortPendingOperations) {
-            $success = $this->abortPendingOperations();
+            $this->abortPendingOperations();
         }
         else {
-            $success = $this->markPendingAsWaiting();
+            $this->markPendingAsWaiting();
         }
 
-        if($success) {
-            $this->setBotStatus("WAITING_TASKS");
-        }
-        else {
-            $this->setBotStatus("OFFLINE");
-        }
-
-        return $success;
+        return true;
     }
 
     private function abortPendingOperations() {

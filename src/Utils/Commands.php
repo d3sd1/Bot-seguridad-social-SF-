@@ -54,14 +54,15 @@ class Commands
 
     private function processRunning($p)
     {
-        $output = $this->runSyncCommand("ps -U root -u root u");
-        $this->container->get("app.dblogger")->warning("DEBUG OUTPUT: " . $output);
+        exec("ps -U ".getenv("BASH_USER")." -u ".getenv("BASH_USER")." u", $output, $result);
         foreach ($output AS $line) if(strpos($line, $p)) return true;
+        $output = $this->runSyncCommand("ps -U root -u root u");
         return false;
     }
 
     public function isBotHanging()
     {
+        $this->bm->getBotStatus() == "";
         if (!$this->processRunning("php bin/console start-bot")
             || !$this->processRunning("selenium-server")) { //Bot is hanging since no proccess is running
             $this->container->get("app.dblogger")->warning("Bot hanging... Taking it out. (isBotHanging())");
