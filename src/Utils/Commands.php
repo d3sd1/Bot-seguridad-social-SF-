@@ -127,15 +127,16 @@ class Commands
             $this->runSyncCommand("touch /var/www/debug/Xvfb/$sessionId.log");
             //$this->runSyncCommand("mkdir -p /var/www/debug/Selenium");
             //$this->runSyncCommand("touch /var/www/debug/Selenium/$sessionId.log");
-            if ($GLOBALS['debug']) {
+            $headless = getenv('HEADLESS');
+            if ($headless) {
                 $this->runSyncCommand("export MOZ_HEADLESS=1");
+                $this->runAsyncCommand("nohup Xvfb :99", "/var/www/debug/Xvfb/$sessionId.log");
+                $this->runSyncCommand("export DISPLAY=:99 && export DISPLAY=127.0.0.1:99");
             } else {
                 $this->runSyncCommand("export MOZ_HEADLESS=0");
             }
-            $this->runAsyncCommand("nohup Xvfb :99", "/var/www/debug/Xvfb/$sessionId.log");
-            $this->runSyncCommand("export DISPLAY=:99 && export DISPLAY=127.0.0.1:99");
             $this->runSyncCommand("export MOZ_CRASHREPORTER_SHUTDOWN=1");
-            $this->runAsyncCommand("DISPLAY=:99 java -Dwebdriver.gecko.driver=/var/www/drivers/gecko/0.20.1 -Dwebdriver.server.session.timeout=99999999  -jar /var/www/drivers/selenium-server/3.8.1.jar -timeout 99999999 -enablePassThrough false", ""); //"/var/www/debug/Selenium/$sessionId/sel.log"
+            $this->runAsyncCommand(($headless ? "DISPLAY=:99":"")." java -Dwebdriver.gecko.driver=/var/www/drivers/gecko/0.20.1 -Dwebdriver.server.session.timeout=99999999  -jar /var/www/drivers/selenium-server/3.8.1.jar -timeout 99999999 -enablePassThrough false", ""); //"/var/www/debug/Selenium/$sessionId/sel.log"
             $this->runSyncCommand("cd /var/www && php bin/console cache:clear");
             sleep(5); //Esperar a que cargue Selenium
             exec("cd /var/www && (nohup php bin/console start-bot >/dev/null 2>&1 &)");
