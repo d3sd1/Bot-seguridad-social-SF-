@@ -101,7 +101,7 @@ class Alta extends Operation
          * Rellenar grupo de cotización.
          * Dos dígitos INT.
          */
-        $this->driver->findElement(WebDriverBy::name('txt_SDFGRUCOT_ayuda'))->sendKeys($this->operation->getSit());
+        $this->driver->findElement(WebDriverBy::name('txt_SDFGRUCOT_ayuda'))->sendKeys($this->operation->getGco());
 
         /*
          * Rellenar tipo de contrato.
