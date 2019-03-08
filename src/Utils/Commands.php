@@ -135,7 +135,7 @@ class Commands
             $headless = getenv('HEADLESS');
             if ($headless) {
                 $this->runSyncCommand("export MOZ_HEADLESS=1");
-                $this->runAsyncCommand("nohup Xvfb :99", "/var/www/debug/Xvfb/$sessionId.log");
+                $this->runAsyncCommand("nohup Xvfb :99 -screen 0 1024x768x24", "/var/www/debug/Xvfb/$sessionId.log");
                 $this->runSyncCommand("export DISPLAY=:99 && export DISPLAY=127.0.0.1:99");
             } else {
                 $this->runSyncCommand("export MOZ_HEADLESS=0");
