@@ -301,6 +301,7 @@ abstract class Operation
     {
         $this->takeScreenShoot();
         $this->container->get("app.dblogger")->info("Esperando envío del formulario...");
+        sleep(5); // Para esperar a que se haga el pantallazo.
         try {
             $this->container->get("app.dblogger")->info("Comprobando envío...");
             $this->driver->wait(10, 300)->until(
@@ -400,6 +401,7 @@ abstract class Operation
                 3408 => "Operación realizada correctamente (alta)",
                 3083 => "INTRODUZCA LOS DATOS Y PULSE CONTINUAR",
                 9125 => "ALTA REALIZADA. ASIGNADO CONVENIO DE LA CUENTA",
+                9086 => "ALTA REALIZADA CORRECTAMENTE.CONVENIO COLECTIVO NO ADMITIDO",
             ];
             if ($consultaAltasCCC) {
                 $notErrorBoxCodes[3543] = "NO EXISTEN DATOS PARA ESTA CONSULTA";

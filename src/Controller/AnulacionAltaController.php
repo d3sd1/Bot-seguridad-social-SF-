@@ -80,7 +80,6 @@ class AnulacionAltaController extends Controller
      */
     public function getAnulacionAltaPreviaAction(Request $request)
     {
-        $this->container->get("bot.manager")->preventHanging();
         $em = $this->get("doctrine.orm.entity_manager");
         $qb = $em->createQueryBuilder();
         $alta = $qb->select(array('a'))
@@ -109,7 +108,7 @@ class AnulacionAltaController extends Controller
      */
     public function anulacionAltaPreviaAction(Request $request)
     {
-        $this->container->get("bot.manager")->preventHanging();
+
 
         try {
             $em = $this->get("doctrine.orm.entity_manager");
@@ -261,7 +260,6 @@ class AnulacionAltaController extends Controller
      */
     public function getAnulacionAltaConsolidadaAction(Request $request)
     {
-        $this->container->get("bot.manager")->preventHanging();
         $em = $this->get("doctrine.orm.entity_manager");
         $qb = $em->createQueryBuilder();
         $alta = $qb->select(array('a'))
@@ -290,7 +288,7 @@ class AnulacionAltaController extends Controller
      */
     public function anulacionAltaConsolidadaAction(Request $request)
     {
-        $this->container->get("bot.manager")->preventHanging();
+
         try {
             $em = $this->get("doctrine.orm.entity_manager");
             /*

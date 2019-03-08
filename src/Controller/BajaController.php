@@ -79,7 +79,7 @@ class BajaController extends Controller
      */
     public function getBajaAction(Request $request)
     {
-        $this->container->get("bot.manager")->preventHanging();
+        
         $em = $this->get("doctrine.orm.entity_manager");
         $qb = $em->createQueryBuilder();
         $baja = $qb->select(array('a'))
@@ -108,7 +108,7 @@ class BajaController extends Controller
      */
     public function bajaAction(Request $request)
     {
-        $this->container->get("bot.manager")->preventHanging();
+        
         try {
             $em = $this->get("doctrine.orm.entity_manager");
             /*

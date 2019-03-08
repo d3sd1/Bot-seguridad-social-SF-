@@ -81,7 +81,6 @@ class AltaController extends Controller
      */
     public function getAltaAction(Request $request)
     {
-        $this->container->get("bot.manager")->preventHanging();
         $em = $this->get("doctrine.orm.entity_manager");
         $qb = $em->createQueryBuilder();
         $alta = $qb->select(array('a'))
@@ -110,7 +109,6 @@ class AltaController extends Controller
      */
     public function altaAction(Request $request)
     {
-        $this->container->get("bot.manager")->preventHanging();
         try {
             $em = $this->get("doctrine.orm.entity_manager");
             /*

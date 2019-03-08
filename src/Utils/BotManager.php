@@ -206,15 +206,4 @@ class BotManager
             ->orderBy('s.id', 'DESC')
             ->getQuery()->getSingleResult();
     }
-
-    /* Esta función previene al bot de colgarse si algo va mal */
-    public function preventHanging() { //DEPRECEATED DUE TO ONLY USED IN CONTROLLERS
-        /*if($this->container->get("so.commands")->isBotHanging()) {
-            $this->container->get("app.dblogger")->success("Bot is hanging on. We are restarting it...");
-            $this->close();
-            // Aqui tirar el mismo comando que en el cron: checker para ver estado e iniciar si es necesario
-            $this->container->get("so.commands")->runCronChecker();
-        }*/
-    }
-
 }
