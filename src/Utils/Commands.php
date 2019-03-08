@@ -33,6 +33,11 @@ class Commands
         return $output;
     }
 
+    public function takeXScreenshoot($screenshot_name)
+    {
+        $this->runSyncCommand("DISPLAY=:99 import -window root $screenshot_name");
+    }
+
     private function runAsyncCommand($command, $outputFile = null)
     {
         if ($outputFile === null) {

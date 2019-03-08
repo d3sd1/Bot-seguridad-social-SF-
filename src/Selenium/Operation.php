@@ -31,8 +31,6 @@ abstract class Operation
             $this->bm = $container->get('bot.manager');
             $this->server = $this->bm->getBotStatus();
             $this->driver = $seleniumDriver;
-            $window = new WebDriverDimension(1920, 1080);
-            $this->driver->manage()->window()->setSize($window);
 
             $this->operationName = array_values(array_slice(explode("\\", get_class($operation)), -1))[0];
 
@@ -205,6 +203,8 @@ abstract class Operation
 
     public function takeFullScreenshot($screenshot_name)
     {
+        $this->container->get("so.commands")->takeXScreenshoot($screenshot_name);
+        /*
         $total_width = $this->driver->executeScript('return Math.max.apply(null, [document.body.clientWidth, document.body.scrollWidth, document.documentElement.scrollWidth, document.documentElement.clientWidth])');
         $total_height = $this->driver->executeScript('return Math.max.apply(null, [document.body.clientHeight, document.body.scrollHeight, document.documentElement.scrollHeight, document.documentElement.clientHeight])');
         $viewport_width = $this->driver->executeScript('return document.documentElement.clientWidth');
@@ -237,7 +237,7 @@ abstract class Operation
             }
         }
         imagepng($full_capture, $screenshot_name);
-        imagedestroy($full_capture);
+        imagedestroy($full_capture);*/
     }
 
 
@@ -251,7 +251,7 @@ abstract class Operation
             }
 
 
-            $screenshot = $path . "/page_" . microtime(true) . ".png";
+            $screenshot = $path . "/page_" . microtime(true) . ".jpeg";
 
             $this->takeFullScreenshot($screenshot);
             /*

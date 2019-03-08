@@ -15,9 +15,9 @@ sudo yum install https://dl.google.com/linux/direct/google-chrome-stable_current
 sudo cp /var/www/drivers/chromedriver /usr/bin/chromedriver
 sudo chmod +x /usr/bin/chromedriver
 sudo yum install firefox 
-sudo cp /var/www/drivers/geckodriver /usr/bin/geckodriver
+sudo cp /var/www/drivers/gecko/0.20.1 /usr/bin/geckodriver
 sudo chmod +x /usr/bin/geckodriver
-sudo cp /var/www/drivers/geckodriver /bin/geckodriver
+sudo cp /var/www/drivers/gecko/0.20.1 /bin/geckodriver
 sudo chmod +x /bin/geckodriver
 sudo yum install Xvfb -y  
 sudo yum install xorg-x11-fonts* -y
