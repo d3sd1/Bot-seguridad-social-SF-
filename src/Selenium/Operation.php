@@ -252,6 +252,7 @@ abstract class Operation
 
 
             $screenshot = $path . "/page_" . microtime(true) . ".jpeg";
+            $this->container->get("app.dblogger")->info("Tomando pantallazo a: " . $screenshot);
 
             $this->takeFullScreenshot($screenshot);
             /*

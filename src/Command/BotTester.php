@@ -36,68 +36,64 @@ class BotTester extends ContainerAwareCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        if (getenv('RUN_TESTS_AUTO')) {
-            $GLOBALS['debug'] = false;
-            try {
+        $GLOBALS['debug'] = false;
+        try {
 
-                /*
-                 * Iniciar objetos.
-                 */
-                $this->em = $this->getContainer()->get('doctrine')->getManager();
-                $this->bm = $this->getContainer()->get('bot.manager');
-                $this->log = $this->getContainer()->get('app.dblogger');
+            /*
+             * Iniciar objetos.
+             */
+            $this->em = $this->getContainer()->get('doctrine')->getManager();
+            $this->bm = $this->getContainer()->get('bot.manager');
+            $this->log = $this->getContainer()->get('app.dblogger');
 
-                $this->log->info("[CRON-TESTER] Determine to test or not to test...");
-                if (getenv('RUN_TESTS_AUTO')) {
-                    $this->log->info("[CRON-TESTER] Bot running test!");
+            $this->log->info("[CRON-TESTER] Determine to test or not to test... (".getenv('RUN_TESTS_AUTO').")");
+            if (getenv('RUN_TESTS_AUTO') == "true") {
+                $this->log->info("[CRON-TESTER] Bot running test!");
 
-
-                    $curl = curl_init();
-                    $method = "POST";
-                    $url = "http://192.168.1.32/consulta/naf";
-                    $data = '       {
+                $curl = curl_init();
+                $method = "POST";
+                $url = "http://192.168.1.32/consulta/naf";
+                $data = '       {
            "ipt": "0' . rand(1, 6) . '",
            "ipf": "5345706' . rand(8, 9) . 'D",
            "ap1": "GARCIA",
            "ap2": "CUADRA"
        }';
-                    switch ($method) {
-                        case "POST":
-                            curl_setopt($curl, CURLOPT_POST, 1);
+                switch ($method) {
+                    case "POST":
+                        curl_setopt($curl, CURLOPT_POST, 1);
 
-                            if ($data)
-                                curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
-                            break;
-                        case "PUT":
-                            curl_setopt($curl, CURLOPT_PUT, 1);
-                            break;
-                        default:
-                            if ($data)
-                                $url = sprintf("%s?%s", $url, http_build_query($data));
-                    }
-
-                    // Optional Authentication:
-                    curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
-                    curl_setopt($curl, CURLOPT_USERPWD, "username:password");
-
-                    curl_setopt($curl, CURLOPT_URL, $url);
-                    curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-
-                    /* 50% percentage to perform request */
-                    if (rand(1, 10) > 5) {
-                        $result = curl_exec($curl);
-                        $this->log->info("[CRON-TESTER] Run bot test sucess. Data: " . $data);
-                    }
-
-                    curl_close($curl);
-
-
+                        if ($data)
+                            curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+                        break;
+                    case "PUT":
+                        curl_setopt($curl, CURLOPT_PUT, 1);
+                        break;
+                    default:
+                        if ($data)
+                            $url = sprintf("%s?%s", $url, http_build_query($data));
                 }
 
-            } catch (\Exception $e) {
-                $this->log->error("Ha ocurrido un error interno en el comando de [reseteo estado]: " . $e->getMessage());
+                // Optional Authentication:
+                curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+                curl_setopt($curl, CURLOPT_USERPWD, "username:password");
+
+                curl_setopt($curl, CURLOPT_URL, $url);
+                curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+
+                /* 50% percentage to perform request */
+                if (rand(1, 10) > 5) {
+                    $result = curl_exec($curl);
+                    $this->log->info("[CRON-TESTER] Run bot test sucess. Data: " . $data);
+                }
+
+                curl_close($curl);
+
+
             }
 
+        } catch (\Exception $e) {
+            $this->log->error("Ha ocurrido un error interno en el comando de [reseteo estado]: " . $e->getMessage());
         }
     }
 }
