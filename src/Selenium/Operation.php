@@ -301,7 +301,6 @@ abstract class Operation
     {
         $this->takeScreenShoot();
         $this->container->get("app.dblogger")->info("Esperando envío del formulario...");
-        sleep(5); // Para esperar a que se haga el pantallazo.
         try {
             $this->container->get("app.dblogger")->info("Comprobando envío...");
             $this->driver->wait(10, 300)->until(

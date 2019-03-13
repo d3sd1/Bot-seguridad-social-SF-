@@ -132,6 +132,7 @@ class ConsultaAltasCcc extends Operation
                     break;
                 }
             }
+            $this->takeScreenShoot();
             $this->driver->findElement(WebDriverBy::name('btn_Sub2207901001'))->click();
 
             $this->container->get("app.dblogger")->info("Cargando más registros...");

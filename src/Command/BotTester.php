@@ -46,7 +46,6 @@ class BotTester extends ContainerAwareCommand
             $this->bm = $this->getContainer()->get('bot.manager');
             $this->log = $this->getContainer()->get('app.dblogger');
 
-            $this->log->info("[CRON-TESTER] Determine to test or not to test... (".getenv('RUN_TESTS_AUTO').")");
             if (getenv('RUN_TESTS_AUTO') == "true") {
                 $this->log->info("[CRON-TESTER] Bot running test!");
 

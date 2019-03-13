@@ -47,6 +47,7 @@ class ConsultaNaf extends Operation
          * Clickar en el botón de enviar
          * Aquí concluye el formulario
          */
+        $this->takeScreenShoot();
         $this->driver->findElement(WebDriverBy::name('btn_Sub2207601004'))->click();
 
         /*

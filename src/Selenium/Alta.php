@@ -20,7 +20,6 @@ class Alta extends Operation
 
     public function doOperation()
     {
-        $this->container->get("app.dblogger")->info($this->driver->getPageSource());
         $this->container->get("app.dblogger")->info("Rellenando primer formulario...");
         /*
          * **************************************
@@ -62,6 +61,7 @@ class Alta extends Operation
          * Clickar en el botón de enviar
          * Aquí concluye la primera parte del formulario
          */
+        $this->takeScreenShoot();
         $this->driver->findElement(WebDriverBy::name('btn_Sub2207401004'))->click();
 
         $this->container->get("app.dblogger")->info("Enviando primer formulario...");
@@ -121,6 +121,7 @@ class Alta extends Operation
         /*
          * Enviar formulario.
          */
+        $this->takeScreenShoot();
         $this->driver->findElement(WebDriverBy::name('btn_Sub2207401004'))->click();
 
         /*
