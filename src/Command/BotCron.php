@@ -59,7 +59,7 @@ class BotCron extends ContainerAwareCommand
                     $this->log->error("[CRON] Bot restart FAILED. Check logs [DEV_DEBUG].");
                 }
             } // check if bot is hanging from timeouts on queue.
-            else if (null != $actualAction && null != $actualAction->getDateAdded() && $actualAction->getDateAdded()->modify("+10 minutes") < (new \DateTime())) {
+            else if (null != $actualAction && null != $actualAction->getDateAdded() && $actualAction->getDateAdded()->modify("+15 minutes") < (new \DateTime())) {
                 $this->getContainer()->get('bot.manager')->setBotStatus('CRASHED');
                 $this->log->warning("[CRON] Bot Queue handged. Restarting server... (Will start queue auto)");
                 $this->getContainer()->get('bot.manager')->restartServerSO();
