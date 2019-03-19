@@ -41,7 +41,6 @@ class BajaController extends Controller
             ->getOneOrNullResult();
         if ($operation != null) {
             $status = $em->getRepository("App:ProcessStatus")->findOneBy(['id' => $operation->getStatus()]);
-            $this->get("app.dblogger")->info("Llamada al rest (ELIMINACIÓN BAJA) ID: " . $this->em->getRepository("App:ProcessStatus")->findOneBy(['id' => $this->operation->getStatus()])->getStatus() . ", ESTADO: " . $operation->getStatus());
             if ($status != null && ($status->getStatus() == "AWAITING" || $status->getStatus() == "STOPPED")) {
                 $rmStatus = $em->getRepository("App:ProcessStatus")->findOneBy(['status' => "REMOVED"]);
                 $operation->setStatus($rmStatus->getId());
@@ -94,7 +93,6 @@ class BajaController extends Controller
             /* Enviar notificación al bot para procesar cola */
             //DEPRECEATED $REAL TIME SOCKETS DUE TO PHP BAD SOCKETS $this->get("app.sockets")->notify();
 
-            $this->get("app.dblogger")->info("Llamada al rest (COMPROBACIÓN BAJA) ID: " . $baja->getId() . ", ESTADO: " . $baja->getStatus());
             $status = $em->getRepository("App:ProcessStatus")->findOneBy(['id' => $baja->getStatus()]);
             return $this->container->get("response")->success($status->getStatus(), $baja->getErrMsg());
         } else {
@@ -193,7 +191,6 @@ class BajaController extends Controller
                 //DEPRECEATED $REAL TIME SOCKETS DUE TO PHP BAD SOCKETS $this->get("app.sockets")->notify();
 
                 /* Devolver resultado */
-                $this->get("app.dblogger")->info("Llamada al rest (BAJA). La petición ya existía, así que sólo se devolvió su ID (" . $baja->getId() . ").");
                 return $this->container->get("response")->success("RETRIEVED", $task->getId());
             } else {
                 /* Agregar baja */
@@ -214,13 +211,10 @@ class BajaController extends Controller
                 //DEPRECEATED $REAL TIME SOCKETS DUE TO PHP BAD SOCKETS $this->get("app.sockets")->notify();
             }
 
-            $this->get("app.dblogger")->info("Llamada al rest (BAJA). La petición se ha creado satisfactoriamente (" . $baja->getId() . ")");
             return $this->container->get("response")->success("CREATED", $baja->getId());
         } catch (\JMS\Serializer\Exception\RuntimeException $e) {
-            $this->get("app.dblogger")->error("Llamada al rest (BAJA) EXCEPTION JMS: " . $e->getMessage());
             return $this->container->get("response")->error(400, "INVALID_OBJECT");
         } catch (\Exception $e) {
-            $this->get("app.dblogger")->error("Llamada al rest (BAJA) EXCEPTION: " . $e->getMessage());
             return $this->container->get("response")->error(400, "UNCAUGHT_EXCEPTION");
         }
     }

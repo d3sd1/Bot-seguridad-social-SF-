@@ -43,7 +43,6 @@ class AltaController extends Controller
             ->getOneOrNullResult();
         if ($operation != null) {
             $status = $em->getRepository("App:ProcessStatus")->findOneBy(['id' => $operation->getStatus()]);
-            $this->get("app.dblogger")->info("Llamada al rest (ELIMINACIÓN ALTA) ID: " . $this->em->getRepository("App:ProcessStatus")->findOneBy(['id' => $this->operation->getStatus()])->getStatus() . ", ESTADO: " . $operation->getStatus());
             if ($status != null && ($status->getStatus() == "AWAITING" || $status->getStatus() == "STOPPED")) {
                 $rmStatus = $em->getRepository("App:ProcessStatus")->findOneBy(['status' => "REMOVED"]);
                 $operation->setStatus($rmStatus->getId());
@@ -95,7 +94,6 @@ class AltaController extends Controller
             /* Enviar notificación al bot para procesar cola */
             //DEPRECEATED $REAL TIME SOCKETS DUE TO PHP BAD SOCKETS $this->get("app.sockets")->notify();
 
-            $this->get("app.dblogger")->info("Llamada al rest (COMPROBACIÓN ALTA) ID: " . $alta->getId() . ", ESTADO: " . $alta->getStatus());
             $status = $em->getRepository("App:ProcessStatus")->findOneBy(['id' => $alta->getStatus()]);
             return $this->container->get("response")->success($status->getStatus(), $alta->getErrMsg());
         } else {
@@ -201,7 +199,6 @@ class AltaController extends Controller
                 //DEPRECEATED $REAL TIME SOCKETS DUE TO PHP BAD SOCKETS $this->get("app.sockets")->notify();
 
                 /* Devolver resultado */
-                $this->get("app.dblogger")->info("Llamada al rest (ALTA). La petición ya existía, así que sólo se devolvió su ID (" . $alta->getId() . ").");
                 return $this->container->get("response")->success("RETRIEVED", $task->getId());
             } else {
                 /* Agregar alta */
@@ -222,7 +219,6 @@ class AltaController extends Controller
                 //DEPRECEATED $REAL TIME SOCKETS DUE TO PHP BAD SOCKETS $this->get("app.sockets")->notify();
             }
 
-            $this->get("app.dblogger")->info("Llamada al rest (ALTA). La petición se ha creado satisfactoriamente (" . $alta->getId() . ")");
             return $this->container->get("response")->success("CREATED", $alta->getId());
         } catch (\Exception $e) {
             return $this->container->get("response")->error(400, $this->get("app.exception")->capture($e));

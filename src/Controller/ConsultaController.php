@@ -36,7 +36,6 @@ class ConsultaController extends Controller
             /* Enviar notificación al bot para procesar cola */
             //DEPRECEATED $REAL TIME SOCKETS DUE TO PHP BAD SOCKETS $this->get("app.sockets")->notify();
 
-            $this->get("app.dblogger")->info("Llamada al rest (COMPROBACIÓN CONSULTA NAF) ID: " . $consulta->getId() . ", ESTADO: " . $consulta->getStatus());
             $status = $em->getRepository("App:ProcessStatus")->findOneBy(['id' => $consulta->getStatus()]);
 
             $data = "";
@@ -94,7 +93,6 @@ class ConsultaController extends Controller
                 //DEPRECEATED $REAL TIME SOCKETS DUE TO PHP BAD SOCKETS $this->get("app.sockets")->notify();
 
                 /* Devolver resultado */
-                $this->get("app.dblogger")->info("Llamada al rest (Consulta NAF). La petición ya existía, así que sólo se devolvió su ID (" . $consulta->getId() . ").");
                 return $this->container->get("response")->success("RETRIEVED", $task->getId());
             } else {
                 /* Agregar consulta */
@@ -117,7 +115,6 @@ class ConsultaController extends Controller
                 //DEPRECEATED $REAL TIME SOCKETS DUE TO PHP BAD SOCKETS $this->get("app.sockets")->notify();
             }
 
-            $this->get("app.dblogger")->info("Llamada al rest (CONSULTA NAF). La petición se ha creado satisfactoriamente (" . $consulta->getId() . ")");
             return $this->container->get("response")->success("CREATED", $consulta->getId());
 
         } catch (\Exception $e) {
@@ -147,7 +144,6 @@ class ConsultaController extends Controller
             /* Enviar notificación al bot para procesar cola */
             //DEPRECEATED $REAL TIME SOCKETS DUE TO PHP BAD SOCKETS $this->get("app.sockets")->notify();
 
-            $this->get("app.dblogger")->info("Llamada al rest (COMPROBACIÓN CONSULTA IPF) ID: " . $consulta->getId() . ", ESTADO: " . $consulta->getStatus());
             $status = $em->getRepository("App:ProcessStatus")->findOneBy(['id' => $consulta->getStatus()]);
 
             $data = "";
@@ -206,7 +202,6 @@ class ConsultaController extends Controller
                 //DEPRECEATED $REAL TIME SOCKETS DUE TO PHP BAD SOCKETS $this->get("app.sockets")->notify();
 
                 /* Devolver resultado */
-                $this->get("app.dblogger")->info("Llamada al rest (Consulta IPF). La petición ya existía, así que sólo se devolvió su ID (" . $consulta->getId() . ").");
                 return $this->container->get("response")->success("RETRIEVED", $task->getId());
             } else {
                 /* Agregar consulta */
@@ -228,7 +223,6 @@ class ConsultaController extends Controller
                 //DEPRECEATED $REAL TIME SOCKETS DUE TO PHP BAD SOCKETS $this->get("app.sockets")->notify();
             }
 
-            $this->get("app.dblogger")->info("Llamada al rest (CONSULTA IPF). La petición se ha creado satisfactoriamente (" . $consulta->getId() . ")");
             return $this->container->get("response")->success("CREATED", $consulta->getId());
 
         } catch (\Exception $e) {
@@ -258,7 +252,6 @@ class ConsultaController extends Controller
             /* Enviar notificación al bot para procesar cola */
             //DEPRECEATED $REAL TIME SOCKETS DUE TO PHP BAD SOCKETS $this->get("app.sockets")->notify();
 
-            $this->get("app.dblogger")->info("Llamada al rest (COMPROBACIÓN CONSULTA ALTAS CCC) ID: " . $consulta->getId() . ", ESTADO: " . $consulta->getStatus());
             $status = $em->getRepository("App:ProcessStatus")->findOneBy(['id' => $consulta->getStatus()]);
 
             $data = "";
@@ -330,7 +323,6 @@ class ConsultaController extends Controller
                 //DEPRECEATED $REAL TIME SOCKETS DUE TO PHP BAD SOCKETS $this->get("app.sockets")->notify();
 
                 /* Devolver resultado */
-                $this->get("app.dblogger")->info("Llamada al rest (Consulta ALTAS CCC). La petición ya existía, así que sólo se devolvió su ID (" . $consulta->getId() . ").");
                 return $this->container->get("response")->success("RETRIEVED", $task->getId());
             } else {
                 /* Agregar consulta */
@@ -352,7 +344,6 @@ class ConsultaController extends Controller
                 //DEPRECEATED $REAL TIME SOCKETS DUE TO PHP BAD SOCKETS $this->get("app.sockets")->notify();
             }
 
-            $this->get("app.dblogger")->info("Llamada al rest (CONSULTA NAF). La petición se ha creado satisfactoriamente (" . $consulta->getId() . ")");
             return $this->container->get("response")->success("CREATED", $consulta->getId());
 
         } catch (\Exception $e) {
@@ -381,7 +372,6 @@ class ConsultaController extends Controller
             /* Enviar notificación al bot para procesar cola */
             //DEPRECEATED $REAL TIME SOCKETS DUE TO PHP BAD SOCKETS $this->get("app.sockets")->notify();
 
-            $this->get("app.dblogger")->info("Llamada al rest (COMPROBACIÓN CONSULTA TA) ID: " . $consulta->getId() . ", ESTADO: " . $consulta->getStatus());
             $status = $em->getRepository("App:ProcessStatus")->findOneBy(['id' => $consulta->getStatus()]);
 
             $data = "";
@@ -456,7 +446,6 @@ class ConsultaController extends Controller
                 //DEPRECEATED $REAL TIME SOCKETS DUE TO PHP BAD SOCKETS $this->get("app.sockets")->notify();
 
                 /* Devolver resultado */
-                $this->get("app.dblogger")->info("Llamada al rest (Consulta TA). La petición ya existía, así que sólo se devolvió su ID (" . $consulta->getId() . ").");
                 return $this->container->get("response")->success("RETRIEVED", $task->getId());
             } else {
                 /* Agregar consulta */
@@ -479,7 +468,6 @@ class ConsultaController extends Controller
                 //DEPRECEATED $REAL TIME SOCKETS DUE TO PHP BAD SOCKETS $this->get("app.sockets")->notify();
             }
 
-            $this->get("app.dblogger")->info("Llamada al rest (CONSULTA TA). La petición se ha creado satisfactoriamente (" . $consulta->getId() . ")");
             return $this->container->get("response")->success("CREATED", $consulta->getId());
 
         } catch (\Exception $e) {
@@ -511,7 +499,6 @@ class ConsultaController extends Controller
             /* Enviar notificación al bot para procesar cola */
             //DEPRECEATED $REAL TIME SOCKETS DUE TO PHP BAD SOCKETS $this->get("app.sockets")->notify();
 
-            $this->get("app.dblogger")->info("Llamada al rest (COMPROBACIÓN CONSULTA ALTA) ID: " . $consulta->getId() . ", ESTADO: " . $consulta->getStatus());
             $status = $em->getRepository("App:ProcessStatus")->findOneBy(['id' => $consulta->getStatus()]);
 
             $data = "";
@@ -585,7 +572,6 @@ class ConsultaController extends Controller
                 //DEPRECEATED $REAL TIME SOCKETS DUE TO PHP BAD SOCKETS $this->get("app.sockets")->notify();
 
                 /* Devolver resultado */
-                $this->get("app.dblogger")->info("Llamada al rest (Consulta ALTA). La petición ya existía, así que sólo se devolvió su ID (" . $consulta->getId() . ").");
                 return $this->container->get("response")->success("RETRIEVED", $task->getId());
             } else {
 
@@ -610,7 +596,6 @@ class ConsultaController extends Controller
                 //DEPRECEATED $REAL TIME SOCKETS DUE TO PHP BAD SOCKETS $this->get("app.sockets")->notify();
             }
 
-            $this->get("app.dblogger")->info("Llamada al rest (CONSULTA ALTA). La petición se ha creado satisfactoriamente (" . $consulta->getId() . ")");
             return $this->container->get("response")->success("CREATED", $consulta->getId());
 
         } catch (\Exception $e) {

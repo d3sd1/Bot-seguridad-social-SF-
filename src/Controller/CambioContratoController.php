@@ -41,7 +41,6 @@ class CambioContratoController extends Controller
             ->getOneOrNullResult();
         if ($operation != null) {
             $status = $em->getRepository("App:ProcessStatus")->findOneBy(['id' => $operation->getStatus()]);
-            $this->get("app.dblogger")->info("Llamada al rest (ELIMINACIÓN CAMBIO CONTRATO CONSOLIDADO) ID: " . $this->em->getRepository("App:ProcessStatus")->findOneBy(['id' => $this->operation->getStatus()])->getStatus() . ", ESTADO: " . $operation->getStatus());
             if ($status != null && ($status->getStatus() == "AWAITING" || $status->getStatus() == "STOPPED")) {
                 $rmStatus = $em->getRepository("App:ProcessStatus")->findOneBy(['status' => "REMOVED"]);
                 $operation->setStatus($rmStatus->getId());
@@ -102,7 +101,6 @@ class CambioContratoController extends Controller
             /* Enviar notificación al bot para procesar cola */
             //DEPRECEATED $REAL TIME SOCKETS DUE TO PHP BAD SOCKETS $this->get("app.sockets")->notify();
 
-            $this->get("app.dblogger")->info("Llamada al rest (COMPROBACIÓN CAMBIO CONTRATO CONSOLIDADo) ID: " . $cambioTcoCons->getId() . ", ESTADO: " . $cambioTcoCons->getStatus());
             $status = $em->getRepository("App:ProcessStatus")->findOneBy(['id' => $cambioTcoCons->getStatus()]);
             return $this->container->get("response")->success($status->getStatus(), $cambioTcoCons->getErrMsg());
         } else {
@@ -199,7 +197,6 @@ class CambioContratoController extends Controller
                 //DEPRECEATED $REAL TIME SOCKETS DUE TO PHP BAD SOCKETS $this->get("app.sockets")->notify();
 
                 /* Devolver resultado */
-                $this->get("app.dblogger")->info("Llamada al rest (CAMBIO_CONTRATO_CONSOLIDADO). La petición ya existía, así que sólo se devolvió su ID (" . $cambioTcoCons->getId() . ").");
                 return $this->container->get("response")->success("RETRIEVED", $task->getId());
             } else {
                 /* Agregar cambio de contrato consolidado */
@@ -220,7 +217,6 @@ class CambioContratoController extends Controller
                 //DEPRECEATED $REAL TIME SOCKETS DUE TO PHP BAD SOCKETS $this->get("app.sockets")->notify();
             }
 
-            $this->get("app.dblogger")->info("Llamada al rest (CAMBIO_CONTRATO_CONSOLIDADO). La petición se ha creado satisfactoriamente (" . $cambioTcoCons->getId() . ")");
             return $this->container->get("response")->success("CREATED", $cambioTcoCons->getId());
         } catch (\Exception $e) {
             return $this->container->get("response")->error(400, $this->get("app.exception")->capture($e));

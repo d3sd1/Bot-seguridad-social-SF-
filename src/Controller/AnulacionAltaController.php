@@ -42,7 +42,6 @@ class AnulacionAltaController extends Controller
             ->getOneOrNullResult();
         if ($operation != null) {
             $status = $em->getRepository("App:ProcessStatus")->findOneBy(['id' => $operation->getStatus()]);
-            $this->get("app.dblogger")->info("Llamada al rest (ELIMINACIÓN ANULACIÓN ALTA) ID: " . $this->em->getRepository("App:ProcessStatus")->findOneBy(['id' => $this->operation->getStatus()])->getStatus() . ", ESTADO: " . $operation->getStatus());
             if ($status != null && ($status->getStatus() == "AWAITING" || $status->getStatus() == "STOPPED")) {
                 $rmStatus = $em->getRepository("App:ProcessStatus")->findOneBy(['status' => "REMOVED"]);
                 $operation->setStatus($rmStatus->getId());
@@ -94,7 +93,6 @@ class AnulacionAltaController extends Controller
             /* Enviar notificación al bot para procesar cola */
             //DEPRECEATED $REAL TIME SOCKETS DUE TO PHP BAD SOCKETS $this->get("app.sockets")->notify();
 
-            $this->get("app.dblogger")->info("Llamada al rest (COMPROBACIÓN ANULACIÓN ALTA) ID: " . $alta->getId() . ", ESTADO: " . $alta->getStatus());
             $status = $em->getRepository("App:ProcessStatus")->findOneBy(['id' => $alta->getStatus()]);
             return $this->container->get("response")->success($status->getStatus(), $alta->getErrMsg());
         } else {
@@ -174,7 +172,6 @@ class AnulacionAltaController extends Controller
                 //DEPRECEATED $REAL TIME SOCKETS DUE TO PHP BAD SOCKETS $this->get("app.sockets")->notify();
 
                 /* Devolver resultado */
-                $this->get("app.dblogger")->info("Llamada al rest (ANULACION_ALTA_PREVIA). La petición ya existía, así que sólo se devolvió su ID (" . $anulacionAlta->getId() . ").");
                 return $this->container->get("response")->success("RETRIEVED", $task->getId());
             } else {
                 /* Agregar anulación de alta */
@@ -195,13 +192,10 @@ class AnulacionAltaController extends Controller
                 //DEPRECEATED $REAL TIME SOCKETS DUE TO PHP BAD SOCKETS $this->get("app.sockets")->notify();
             }
 
-            $this->get("app.dblogger")->info("Llamada al rest (ANULACION_ALTA_PREVIA). La petición se ha creado satisfactoriamente (" . $anulacionAlta->getId() . ")");
             return $this->container->get("response")->success("CREATED", $anulacionAlta->getId());
         } catch (\JMS\Serializer\Exception\RuntimeException $e) {
-            $this->get("app.dblogger")->error("Llamada al rest (ANULACION_ALTA_PREVIA) EXCEPTION JMS: " . $e->getMessage());
             return $this->container->get("response")->error(400, "INVALID_OBJECT");
         } catch (\Exception $e) {
-            $this->get("app.dblogger")->error("Llamada al rest (ANULACION_ALTA_PREVIA) EXCEPTION: " . $e->getMessage());
             return $this->container->get("response")->error(400, "UNCAUGHT_EXCEPTION");
         }
     }
@@ -222,7 +216,6 @@ class AnulacionAltaController extends Controller
             ->getOneOrNullResult();
         if ($operation != null) {
             $status = $em->getRepository("App:ProcessStatus")->findOneBy(['id' => $operation->getStatus()]);
-            $this->get("app.dblogger")->info("Llamada al rest (ELIMINACIÓN ANULACIÓN ALTA) ID: " . $this->em->getRepository("App:ProcessStatus")->findOneBy(['id' => $this->operation->getStatus()])->getStatus() . ", ESTADO: " . $operation->getStatus());
             if ($status != null && ($status->getStatus() == "AWAITING" || $status->getStatus() == "STOPPED")) {
                 $rmStatus = $em->getRepository("App:ProcessStatus")->findOneBy(['status' => "REMOVED"]);
                 $operation->setStatus($rmStatus->getId());
@@ -274,7 +267,6 @@ class AnulacionAltaController extends Controller
             /* Enviar notificación al bot para procesar cola */
             //DEPRECEATED $REAL TIME SOCKETS DUE TO PHP BAD SOCKETS $this->get("app.sockets")->notify();
 
-            $this->get("app.dblogger")->info("Llamada al rest (COMPROBACIÓN ANULACIÓN ALTA) ID: " . $alta->getId() . ", ESTADO: " . $alta->getStatus());
             $status = $em->getRepository("App:ProcessStatus")->findOneBy(['id' => $alta->getStatus()]);
             return $this->container->get("response")->success($status->getStatus(), $alta->getErrMsg());
         } else {
@@ -340,7 +332,6 @@ class AnulacionAltaController extends Controller
                 //DEPRECEATED $REAL TIME SOCKETS DUE TO PHP BAD SOCKETS $this->get("app.sockets")->notify();
 
                 /* Devolver resultado */
-                $this->get("app.dblogger")->info("Llamada al rest (ANULACION_ALTA_CONSOLIDADA). La petición ya existía, así que sólo se devolvió su ID (" . $anulacionAlta->getId() . ").");
                 return $this->container->get("response")->success("RETRIEVED", $task->getId());
             } else {
                 /* Agregar anulación de alta */
@@ -361,13 +352,10 @@ class AnulacionAltaController extends Controller
                 //DEPRECEATED $REAL TIME SOCKETS DUE TO PHP BAD SOCKETS $this->get("app.sockets")->notify();
             }
 
-            $this->get("app.dblogger")->info("Llamada al rest (ANULACION_ALTA_CONSOLIDADA). La petición se ha creado satisfactoriamente (" . $anulacionAlta->getId() . ")");
             return $this->container->get("response")->success("CREATED", $anulacionAlta->getId());
         } catch (\JMS\Serializer\Exception\RuntimeException $e) {
-            $this->get("app.dblogger")->error("Llamada al rest (ANULACION_ALTA_CONSOLIDADA) EXCEPTION JMS: " . $e->getMessage());
             return $this->container->get("response")->error(400, "INVALID_OBJECT");
         } catch (\Exception $e) {
-            $this->get("app.dblogger")->error("Llamada al rest (ANULACION_ALTA_CONSOLIDADA) EXCEPTION: " . $e->getMessage());
             return $this->container->get("response")->error(400, "UNCAUGHT_EXCEPTION");
         }
     }
