@@ -192,6 +192,7 @@ class AnulacionAltaController extends Controller
                 //DEPRECEATED $REAL TIME SOCKETS DUE TO PHP BAD SOCKETS $this->get("app.sockets")->notify();
             }
 
+            $this->get("bot.manager")->logObject("AnulacionAltaPrevia", $anulacionAlta->getId(), $request->getContent());
             return $this->container->get("response")->success("CREATED", $anulacionAlta->getId());
         } catch (\JMS\Serializer\Exception\RuntimeException $e) {
             return $this->container->get("response")->error(400, "INVALID_OBJECT", $e->getMessage());
@@ -351,6 +352,7 @@ class AnulacionAltaController extends Controller
                 /* Enviar notificación al bot para procesar cola */
                 //DEPRECEATED $REAL TIME SOCKETS DUE TO PHP BAD SOCKETS $this->get("app.sockets")->notify();
             }
+            $this->get("bot.manager")->logObject("AnulacionAltaConsolidada", $anulacionAlta->getId(), $request->getContent());
 
             return $this->container->get("response")->success("CREATED", $anulacionAlta->getId());
         } catch (\JMS\Serializer\Exception\RuntimeException $e) {

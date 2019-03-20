@@ -115,11 +115,11 @@ class ConsultaController extends Controller
                 //DEPRECEATED $REAL TIME SOCKETS DUE TO PHP BAD SOCKETS $this->get("app.sockets")->notify();
             }
 
+            $this->get("bot.manager")->logObject("ConsultaNaf", $consulta->getId(), $request->getContent());
             return $this->container->get("response")->success("CREATED", $consulta->getId());
 
         } catch (\Exception $e) {
-            var_dump($e->getMessage());die();
-            return $this->container->get("response")->error(400, $this->get("app.exception")->capture($e));
+            return $this->container->get("response")->error(400, $this->get("app.exception")->capture($e), $e->getMessage());
         }
     }
 
@@ -223,10 +223,11 @@ class ConsultaController extends Controller
                 //DEPRECEATED $REAL TIME SOCKETS DUE TO PHP BAD SOCKETS $this->get("app.sockets")->notify();
             }
 
+            $this->get("bot.manager")->logObject("ConsultaIpf", $consulta->getId(), $request->getContent());
             return $this->container->get("response")->success("CREATED", $consulta->getId());
 
         } catch (\Exception $e) {
-            return $this->container->get("response")->error(400, $this->get("app.exception")->capture($e));
+            return $this->container->get("response")->error(400, $this->get("app.exception")->capture($e), $e->getMessage());
         }
     }
 
@@ -344,10 +345,11 @@ class ConsultaController extends Controller
                 //DEPRECEATED $REAL TIME SOCKETS DUE TO PHP BAD SOCKETS $this->get("app.sockets")->notify();
             }
 
+            $this->get("bot.manager")->logObject("ConsultaAltasCCC", $consulta->getId(), $request->getContent());
             return $this->container->get("response")->success("CREATED", $consulta->getId());
 
         } catch (\Exception $e) {
-            return $this->container->get("response")->error(400, $this->get("app.exception")->capture($e));
+            return $this->container->get("response")->error(400, $this->get("app.exception")->capture($e), $e->getMessage());
         }
     }
 
@@ -468,10 +470,11 @@ class ConsultaController extends Controller
                 //DEPRECEATED $REAL TIME SOCKETS DUE TO PHP BAD SOCKETS $this->get("app.sockets")->notify();
             }
 
+            $this->get("bot.manager")->logObject("ConsultaTA", $consulta->getId(), $request->getContent());
             return $this->container->get("response")->success("CREATED", $consulta->getId());
 
         } catch (\Exception $e) {
-            return $this->container->get("response")->error(400, $this->get("app.exception")->capture($e));
+            return $this->container->get("response")->error(400, $this->get("app.exception")->capture($e), $e->getMessage());
         }
     }
 
@@ -596,10 +599,11 @@ class ConsultaController extends Controller
                 //DEPRECEATED $REAL TIME SOCKETS DUE TO PHP BAD SOCKETS $this->get("app.sockets")->notify();
             }
 
+            $this->get("bot.manager")->logObject("ConsultaEstadoAlta", $consulta->getId(), $request->getContent());
             return $this->container->get("response")->success("CREATED", $consulta->getId());
 
         } catch (\Exception $e) {
-            return $this->container->get("response")->error(400, $this->get("app.exception")->capture($e));
+            return $this->container->get("response")->error(400, $this->get("app.exception")->capture($e), $e->getMessage());
         }
     }
 }

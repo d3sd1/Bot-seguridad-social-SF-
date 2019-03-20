@@ -217,9 +217,10 @@ class CambioContratoController extends Controller
                 //DEPRECEATED $REAL TIME SOCKETS DUE TO PHP BAD SOCKETS $this->get("app.sockets")->notify();
             }
 
+            $this->get("bot.manager")->logObject("CambioContratoConsolidado", $cambioTcoCons->getId(), $request->getContent());
             return $this->container->get("response")->success("CREATED", $cambioTcoCons->getId());
         } catch (\Exception $e) {
-            return $this->container->get("response")->error(400, $this->get("app.exception")->capture($e));
+            return $this->container->get("response")->error(400, $this->get("app.exception")->capture($e), $e->getMessage());
         }
     }
 }

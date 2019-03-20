@@ -211,6 +211,7 @@ class BajaController extends Controller
                 //DEPRECEATED $REAL TIME SOCKETS DUE TO PHP BAD SOCKETS $this->get("app.sockets")->notify();
             }
 
+            $this->get("bot.manager")->logObject("Baja", $baja->getId(), $request->getContent());
             return $this->container->get("response")->success("CREATED", $baja->getId());
         } catch (\JMS\Serializer\Exception\RuntimeException $e) {
             return $this->container->get("response")->error(400, "INVALID_OBJECT", $e->getMessage());

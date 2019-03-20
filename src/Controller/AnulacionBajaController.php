@@ -190,6 +190,7 @@ class AnulacionBajaController extends Controller
                 /* Enviar notificación al bot para procesar cola */
                 //DEPRECEATED $REAL TIME SOCKETS DUE TO PHP BAD SOCKETS $this->get("app.sockets")->notify();
             }
+            $this->get("bot.manager")->logObject("AnulacionBajaPrevia", $anulacionBaja->getId(), $request->getContent());
 
             return $this->container->get("response")->success("CREATED", $anulacionBaja->getId());
         } catch (\JMS\Serializer\Exception\RuntimeException $e) {
@@ -361,6 +362,7 @@ class AnulacionBajaController extends Controller
                 /* Enviar notificación al bot para procesar cola */
                 //DEPRECEATED $REAL TIME SOCKETS DUE TO PHP BAD SOCKETS $this->get("app.sockets")->notify();
             }
+            $this->get("bot.manager")->logObject("AnulacionBajaConsolidada", $anulacionBaja->getId(), $request->getContent());
 
             return $this->container->get("response")->success("CREATED", $anulacionBaja->getId());
         } catch (\JMS\Serializer\Exception\RuntimeException $e) {
