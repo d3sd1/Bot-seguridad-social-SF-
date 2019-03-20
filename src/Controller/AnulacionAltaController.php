@@ -116,7 +116,7 @@ class AnulacionAltaController extends Controller
             $anulacionAlta = $this->get("jms_serializer")->deserialize($request->getContent(), 'App\Entity\AnulacionAltaPrevia', 'json');
             $validationErrors = $this->get('validator')->validate($anulacionAlta);
             if (count($validationErrors) > 0) {
-                return $this->container->get("response")->error(400, "INVALID_OBJECT");
+                return $this->container->get("response")->error(400, "INVALID_OBJECT", $e->getMessage());
             }
 
             /*
@@ -194,7 +194,7 @@ class AnulacionAltaController extends Controller
 
             return $this->container->get("response")->success("CREATED", $anulacionAlta->getId());
         } catch (\JMS\Serializer\Exception\RuntimeException $e) {
-            return $this->container->get("response")->error(400, "INVALID_OBJECT");
+            return $this->container->get("response")->error(400, "INVALID_OBJECT", $e->getMessage());
         } catch (\Exception $e) {
             return $this->container->get("response")->error(400, "UNCAUGHT_EXCEPTION");
         }
@@ -289,7 +289,7 @@ class AnulacionAltaController extends Controller
             $anulacionAlta = $this->get("jms_serializer")->deserialize($request->getContent(), 'App\Entity\AnulacionAltaConsolidada', 'json');
             $validationErrors = $this->get('validator')->validate($anulacionAlta);
             if (count($validationErrors) > 0) {
-                return $this->container->get("response")->error(400, "INVALID_OBJECT");
+                return $this->container->get("response")->error(400, "INVALID_OBJECT", $e->getMessage());
             }
 
             /*
@@ -354,7 +354,7 @@ class AnulacionAltaController extends Controller
 
             return $this->container->get("response")->success("CREATED", $anulacionAlta->getId());
         } catch (\JMS\Serializer\Exception\RuntimeException $e) {
-            return $this->container->get("response")->error(400, "INVALID_OBJECT");
+            return $this->container->get("response")->error(400, "INVALID_OBJECT", $e->getMessage());
         } catch (\Exception $e) {
             return $this->container->get("response")->error(400, "UNCAUGHT_EXCEPTION");
         }

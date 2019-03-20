@@ -14,12 +14,12 @@ class RestResponse
         $this->container = $container;
     }
 
-    function error(int $code, String $message)
+    function error(int $code, String $message, String $extra = null)
     {
 
         $response = new JsonResponse();
         $response->setStatusCode($code);
-        $response->setContent($this->container->get('jms_serializer')->serialize(array("message" => $message != null ? $message : ""), "json"));
+        $response->setContent($this->container->get('jms_serializer')->serialize(array("message" => $message != null ? $message : "", "extra" => $extra != null ? $extra : ""), "json"));
         return $response;
     }
 

@@ -115,7 +115,7 @@ class BajaController extends Controller
             $baja = $this->get("jms_serializer")->deserialize($request->getContent(), 'App\Entity\Baja', 'json');
             $validationErrors = $this->get('validator')->validate($baja);
             if (count($validationErrors) > 0) {
-                return $this->container->get("response")->error(400, "INVALID_OBJECT");
+                return $this->container->get("response")->error(400, "INVALID_OBJECT", $e->getMessage());
             }
 
             /*
@@ -213,7 +213,7 @@ class BajaController extends Controller
 
             return $this->container->get("response")->success("CREATED", $baja->getId());
         } catch (\JMS\Serializer\Exception\RuntimeException $e) {
-            return $this->container->get("response")->error(400, "INVALID_OBJECT");
+            return $this->container->get("response")->error(400, "INVALID_OBJECT", $e->getMessage());
         } catch (\Exception $e) {
             return $this->container->get("response")->error(400, "UNCAUGHT_EXCEPTION");
         }
