@@ -19,7 +19,12 @@ class BotManager
 
     public function logObject($opType, $opId, $json) {
         // sólo se guardan las operaciones que están en la base de datos (los INVALID_OBJECT NO).
-        file_put_contents("/var/www/oplogs/$opType/$opId.log", $json, FILE_APPEND | LOCK_EX);
+        if(!is_dir("/var/www/oplogs/$opType")) {
+            mkdir("/var/www/oplogs/$opType");
+        }
+        $fp = fopen("/var/www/oplogs/$opType/$opId.log","wb");
+        fwrite($fp,$json);
+        fclose($fp);
     }
 
     public function __construct(ContainerInterface $container, EntityManager $em)
