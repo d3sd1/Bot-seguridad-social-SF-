@@ -354,7 +354,7 @@ abstract class Operation
             $base64Response = base64_encode(json_encode($base64Response));
 
             $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, $this->operation->getCallbackUrl() . '?response=' . $base64Response);
+            curl_setopt($ch, CURLOPT_URL, $this->operation->getCallbackUrl() . '&response=' . $base64Response);
             curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-type: application/json')); // Assuming you're requesting JSON
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 
