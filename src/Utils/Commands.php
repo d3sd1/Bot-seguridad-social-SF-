@@ -130,8 +130,8 @@ class Commands
 
             $this->runSyncCommand("mkdir -p /var/www/debug/Xvfb");
             $this->runSyncCommand("touch /var/www/debug/Xvfb/$sessionId.log");
-            //$this->runSyncCommand("mkdir -p /var/www/debug/Selenium");
-            //$this->runSyncCommand("touch /var/www/debug/Selenium/$sessionId.log");
+            $this->runSyncCommand("mkdir -p /var/www/debug/Selenium");
+            $this->runSyncCommand("touch /var/www/debug/Selenium/$sessionId.log");
             $headless = getenv('HEADLESS');
             if ($headless) {
                 $this->runSyncCommand("export MOZ_HEADLESS=1");

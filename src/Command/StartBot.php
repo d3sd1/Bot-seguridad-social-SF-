@@ -185,6 +185,7 @@ class StartBot extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $GLOBALS['debug'] = false;
+        $GLOBALS['OPERATION_TIMEOUT_SECONDS_SESS'] = 0;
         try {
 
             /*

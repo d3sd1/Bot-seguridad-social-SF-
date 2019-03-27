@@ -45,7 +45,7 @@ abstract class Operation
                  * hay algo por hacer.
                  */
 
-                if ($this->operation->getDateInit() != null && $this->operation->getDateInit()->diff(new \DateTime())->s > getenv('OPERATION_TIMEOUT_SECONDS')) {
+                if ($this->operation->getDateInit() != null && $this->operation->getDateInit()->diff(new \DateTime())->s > getenv('OPERATION_TIMEOUT_SECONDS') + $GLOBALS['OPERATION_TIMEOUT_SECONDS_SESS']) {
                     /* Eliminar de la cola */
                     $this->removeFromQueue();
 
@@ -124,6 +124,7 @@ abstract class Operation
             if ($this->doOperation()) {
                 $this->updateStatus("COMPLETED");
                 $this->removeFromQueue();
+                $GLOBALS['OPERATION_TIMEOUT_SECONDS_SESS'] += $this->operation->getProcessTime();
             } else {
                 $this->updateStatus("ERROR");
                 $this->removeFromQueue();
@@ -309,8 +310,7 @@ abstract class Operation
             $this->container->get("app.dblogger")->info("Envío satisfactorio. Comprobando errores.");
             $found = true;
         } catch (\Exception $e) {
-            $this->container->get("app.dblogger")->info("Envío erróneo (Si hay otro error de envío, este es asociado y no principal): " . $e->getMessage());
-            $this->container->get("app.dblogger")->info("SOURCE: " . $this->driver->getPageSource());
+            $this->container->get("app.dblogger")->info("Envío con warnings (ignorar si todo fue bien): " . $e->getMessage() .", SOURCE: ". $this->driver->getPageSource());
             $found = false;
         }
         return $found;
