@@ -124,11 +124,11 @@ abstract class Operation
             if ($this->doOperation()) {
                 $this->updateStatus("COMPLETED");
                 $this->removeFromQueue();
-                $GLOBALS['OPERATION_TIMEOUT_SECONDS_SESS'] += $this->operation->getProcessTime();
             } else {
                 $this->updateStatus("ERROR");
                 $this->removeFromQueue();
             }
+            $GLOBALS['OPERATION_TIMEOUT_SECONDS_SESS'] += $this->operation->getProcessTime();
         } else {
             $this->updateStatus("STOPPED");
             $this->bm->setBotStatus("SS_PAGE_DOWN");

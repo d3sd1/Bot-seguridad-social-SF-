@@ -75,6 +75,7 @@ class StartBot extends ContainerAwareCommand
                 while($task == null) {
                     sleep(5);
                     $task = $taskQuery->getOneOrNullResult();
+                    $GLOBALS['OPERATION_TIMEOUT_SECONDS_SESS'] = 0; // Remove pending wait since we ended up with a queue! we dont want permanent timeout!
                 }
             }
         }
