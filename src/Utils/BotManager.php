@@ -83,6 +83,10 @@ class BotManager
                     ->setMaxResults(1)
                     ->getOneOrNullResult();
                 $operation->setStatus($abortedStatus->getId());
+
+                /* Mandar correo */
+                $msg = "INFORMACIÓN INTERNA DEL BOT: Abortada petición con ID " . $queueProccess->getId() . " del tipo " . $queueProccess->getProcessType()->getType();
+                $this->container->get('app.dblogger')->sendErrorMail('ABORTED', $msg);
                 /* Eliminar de la cola */
                 $this->container->get("app.dblogger")->success("Abortada petición con ID " . $queueProccess->getId() . " del tipo " . $queueProccess->getProcessType()->getType());
                 $this->em->remove($queueProccess);
