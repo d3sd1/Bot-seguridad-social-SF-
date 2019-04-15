@@ -52,6 +52,10 @@ class StartBot extends ContainerAwareCommand
             ->setMaxResults(1)
             ->getQuery();
         while ($this->processingQueue) {
+            /*
+             * Reboot firefox
+             */
+            $this->getContainer()->get("so.commands")->resetNavigator();
             if ($this->bm->getBotStatus() === "SS_PAGE_DOWN") {
                 $this->log->info("Página de la seguridad social inactiva. Esperando " . getenv("SS_PAGE_DOWN_SLEEP") . " segundos.");
                 sleep(getenv("SS_PAGE_DOWN_SLEEP"));
