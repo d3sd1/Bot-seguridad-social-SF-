@@ -59,7 +59,7 @@ class StartBot extends ContainerAwareCommand
                 $this->log->info("Página de la seguridad social inactiva. Esperando " . getenv("SS_PAGE_DOWN_SLEEP") . " segundos.");
                 sleep(getenv("SS_PAGE_DOWN_SLEEP"));
             }
-            $this->getContainer()->get("so.commands")->resetNavigator();
+            //$this->getContainer()->get("so.commands")->resetNavigator();
             /*
              * Recuperar los resultados actuales.
              */

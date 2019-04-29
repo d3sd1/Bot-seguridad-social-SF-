@@ -19,36 +19,40 @@ class DBLogger
     }
 
     public function sendErrorMail($type,$msg) {
-        $recipers = explode(',',getenv('LOG_EMAILS'));
-        $log = new InternalLog();
-        $log->setMessage("Sending error messages to " .getenv('LOG_EMAILS'));
-        $log->setType($this->em->getRepository("App:LogType")->findOneBy(['type' => $type]));
-        $this->em->persist($log);
-
-        foreach($recipers as $reciper) {
+        try {
+            $recipers = explode(',', getenv('LOG_EMAILS'));
             $log = new InternalLog();
-            $log->setMessage("Sent error message to " .$reciper);
+            $log->setMessage("Sending error messages to " . getenv('LOG_EMAILS'));
             $log->setType($this->em->getRepository("App:LogType")->findOneBy(['type' => $type]));
             $this->em->persist($log);
 
-            $message = (new \Swift_Message('('.$type.') En bot de la seguridad social'))
-                ->setFrom('bot-ss@workout-events.com')
-                ->setTo($reciper)
-                ->setBody(
-                    'El bot de la seguridad social (192.168.1.32) ha tenido una excepción: '.$msg,
-                    'text/html'
-                );
+            foreach ($recipers as $reciper) {
+                $log = new InternalLog();
+                $log->setMessage("Sent error message to " . $reciper);
+                $log->setType($this->em->getRepository("App:LogType")->findOneBy(['type' => $type]));
+                $this->em->persist($log);
+
+                $message = (new \Swift_Message('(' . $type . ') En bot de la seguridad social'))
+                    ->setFrom('bot-ss@workout-events.com')
+                    ->setTo($reciper)
+                    ->setBody(
+                        'El bot de la seguridad social (192.168.1.32) ha tenido una excepción: ' . $msg,
+                        'text/html'
+                    );
 
 
-            $transport = (new \Swift_SmtpTransport('email-smtp.us-west-2.amazonaws.com', 587, 'tls'))
-                ->setUsername('AKIAI7M6LEJO4FQROWTQ')
-                ->setPassword('AuyAV0Zirt+lK47RwE1nKinH5aWt/ysH2N1ZB85NRmiJ')
-            ;
+                $transport = (new \Swift_SmtpTransport('email-smtp.eu-west-1.amazonaws.com', 587, 'tls'))
+                    ->setUsername('AKIAIKOSJWXZFS7T4C7A')
+                    ->setPassword('ApOkCAsoo/bIRQl4W5gOTspQgJ5OjubaZoAy7++BBIzi');
 
-            $mailer = new \Swift_Mailer($transport);
-            $mailer->send($message);
+                $mailer = new \Swift_Mailer($transport);
+                $mailer->send($message);
+            }
+            $this->em->flush();
         }
-        $this->em->flush();
+        catch(\Exception $e) {
+            $this->error("Mail server down!!!!");
+        }
 
     }
 
