@@ -488,7 +488,7 @@ jquery.event.drag@2.2.2:
   version "2.2.2"
   resolved "https://registry.yarnpkg.com/jquery.event.drag/-/jquery.event.drag-2.2.2.tgz#11bbbf83f4c6ef5f3b5065564663913c9f964be1"
 
-jquery@3.3.1, "jquery@^1.7 || ^2.0 || ^3.1":
+jquery@3.4.0, "jquery@^1.7 || ^2.0 || ^3.1":
   version "3.3.1"
   resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.3.1.tgz#958ce29e81c9790f31be7792df5d4d95fc57fbca"
 
@@ -522,8 +522,8 @@ levn@^0.3.0, levn@~0.3.0:
     prelude-ls "~1.1.2"
     type-check "~0.3.2"
 
-lodash@^4.17.4, lodash@^4.3.0:
-  version "4.17.5"
+lodash@^4.17.12, lodash@^4.17.12:
+  version "4.17.12"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.5.tgz#99a92d65c0272debe8c96b6057bc8fbfa3bed511"
 
 lru-cache@^4.0.1:
